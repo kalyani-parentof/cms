@@ -4,6 +4,8 @@ var mongoose = require('mongoose'),
 var ageGroup = new Schema({
     name: String,
     createdBy: String,
+    isDeleted: Boolean,
+    isApproved: Boolean,
     createdDate: {
         type: Date,
         default: Date.now

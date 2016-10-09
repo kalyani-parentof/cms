@@ -1,38 +1,114 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="parentOf">
+<html ng-app="parentOf">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Parent of</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link href="bower_components/angular-notify/dist/angular-notify.min.css" type="text/css" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="app/assets/css/landing-page.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="app/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <title>ParentOf CMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jQuery UI -->
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- styles -->
+    <link href="css/styles.css" rel="stylesheet">
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/forms.css" rel="stylesheet">
+
 </head>
 
 <body ng-controller="mainCtrl">
-    <!-- Navigation -->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1><a>ParentOf CMS</a></h1>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-lg-12">
 
-    <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="application/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <script type="application/javascript" src="bower_components/angular/angular.min.js"></script>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="navbar navbar-inverse" role="banner">
+                        <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+                                    <ul class="dropdown-menu animated fadeInUp">
+
+                                        <li><a href="login.html">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="sidebar content-box" style="display: block;">
+                    <ul class="nav">
+                        <!-- Main menu -->
+                        <li><a ui-sref="age"> Age Master</a>
+                        </li>
+                        <li><a ui-sref="da"> Developmental Area</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10" ui-view>
+
+
+
+                <!--  Page content -->
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <footer>
+    <div class="container">
+
+        <div class="copy text-center">
+            Copyright 2014 <a href='#'>Website</a>
+        </div>
+
+    </div>
+</footer>
+-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/bower_components/jquery/dist/jquery.min.js " type="text/javascript " charset="utf-8 "></script>
+    <script src="/bower_components/angular/angular.min.js " type="text/javascript " charset="utf-8 "></script>
+    <script src="bower_components/angular-notify/angular-notify.js"></script>
+    <script src="/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="/bower_components/restangular/dist/restangular.js"></script>
     <script type="application/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script type="application/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
-    <script type="application/javascript" src="bower_components/angular-notify/dist/angular-notify.min.js"></script>
-    <script type="application/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
-    <script type="application/javascript" src="bower_components/restangular/dist/restangular.js"></script>
-    <script type="application/javascript" src="app.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="/bower_components/angular-indexed-db/angular-indexed-db.js"></script>
+    <script src="bower_components/angular-google-plus/dist/angular-google-plus.js"></script>
+    <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+
+    <script src="/app.js"></script>
+
+    <!-- jQuery UI -->
+
 </body>
 
 </html>
