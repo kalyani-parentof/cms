@@ -4,7 +4,7 @@
        <div class="col-lg-6">
            <div class="form-group">
                <label for="ages">Age group</label>
-               <select class="form-control" id="ages">
+               <select ng-options="a._id as a.name for a in ages" ng-model="selectedAge" class="form-control" id="ages">
                    <option>Select Age</option>
                </select>
            </div>
@@ -12,9 +12,9 @@
        <div class="col-lg-6">
        <div class="form-group">
            <label for="name">Name</label>
-           <input type="email" class="form-control" id="name" placeholder="Age group name">
+           <input ng-model="age.name" type="text" class="form-control" id="name" placeholder="Age group name">
        </div>
-           <button type="button" class="btn btn-default">Add</button>
+           <button type="button" ng-click="addAge()" class="btn btn-default">Add</button>
         </div>
 
    </form>

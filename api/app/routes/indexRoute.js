@@ -1,5 +1,6 @@
 module.exports = function (app) {
     var health = require('../controllers/health');
+    var age = require('../controllers/ageGroupCtrl');
     var da = require('../controllers/developmentalAreaCtrl');
     var characteristic = require('../controllers/characteristicCtrl');
     var functionality = require('../controllers/functionalityCtrl');
@@ -26,5 +27,9 @@ module.exports = function (app) {
     app.delete('/functionality/char/:id/:char', functionality.removeChar);
     app.get('/functionality/:id', functionality.getById);
 
+    //age
+    //da
+    app.post('/age', age.post);
+    app.get('/age', age.get);
 
 };

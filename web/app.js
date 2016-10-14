@@ -62,6 +62,3 @@ parentOf.factory('pofRestangular', ['Restangular', function (Restangular) {
 parentOf.controller('mainCtrl', function ($scope) {
 
 })
-parentOf.controller('ageCtrl', function ($scope) {
-
-})
