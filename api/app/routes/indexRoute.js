@@ -1,6 +1,8 @@
 module.exports = function (app) {
-    var user = require('../controllers/userCtrl');
     var health = require('../controllers/health');
+    var da = require('../controllers/developmentalAreaCtrl');
+    var characteristic = require('../controllers/characteristicCtrl');
+    var functionality = require('../controllers/functionalityCtrl');
     app.get('/*', function (req, res, next) {
         res.header('X-XSS-Protection', 0);
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -8,17 +10,21 @@ module.exports = function (app) {
     });
 
     app.get('/health',health.getHealth)
-    app.get('/user/id/:id', user.getById);
-    app.get('/user/:email', user.getUserByEmail);
-    app.get('/activate/:token', user.activate);
-    app.get('/user/:email/:token', user.updateResultToken);
-    app.get('/offline/:email/:token', user.updateResultToken);
-    app.post('/user/register', user.register);
-    app.post('/refer', user.refer);
-    app.post('/user/login', user.login);
-    app.post('/user/rating', user.submitRating);
-    app.post('/user/questions', user.submitAnswers);
 
+    //da
+    app.post('/da', da.post);
+    app.get('/da', da.get);
+
+    //characteristic
+    app.post('/characteristic', characteristic.post);
+    app.get('/characteristic', characteristic.get);
+
+    //characteristic
+    app.post('/functionality', functionality.post);
+    app.get('/functionality', functionality.get);
+    app.post('/functionality/char/:id', functionality.post);
+    app.get('/functionality/char/:id', functionality.get);
+    app.get('/functionality/:id', functionality.get);
 
 
 };

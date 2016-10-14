@@ -1,13 +1,11 @@
+/**
+ * Created by rajanchaudhary on 10/10/16.
+ */
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-var mileStone = new Schema({
+var trait = new Schema({
     name: String,
-    description: String,
-    indicators: [{
-        indicator: String,
-        trait: String
-    }],
     createdBy: String,
     createdDate: {
         type: Date,
@@ -15,4 +13,4 @@ var mileStone = new Schema({
     }
 });
 
-mongoose.model('mileStone', mileStone);
+mongoose.model('trait', trait);

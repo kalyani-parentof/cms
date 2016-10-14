@@ -50,9 +50,9 @@ parentOf.run(function ($rootScope, $state, $location, localStorageService) {
     });
 });
 
-parentOf.factory('hlRestangular', ['Restangular', function (Restangular) {
+parentOf.factory('pofRestangular', ['Restangular', function (Restangular) {
     return Restangular.withConfig(function (RestangularConfigurer) {
-        RestangularConfigurer.setBaseUrl("http://api.parentof.com");
+        RestangularConfigurer.setBaseUrl("http://localhost:3111");
         RestangularConfigurer.setDefaultHttpFields({
             timeout: 15000
         });
@@ -63,8 +63,5 @@ parentOf.controller('mainCtrl', function ($scope) {
 
 })
 parentOf.controller('ageCtrl', function ($scope) {
-
-})
-parentOf.controller('daCtrl', function ($scope) {
 
 })
