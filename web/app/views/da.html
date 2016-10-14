@@ -172,3 +172,28 @@
     </div>
 
 </div>
+
+<div ng-controller="traitCtrl" class="row">
+    <div>
+        <h2>Traits</h2>
+        <form class="form">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="traits">Traits</label>
+                    <select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait" class="form-control" id="traits">
+                        <option>Select Trait</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="tname">Name</label>
+                    <input type="text" ng-model="trait.name" class="form-control" id="tname" placeholder="Trait name">
+                </div>
+                <button type="button" ng-click="addTrait()" class="btn btn-default">Add</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
