@@ -31,24 +31,27 @@ exports.get = function(req, res){
 
 
 exports.addChar = function(req, res){
-    var id = req.param.id;
+    var id = req.params.id;
     var char = req.body.char;
-
-    Functionality.update({_id: id},{$push:{characteristic: char}}, function(){
+    Functionality.update({_id: id},{$push:{characteristic: char}}, function(err){
+        console.log(err)
         res.success("saved successfully")
     })
 }
 
 exports.removeChar = function(req, res){
-    var id = req.param.id;
-    var char = req.body.char;
-
-    Functionality.update({_id: id},{$pull:{characteristic: char}})
+    var id = req.params.id;
+    var char = req.params.char;
+    console.log(id, char)
+    Functionality.update({_id: id},{$pull:{characteristic: char}}, function(err){
+        console.log(err)
+        res.success("saved successfully")
+    })
 }
 
 exports.getById = function(req, res){
-    var id = req.param.id;
-    Functionality.findOne({_id: id}, {_id:1, characteristic:1}, function (err, data) {
+    var id = req.params.id;
+    Functionality.findOne({_id: id}, {_id:1, characteristic:1}).populate('characteristic').exec(function (err, data) {
         if(err){
             res.error(err)
         }

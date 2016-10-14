@@ -122,7 +122,6 @@
                 <div class="form-group">
                     <label for="functionalities">Functionality</label>
                     <select class="form-control" ng-model="selectedFunc" ng-options="f._id as f.name for f in functionalities" ng-change="selectedFuncChange()" id="functionalities">
-                        <option>Select Functionality</option>
                     </select>
                 </div>
                 <table class="table-responsive table table-bordered">
@@ -135,9 +134,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Characteristic 1</td>
-                        <td><button type="button" class="btn btn-danger">Delete</button></td>
+                    <tr ng-repeat="c in  chars">
+                        <td>{{c.name}}</td>
+                        <td><button type="button" ng-click="removeChar(c)" class="btn btn-danger">Delete</button></td>
                     </tr>
 
                     </tbody>
@@ -145,13 +144,13 @@
                     <tr>
                         <td>
                             <div class="form-group">
-                                <select class="form-control"  id="characteristicList">
+                                <select class="form-control"  ng-options="c._id as c.name for c in characteristics" ng-model="selectedChar" id="characteristicList">
                                     <option>Select Characteristic</option>
                                 </select>
                             </div>
 
                         </td>
-                        <td><button type="button"  class="btn btn-primary">Add</button></td>
+                        <td><button type="button" ng-click="addChar()"  class="btn btn-primary">Add</button></td>
                     </tr>
                     </tfoot>
                 </table>

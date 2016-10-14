@@ -22,9 +22,9 @@ module.exports = function (app) {
     //characteristic
     app.post('/functionality', functionality.post);
     app.get('/functionality', functionality.get);
-    app.post('/functionality/char/:id', functionality.post);
-    app.get('/functionality/char/:id', functionality.get);
-    app.get('/functionality/:id', functionality.get);
+    app.post('/functionality/char/:id', functionality.addChar);
+    app.delete('/functionality/char/:id/:char', functionality.removeChar);
+    app.get('/functionality/:id', functionality.getById);
 
 
 };
