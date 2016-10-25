@@ -1,0 +1,58 @@
+<div>
+    <div>
+        <h2>Functionality</h2>
+        <form class="form">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="functionalities">Functionality</label>
+                    <select class="form-control" ng-model="selectedFunc" ng-options="f._id as f.name for f in functionalities" ng-change="selectedFuncChange()" id="functionalities">
+                    </select>
+                </div>
+                <table class="table-responsive table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            Characteristic
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in  chars">
+                        <td>{{c.name}}</td>
+                        <td><button type="button" ng-click="removeChar(c)" class="btn btn-danger">Delete</button></td>
+                    </tr>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <select class="form-control"  ng-options="c._id as c.name for c in characteristics" ng-model="selectedChar" id="characteristicList">
+                                    <option>Select Characteristic</option>
+                                </select>
+                            </div>
+
+                        </td>
+                        <td><button type="button" ng-click="addChar()"  class="btn btn-primary">Add</button></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="fnName">Name</label>
+                    <input type="text" ng-model="functionality.name" class="form-control" id="fnName" placeholder="Functionality name">
+                </div>
+                <div class="form-group">
+                    <label for="fnCode">Code</label>
+                    <input type="text" ng-model="functionality.code" class="form-control" id="fnCode" placeholder="Functionality code">
+                </div>
+
+                <button type="button" ng-click="addFunctionality()" class="btn btn-default">Add</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>

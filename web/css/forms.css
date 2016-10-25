@@ -1,0 +1,9 @@
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}
+
+.itsRequired:after {
+    content:"*";
+    color:red;
+}

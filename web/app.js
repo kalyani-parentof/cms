@@ -20,7 +20,29 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
             url: '/da',
             templateUrl: 'app/views/da.html',
             controller: 'daCtrl'
+        }).state('dp', {
+            url: '/dp',
+            templateUrl: 'app/views/dp.html',
+            controller: 'dpCtrl'
+        }).state('characteristic', {
+            url: '/characteristic',
+            templateUrl: 'app/views/characteristic.html',
+            controller: 'characteristicCtrl'
+        }).state('functionality', {
+            url: '/functionality',
+            templateUrl: 'app/views/functionality.html',
+            controller: 'functionalityCtrl'
+        }).state('trait', {
+            url: '/trait',
+            templateUrl: 'app/views/trait.html',
+            controller: 'traitCtrl'
+        }).state('indicator', {
+            url: '/indicator',
+            templateUrl: 'app/views/indicator.html',
+            controller: 'indicatorCtrl'
         })
+
+
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/age');
 

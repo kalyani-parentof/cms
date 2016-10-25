@@ -4,6 +4,11 @@ var mongoose = require('mongoose'),
 var developmentalTask = new Schema({
     name: String,
     description: String,
+    age: {type:String,ref: 'ageGroup'},
+    mileStones: [{
+        type: String,
+        ref: 'mileStone'
+    }],
     createdBy: String,
     createdDate: {
         type: Date,

@@ -1,48 +1,55 @@
 /**
  * Created by rajanchaudhary on 10/14/16.
  */
-parentOf.controller('functionalityCtrl', function ($scope, pofRestangular) {
+parentOf.controller('dpCtrl', function ($scope, pofRestangular) {
     function init() {
-        $scope.selectedChar = ''
-        $scope.selectedFunc = ''
-        pofRestangular.one('functionality').customGET().then(function(data){
-            $scope.functionalities = data.data;
+        $scope.dps = []
+        $scope.selectedIndicator = ''
+        $scope.selectedDp = ''
+        $scope.selectedAge = ''
+        pofRestangular.one('age').customGET().then(function(data){
+            $scope.ages = data.data;
         })
-        pofRestangular.one('characteristic').customGET().then(function(data){
-            $scope.characteristics = data.data;
+        pofRestangular.one('indicator').customGET().then(function (data) {
+            $scope.indicators = data.data;
         })
 
-        $scope.functionality = {name: '', code: ''}
-        $scope.chars = []
+        pofRestangular.one('dp').customGET().then(function(data){
+            $scope.dps = data.data;
+        })
+
+        $scope.dp = {name: '', age: ''}
+
+
 
     }
     init()
-    $scope.addFunctionality = function(){
-        pofRestangular.one('functionality').customPOST($scope.functionality).then(function(data){
-            $scope.functionalities.push($scope.functionality.name)
+    $scope.addDp = function(){
+        pofRestangular.one('dp').customPOST($scope.dp).then(function(data){
+            $scope.dps.push($scope.dp.name)
             init()
         })
     }
-    $scope.addChar = function(){
-        pofRestangular.one('functionality').one('char').one($scope.selectedFunc).customPOST({char: $scope.selectedChar}).then(function(data){
-            refreshChars()
+    $scope.addIndicator = function(){
+        pofRestangular.one('dp').one('indicator').one($scope.selectedDp).customPOST({indicator: $scope.selectedIndicator}).then(function(data){
+            refreshIndicators()
 
         })
     }
-    $scope.removeChar = function(id){
-        pofRestangular.one('functionality').one('char').one($scope.selectedFunc).one(id._id).customDELETE().then(function(data){
-            refreshChars()
+    $scope.removeIndicator = function(id){
+        pofRestangular.one('dp').one('indicator').one($scope.selectedDp).one(id._id).customDELETE().then(function(data){
+            refreshIndicators()
 
         })
     }
 
-    $scope.selectedFuncChange = function(){
-        refreshChars()
+    $scope.selectedDpChange = function(){
+        refreshIndicators()
     }
-    function refreshChars(){
-        pofRestangular.one('functionality').one($scope.selectedFunc).customGET().then(function(data){
+    function refreshIndicators(){
+        pofRestangular.one('dp').one($scope.selectedDp).customGET().then(function(data){
 
-            $scope.chars = data.data.characteristic;
+            $scope.dpIndicators = data.data.indicators;
         })
     }
 })
