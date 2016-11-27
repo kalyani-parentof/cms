@@ -80,17 +80,7 @@
     </td>
 </tr>
 </tbody>
-<tfoot>
-<tr>
-    <td><select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait" class="form-control" id="traits">
-        <option>Select Trait</option>
-    </select></td>
-    <td><select ng-options="d._id as d.name for d in indicators" ng-model="selectedIndicator" class="form-control" id="indicators">
-        <option>Select Indicator</option>
-    </select> </td>
-    <td><button type="button" ng-disabled="!selectedTrait || !selectedIndicator" ng-click="addIndicator()" class="btn btn-default">Add</button></td>
-</tr>
-</tfoot>
+
             </table>
             </div>
         </div>
@@ -102,6 +92,11 @@
             <div class="form-group required">
                 <label for="msDesc" class="control-label">Description</label>
                 <input type="text" class="form-control" id="msDesc" ng-model="ms.description" placeholder="Description">
+            </div>
+            <div ng-repeat="trait in traits" class="checkbox">
+                <label >
+                    <input type="checkbox" checklist-model="ms.indicators" checklist-value="trait"> {{trait.name}} <input type="text" ng-model="trait.indicator">
+                </label>
             </div>
             <button type="button" ng-click="addMS()" ng-disabled = "!ms.description || !ms.name" class="btn btn-default">Add</button>
         </div>
@@ -127,6 +122,10 @@
 <div >
 
 <div>
+    <div class="form-group">
+        <label for="genders">Gender</label>
+        <input type="text" ng-model="obj.name" >
+    </div>
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading itsRequired">Functionality A x Characteristic</div>
@@ -134,9 +133,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="dropdown">
-                            <select class="form-control itsRequired"
+                            <select class="form-control itsRequired" ng-change="searchSi1()"
                                     ng-options="a._id as a.name for a in functionalities"
-                                    ng-model="selectedFunctionality1" ng-change = "selectedFunctionality1Change()">
+                                    ng-model="si1.functionality" >
 
 
                             </select>
@@ -145,12 +144,37 @@
                     </div>
                     <div class="col-md-6">
                         <div class="dropdown">
-                            <select class="form-control itsRequired"  id="char1"
-                                    ng-options="a._id as a.name for a in chars1"  ng-change="renderCode()"
-                                    ng-model="selectedChar1">
+                            <select class="form-control itsRequired"  id="char1" ng-change="searchSi1()"
+                                    ng-options="a._id as a.name for a in chars"
+                                    ng-model="si1.characteristic">
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="row"><h3>Parameter /Tag</h3></div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in countries" ng-change="searchSi1()" ng-model="si1.country" ng-change="searchSI()" id="countries">
+                            <option>Select Country</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in tiers" ng-change="searchSi1()" ng-model="si1.tier" ng-change="searchSI()" id="tiers">
+                            <option>Select City tier</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in genders" ng-change="searchSi1()" ng-model="si1.gender" ng-change="searchSI()" id="genders">
+                            <option>Select gender</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in sess" ng-change="searchSi1()" ng-model="si1.ses"  ng-change="searchSI()" id="sess">
+                            <option>Socio Economic Status</option>
+                        </select>
+                    </div>
+
+
                 </div>
 
             </div>
@@ -163,9 +187,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="dropdown">
-                            <select class="form-control itsRequired"
+                            <select class="form-control itsRequired" ng-change="searchSi2()"
                                     ng-options="a._id as a.name for a in functionalities"
-                                    ng-model="selectedFunctionality2" ng-change = "selectedFunctionality2Change()">
+                                    ng-model="si2.functionality">
 
 
                             </select>
@@ -174,14 +198,38 @@
                     </div>
                     <div class="col-md-6">
                         <div class="dropdown">
-                            <select class="form-control itsRequired"  id="char2" ng-change="renderCode()"
-                                    ng-options="a._id as a.name for a in chars2"
-                                    ng-model="selectedChar2">
+                            <select class="form-control itsRequired"  id="char2" ng-change="searchSi2()"
+                                    ng-options="a._id as a.name for a in chars"
+                                    ng-model="si2.characteristic">
                             </select>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="row"><h3>Parameter /Tag</h3></div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in countries" ng-change="searchSi2()" ng-model="si2.country" ng-change="searchSI()" id="countries">
+                            <option>Select Country</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in tiers" ng-change="searchSi2()" ng-model="si2.tier" ng-change="searchSI()" id="tiers">
+                            <option>Select City tier</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in genders" ng-change="searchSi2()" ng-model="si2.gender" ng-change="searchSI()" id="genders">
+                            <option>Select gender</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" ng-options="c._id as c.name for c in sess" ng-change="searchSi2()" ng-model="si2.ses"  ng-change="searchSI()" id="sess">
+                            <option>Socio Economic Status</option>
+                        </select>
+                    </div>
 
+
+                </div>
             </div>
         </div>
     </div>
@@ -192,7 +240,22 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body text-center">
-                <h4>{{code}}</h4>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="si1s">Sub item 1</label>
+                            <select class="form-control" ng-model="obj.subItem1" ng-options="f._id as f.name for f in si1s"  id="si1s">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="si2s">Sub item 2</label>
+                            <select class="form-control" ng-model="obj.subItem2" ng-options="f._id as f.name for f in si2s"  id="si2s">
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

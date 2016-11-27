@@ -26,7 +26,14 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     //Milestone
     function initMS(){
         $scope.selectedMS = ''
-        $scope.ms = {name: '', description: ''}
+        pofRestangular.one('trait').customGET().then(function (data) {
+            $scope.traits = data.data;
+            for(var i=0; i< traits.length; i++){
+                $scope.traits.indicator = ""
+            }
+        })
+
+        $scope.ms = {name: '', description: '', indicators: []}
         pofRestangular.one('dt').one($scope.selectedDt).one("milestone").customGET().then(function(data){
             $scope.milestones = data.data.mileStones;
         })
@@ -49,7 +56,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
        }
         if(!$scope.indicators){
 
-            pofRestangular.one('indicator').customGET().then(function (data) {
+            pofRestangular.one('indic   ator').customGET().then(function (data) {
                 $scope.indicators = data.data;
             })
         }
@@ -83,26 +90,51 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         $scope.selectedChar1 = ''
         $scope.selectedChar2 = ''
         $scope.objTrait = ''
-
+        $scope.si1 = { ses: '', country: '', gender: '', tier:'', characteristic: '', functionality: ''}
+        $scope.si2 = { ses: '', country: '', gender: '', tier:'', characteristic: '', functionality: ''}
         pofRestangular.one('functionality').customGET().then(function(data){
             $scope.functionalities = data.data;
+        })
+        pofRestangular.one('characteristic').customGET().then(function(data){
+            $scope.chars = data.data;
+        })
+        pofRestangular.one('country').customGET().then(function (data) {
+            $scope.countries = data.data;
+        })
+        pofRestangular.one('da').customGET().then(function(data){
+            $scope.das = data.data;
+        })
+        pofRestangular.one('gender').customGET().then(function (data) {
+            $scope.genders = data.data;
+        })
+        pofRestangular.one('ses').customGET().then(function (data) {
+            $scope.sess = data.data;
+        })
+        pofRestangular.one('tier').customGET().then(function (data) {
+            $scope.tiers = data.data;
         })
 
         $scope.obj = {item: '',question: '', intervention: '',noOfDay: '', noOfTime: '', intervention2: '',noOfDay2: '', noOfTime2: ''}
     }
-    $scope.selectedFunctionality2Change = function(){
-        pofRestangular.one('functionality').one($scope.selectedFunctionality2).customGET().then(function(data){
+    $scope.searchSi2 = function(){
 
-            $scope.chars2 = data.data.characteristic;
-            $scope.renderCode()
-        })
+            pofRestangular.one("subItem").one("search").customPOST($scope.si2).then(function(data){
+                    $scope.si2s = data.data
+                },
+                function(){
+                    Notification.error("some error occurred")
+                })
+
     }
-    $scope.selectedFunctionality1Change = function(){
-        pofRestangular.one('functionality').one($scope.selectedFunctionality1).customGET().then(function(data){
+    $scope.searchSi1 = function(){
 
-            $scope.chars1 = data.data.characteristic;
-            $scope.renderCode()
-        })
+        pofRestangular.one("subItem").one("search").customPOST($scope.si1).then(function(data){
+                $scope.si1s = data.data
+            },
+            function(){
+                Notification.error("some error occurred")
+            })
+
     }
     $scope.renderCode = function(){
         $scope.code = ""

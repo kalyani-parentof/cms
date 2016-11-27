@@ -16,6 +16,8 @@ exports.post = function(req, res){
     })
 }
 
+
+
 exports.get = function(req, res){
     SubItem.find({},function(err,data){
         if(err){
@@ -60,5 +62,46 @@ exports.search = function(req, res){
             res.success(data)
         }
     })
+
+}
+
+exports.update = function(req, res){
+    var searchReq = req.body;
+
+    SubItem.findOne({_id: searchReq._id}, function(err, query){
+        if(searchReq.functionality){
+            query.functionality = searchReq.functionality;
+        }
+
+        if(searchReq.characteristic){
+            query.characteristic = searchReq.characteristic
+        }
+
+        if(searchReq.country){
+            query.country = searchReq.country
+        }
+        if(searchReq.ses){
+            query.ses = searchReq.ses
+        }
+        if(searchReq.tier){
+            query.tier = searchReq.tier
+        }
+        if(searchReq.gender){
+            query.gender = searchReq.gender
+        }
+        query.das = searchReq.das;
+        query.name = searchReq.name;
+        query.save(function(err){
+            if(err){
+                res.error(err)
+            }
+            else{
+                res.success(query)
+            }
+        })
+    })
+
+
+
 
 }

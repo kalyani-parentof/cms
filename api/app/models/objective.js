@@ -2,36 +2,17 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var objective = new Schema({
-    func1: {
+    subItem1: {
         type: String,
-        ref: 'functionality'
+        ref: 'subItem'
     },
-    func2: {
+    subItem2: {
         type: String,
-        ref: 'functionality'
+        ref: 'subItem'
     },
-    char1: {
-        type: String,
-        ref: 'characteristic'
-    },
-    char2:{type: String,
-        ref: 'characteristic'
-    },
-    trait: {
-        type: String,
-        ref: 'trait'
-    },
-    indicator: {type: String, ref: 'indicator'},
-    code: String,
-    item: String,
-    question: String,
-    intervention: String,
-    noOfDay: String,
-    noOfTime: String,
-    intervention2: String,
-    noOfDay2: String,
-    noOfTime2: String,
-    createdBy: String,
+    name: String,
+    items:[{type: String,
+    ref: 'item'}],
     createdDate: {
         type: Date,
         default: Date.now

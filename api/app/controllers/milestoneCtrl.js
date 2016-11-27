@@ -17,7 +17,19 @@ exports.addIndicator = function(req, res){
 
 exports.getIndicator = function(req, res){
     var msId = req.params.ms;
-    MS.findOne({_id: msId}, {_id:1, indicators:1, objectives:1}).populate(['indicators.indicator', 'indicators.trait', 'objectives']).exec(function (err, data) {
+    MS.findOne({_id: msId}).populate({
+        path: 'indicators.indicator',
+        populate: {
+            path: 'indicator',
+            model: 'indicator'
+        }
+    }).populate({
+        path: 'indicators.trait',
+        populate: {
+            path: 'trait.',
+            model: 'trait'
+        }
+    }).populate(['objectives']).exec(function (err, data) {
         if(err){
             res.error(err)
         }

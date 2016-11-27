@@ -41,7 +41,7 @@ parentOf.controller('subItemCtrl', function ($scope, pofRestangular, Notificatio
                 init()
         },
         function(){
-            Notification.error("some error occured")
+            Notification.error("some error occurred")
         })
     }
 
@@ -51,9 +51,25 @@ parentOf.controller('subItemCtrl', function ($scope, pofRestangular, Notificatio
                     $scope.sis = data.data
                 },
                 function(){
-                    Notification.error("some error occured")
+                    Notification.error("some error occurred")
                 })
         }
+    }
+
+    $scope.edit = function(si){
+        $scope.si = si;
+        $scope.isSearchable = false;
+        $scope.editMode = true;
+    }
+
+    $scope.update = function(){
+        pofRestangular.one("subItem").customPUT($scope.si).then(function(data){
+                Notification.primary("sub item updated successfully")
+                init()
+            },
+            function(){
+                Notification.error("some error occurred")
+            })
     }
 
 })

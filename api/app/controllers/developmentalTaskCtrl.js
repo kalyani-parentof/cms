@@ -4,6 +4,7 @@
 
 var DT = require('mongoose').model('developmentalTask');
 var MS = require('mongoose').model('mileStone');
+var Indicator = require('mongoose').model('indicator');
 
 exports.post = function (req, res) {
     var dt = new DT(req.body);
@@ -31,19 +32,40 @@ exports.get = function(req, res){
 }
 
 //Milestone
+function findByName(arr, name){
+    for(var i=0; i< arr.length; i++){
+        if(arr[i].name == name){
+            return arr[i]
+        }
+    }
+}
 
 exports.addMS = function (req, res) {
     var dtId = req.params.dt;
-    var ms = new MS(req.body);
-    ms.save(function(err){
-        if(err){
-            res.error(err)
-        }else{
-            DT.update({_id: dtId},{$push:{mileStones: ms._id}}, function(errr){
-                 res.success("saved successfully")
-            })
+    var body = req.body;
+    var arr = []
+    var indicators = []
+    for(var i=0; i< body.indicators.length; i++){
+        indicators.push(new Indicator({name: body.indicators[i].indicator}))
+    }
+    Indicator.insertMany(indicators).then(function(data){
+        console.log(data)
+        for(var i=0; i< body.indicators.length; i++){
+            arr.push({trait: body.indicators[i]._id, indicator: findByName(data,body.indicators[i].indicator)._id})
         }
+        console.log(arr)
+        var ms = new MS({name: body.name, description: body.description, indicators: arr});
+        ms.save(function(err){
+            if(err){
+                res.error(err)
+            }else{
+                DT.update({_id: dtId},{$push:{mileStones: ms._id}}, function(errr){
+                    res.success("saved successfully")
+                })
+            }
+        })
     })
+
 }
 
 exports.getMS = function (req, res) {

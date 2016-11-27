@@ -47,6 +47,7 @@ module.exports = function (app) {
     app.get('/age', age.get);
 
     app.post('/subItem', subItem.post)
+    app.put('/subItem', subItem.update)
     app.post('/subItem/search', subItem.search)
 
 
