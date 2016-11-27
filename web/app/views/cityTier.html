@@ -1,14 +1,14 @@
 <div class="row">
     <div>
-        <h2>Traits</h2>
+        <h2>City tier</h2>
         <form class="form">
             <div class="col-lg-6">
                 <div class="form-group">
                     <table class=" table table-bordered ">
-                        <thead><tr><th>Traits</th></tr></thead>
+                        <thead><tr><th>City tier</th></tr></thead>
                         <tbody>
-                        <tr ng-repeat="trait in traits"><td>
-                            <div>{{trait.name}} <span ng-click="edit(trait)" class="glyphicon glyphicon-pencil"></span> </div>
+                        <tr ng-repeat="tier in tiers"><td>
+                            <div>{{tier.name}} <span ng-click="edit(tier)" class="glyphicon glyphicon-pencil"></span> </div>
                         </td></tr>
                         </tbody>
                     </table>
@@ -18,9 +18,9 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="tname">Name</label>
-                    <input type="text" ng-model="trait.name" class="form-control" id="tname" placeholder="Trait name">
+                    <input type="text" ng-model="tier.name" class="form-control" id="tname" placeholder="city tier">
                 </div>
-                <button type="button" ng-if="!editMode" ng-click="addTrait()" class="btn btn-default">Add</button>
+                <button type="button" ng-if="!editMode" ng-click="add()" class="btn btn-default">Add</button>
                 <button type="button" ng-if="editMode" ng-click="update()" class="btn btn-default">Update</button>
             </div>
 

@@ -13,6 +13,11 @@ module.exports = function () {
     require('../app/models/indicator')
     require('../app/models/objective')
     require('../app/models/tag')
+    require('../app/models/country')
+    require('../app/models/tier')
+    require('../app/models/ses')
+    require('../app/models/gender')
+    require('../app/models/subItem')
 
     return db;
 };

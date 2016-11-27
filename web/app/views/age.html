@@ -32,6 +32,9 @@
                     <option>Select DT</option>
                 </select>
             </div>
+            <div ng-if="selectedDt">
+                {{findById(dts, selectedDt).description}}
+            </div>
         </div>
         <div class="col-lg-6">
             <div class="form-group required">
@@ -57,8 +60,11 @@
                 <select class="form-control" ng-model="selectedMS"  ng-change="selectedMSChange()" ng-options="a._id as a.name for a in milestones"  id="ms">
 
                 </select>
-            </div>
 
+            </div>
+            <div ng-if="selectedMS">
+                {{findById(milestones, selectedMS).description}}
+            </div>
             <div ng-show="selectedMS" class="form-group">
             <table class="table">
                 <thead>

@@ -16,8 +16,35 @@ exports.post = function(req, res){
     })
 }
 
+exports.update = function(req, res){
+    var reqDa = req.body
+    DA.findOne({_id: reqDa._id}, function(err, da){
+        da.age = reqDa.age;
+        da.name = reqDa.name;
+        da.save(function(err){
+            if(err){
+                res.error(err)
+            }
+            else{
+                res.success(da)
+            }
+        })
+    })
+}
 
 exports.get = function(req, res){
+    var age = req.params.age;
+    DA.find({age: age}, function(err, data){
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(data)
+        }
+    })
+}
+
+exports.getAll = function(req, res){
     DA.find({}, function(err, data){
         if(err){
             res.error(err)

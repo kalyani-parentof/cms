@@ -16,6 +16,22 @@ exports.post = function(req, res){
         }
     })
 }
+exports.update = function(req, res){
+    var char = new Characteristic(req.body);
+    Characteristic.findOne({_id: char._id}, function(err, characteristic){
+        characteristic.name = char.name
+        characteristic.code = char.code
+        characteristic.save(function(err){
+            if(err){
+                res.error(err)
+            }
+            else{
+                res.success(characteristic)
+            }
+        })
+    })
+
+}
 
 
 exports.get = function(req, res){

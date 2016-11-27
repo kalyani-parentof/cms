@@ -1,7 +1,7 @@
 /**
  * Created by rajanchaudhary on 3/9/16.
  */
-var parentOf = angular.module('parentOf', ['restangular', 'ui.router', 'LocalStorageModule', 'cgNotify']);
+var parentOf = angular.module('parentOf', ['restangular', 'ui.router', 'LocalStorageModule', 'cgNotify','ui-notification', 'checklist-model']);
 parentOf.config(function ($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -36,10 +36,30 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
             url: '/trait',
             templateUrl: 'app/views/trait.html',
             controller: 'traitCtrl'
+        }).state('country', {
+            url: '/country',
+            templateUrl: 'app/views/country.html',
+            controller: 'countryCtrl'
+        }).state('ses', {
+            url: '/ses',
+            templateUrl: 'app/views/ses.html',
+            controller: 'sesCtrl'
+        }).state('gender', {
+            url: '/gender',
+            templateUrl: 'app/views/gender.html',
+            controller: 'genderCtrl'
+        }).state('tier', {
+            url: '/tier',
+            templateUrl: 'app/views/cityTier.html',
+            controller: 'tierCtrl'
         }).state('indicator', {
             url: '/indicator',
             templateUrl: 'app/views/indicator.html',
             controller: 'indicatorCtrl'
+        }).state('subItem', {
+            url: '/subItem',
+            templateUrl: 'app/views/subItem.html',
+            controller: 'subItemCtrl'
         })
 
 
@@ -47,7 +67,17 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/age');
 
 });
-
+parentOf.config(function(NotificationProvider) {
+    NotificationProvider.setOptions({
+        delay: 10000,
+        startTop: 20,
+        startRight: 10,
+        verticalSpacing: 20,
+        horizontalSpacing: 20,
+        positionX: 'right',
+        positionY: 'top'
+    });
+});
 parentOf.config(function (localStorageServiceProvider) {
     localStorageServiceProvider
         .setPrefix('pof');
@@ -82,5 +112,11 @@ parentOf.factory('pofRestangular', ['Restangular', function (Restangular) {
 }]);
 
 parentOf.controller('mainCtrl', function ($scope) {
-
+$scope.findById = function(arr, id){
+    for(var i=0; i< arr.length; i++){
+        if(arr[i]._id == id){
+            return arr[i];
+        }
+    }
+}
 })

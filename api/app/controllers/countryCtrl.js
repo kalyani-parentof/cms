@@ -1,24 +1,24 @@
 /**
  * Created by rajanchaudhary on 10/11/16.
  */
-var Trait = require('mongoose').model('trait');
+var Country = require('mongoose').model('country');
 
 
 exports.post = function(req, res){
-    var trait = new Trait(req.body);
-    trait.save(function(err){
+    var country = new Country(req.body);
+    country.save(function(err){
         if(err){
             res.error(err)
         }
         else{
-            res.success(trait)
+            res.success(country)
         }
     })
 }
 
 
 exports.get = function(req, res){
-    Trait.find({}, function(err, data){
+    Country.find({}, function(err, data){
         if(err){
             res.error(err)
         }
@@ -30,15 +30,15 @@ exports.get = function(req, res){
 
 
 exports.update = function(req, res){
-    var traitReq = new Trait(req.body);
-    Trait.findOne({_id: traitReq._id}, function(err, trait){
-        trait.name = traitReq.name
-        trait.save(function(err){
+    var countryReq = req.body
+    Country.findOne({_id: countryReq._id}, function(err, country){
+        country.name = countryReq.name
+        country.save(function(err){
             if(err){
                 res.error(err)
             }
             else{
-                res.success(trait)
+                res.success(country)
             }
         })
     })

@@ -2,6 +2,11 @@ module.exports = function (app) {
     var health = require('../controllers/health');
     var age = require('../controllers/ageGroupCtrl');
     var trait = require('../controllers/traitCtrl');
+    var country = require('../controllers/countryCtrl');
+    var tier = require('../controllers/tierCtrl');
+    var gender = require('../controllers/genderCtrl');
+    var subItem = require('../controllers/subItemCtrl');
+    var ses = require('../controllers/sesCtrl');
     var indicator = require('../controllers/indicatorCtrl');
     var da = require('../controllers/developmentalAreaCtrl');
     var characteristic = require('../controllers/characteristicCtrl');
@@ -20,10 +25,13 @@ module.exports = function (app) {
 
     //da
     app.post('/da', da.post);
-    app.get('/da', da.get);
+    app.put('/da', da.update);
+    app.get('/da/:age', da.get);
+    app.get('/da/', da.getAll);
 
     //characteristic
     app.post('/characteristic', characteristic.post);
+    app.put('/characteristic', characteristic.update);
     app.get('/characteristic', characteristic.get);
 
     //functionality
@@ -38,9 +46,30 @@ module.exports = function (app) {
     app.post('/age', age.post);
     app.get('/age', age.get);
 
+    app.post('/subItem', subItem.post)
+    app.post('/subItem/search', subItem.search)
+
+
+
     app.post('/trait', trait.post)
+    app.put('/trait', trait.update)
     app.get('/trait', trait.get)
 
+    app.post('/country', country.post)
+    app.put('/country', country.update)
+    app.get('/country', country.get)
+
+    app.post('/gender', gender.post)
+    app.put('/gender', gender.update)
+    app.get('/gender', gender.get)
+
+    app.post('/tier', tier.post)
+    app.put('/tier', tier.update)
+    app.get('/tier', tier.get)
+
+    app.post('/ses', ses.post)
+    app.put('/ses', ses.update)
+    app.get('/ses', ses.get)
     //DP
     app.post('/dp', dp.post);
     app.get('/dp', dp.get);

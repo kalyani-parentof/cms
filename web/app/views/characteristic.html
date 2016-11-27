@@ -8,6 +8,9 @@
                     <select class="form-control" ng-options="c._id as c.name for c in characteristics" ng-model="selectedChar" id="characteristic">
                         <option>Select Characteristic</option>
                     </select>
+
+                        <span ng-if="selectedChar" class="glyphicon glyphicon-pencil" ng-click="edit(selectedChar)" aria-hidden="true"></span>
+
                 </div>
             </div>
             <div class="col-lg-6">
@@ -19,7 +22,8 @@
                     <label for="namec" class="itsRequired">Code</label>
                     <input type="text" ng-model="characteristic.code" class="form-control" id="codec" placeholder="Characteristic code">
                 </div>
-                <button type="button" ng-disabled ="!characteristic.code || !characteristic.name" ng-click="addCharacteristic()" class="btn btn-default">Add</button>
+                <button ng-if="!editMode" type="button" ng-disabled ="!characteristic.code || !characteristic.name" ng-click="addCharacteristic()" class="btn btn-default">Add</button>
+                <button  ng-if="editMode" type="button" ng-disabled ="!characteristic.code || !characteristic.name" ng-click="update()" class="btn btn-default">Update</button>
             </div>
 
         </form>

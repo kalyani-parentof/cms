@@ -3,19 +3,27 @@
         <h2>DA</h2>
         <form class="form">
             <div class="col-lg-6">
+
                 <div class="form-group">
-                    <label for="das">DA</label>
-                    <select ng-options="d._id as d.name for d in das" ng-model="selectedDa" class="form-control" id="das">
-                        <option>Select DA</option>
-                    </select>
+                    <table><thead><tr><th>Decision Area</th><th></th></tr></thead>
+                    <tbody><tr ng-repeat="da in das"><td>{{da.name}}</td><td><button ng-click="edit(da)" class="btn btn-primary">Edit</button> </td></tr></tbody>
+                    </table>
+
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
+                    <label for="ages" class="itsRequired">Select age</label>
+                    <select ng-options="a._id as a.name for a in ages" ng-model="da.age" ng-change="list()" class="form-control" id="ages">
+                        <option>Select Age</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="name" class="itsRequired">Name</label>
                     <input type="text" ng-model="da.name" class="form-control" id="name" placeholder="DA name">
                 </div>
-                <button type="button" ng-disabled="!da.name" ng-click="addDa()" class="btn btn-default">Add</button>
+                <button type="button" ng-if="!editMode" ng-disabled="!da.name && !da.age" ng-click="addDa()" class="btn btn-default">Add</button>
+                <button type="button" ng-if="editMode" ng-disabled="!da.name && !da.age" ng-click="update()" class="btn btn-default">Update</button>
             </div>
 
         </form>

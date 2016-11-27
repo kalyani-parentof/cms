@@ -1,24 +1,24 @@
 /**
  * Created by rajanchaudhary on 10/11/16.
  */
-var Trait = require('mongoose').model('trait');
+var Tier = require('mongoose').model('tier');
 
 
 exports.post = function(req, res){
-    var trait = new Trait(req.body);
-    trait.save(function(err){
+    var tier = new Tier(req.body);
+    tier.save(function(err){
         if(err){
             res.error(err)
         }
         else{
-            res.success(trait)
+            res.success(tier)
         }
     })
 }
 
 
 exports.get = function(req, res){
-    Trait.find({}, function(err, data){
+    Tier.find({}, function(err, data){
         if(err){
             res.error(err)
         }
@@ -30,15 +30,15 @@ exports.get = function(req, res){
 
 
 exports.update = function(req, res){
-    var traitReq = new Trait(req.body);
-    Trait.findOne({_id: traitReq._id}, function(err, trait){
-        trait.name = traitReq.name
-        trait.save(function(err){
+    var tierReq = req.body
+    Tier.findOne({_id: tierReq._id}, function(err, tier){
+        tier.name = tierReq.name
+        tier.save(function(err){
             if(err){
                 res.error(err)
             }
             else{
-                res.success(trait)
+                res.success(tier)
             }
         })
     })

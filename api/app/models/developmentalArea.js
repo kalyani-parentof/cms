@@ -6,6 +6,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var developmentalArea = new Schema({
     name: String,
+    age: {type: String,
+        ref: 'ageGroup'},
     createdBy: String,
     isDeleted: Boolean,
     isApproved: Boolean,

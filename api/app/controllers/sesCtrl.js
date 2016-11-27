@@ -1,24 +1,24 @@
 /**
  * Created by rajanchaudhary on 10/11/16.
  */
-var Trait = require('mongoose').model('trait');
+var SES = require('mongoose').model('ses');
 
 
 exports.post = function(req, res){
-    var trait = new Trait(req.body);
-    trait.save(function(err){
+    var ses = new SES(req.body);
+    ses.save(function(err){
         if(err){
             res.error(err)
         }
         else{
-            res.success(trait)
+            res.success(ses)
         }
     })
 }
 
 
 exports.get = function(req, res){
-    Trait.find({}, function(err, data){
+    SES.find({}, function(err, data){
         if(err){
             res.error(err)
         }
@@ -30,15 +30,15 @@ exports.get = function(req, res){
 
 
 exports.update = function(req, res){
-    var traitReq = new Trait(req.body);
-    Trait.findOne({_id: traitReq._id}, function(err, trait){
-        trait.name = traitReq.name
-        trait.save(function(err){
+    var sesReq = req.body
+    SES.findOne({_id: sesReq._id}, function(err, ses){
+        ses.name = sesReq.name
+        ses.save(function(err){
             if(err){
                 res.error(err)
             }
             else{
-                res.success(trait)
+                res.success(ses)
             }
         })
     })

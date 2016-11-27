@@ -14,6 +14,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <link href="css/forms.css" rel="stylesheet">
+    <link href="bower_components/angular-ui-notification/dist/angular-ui-notification.min.css" rel="stylesheet">
 
 </head>
 
@@ -62,12 +63,17 @@
                         <!-- Main menu -->
                         <li><a ui-sref="age"> Age Master</a>
                         </li>
-                        <li><a ui-sref="da"> Developmental Area</a> </li>
+                        <li><a ui-sref="da"> Decision Area</a> </li>
                         <li><a ui-sref="dp"> Developmental plan</a> </li>
                         <li><a ui-sref="characteristic"> Characteristic</a> </li>
                         <li><a ui-sref="functionality"> Functionality </a> </li>
                         <li><a ui-sref="trait"> Trait</a> </li>
+                        <li><a ui-sref="country"> Country</a> </li>
+                        <li><a ui-sref="ses"> SES</a> </li>
+                        <li><a ui-sref="gender"> Gender</a> </li>
+                        <li><a ui-sref="tier"> City Tier</a> </li>
                         <li><a ui-sref="indicator"> Indicator</a> </li>
+                        <li><a ui-sref="subItem"> Sub Item</a> </li>
 
 
 
@@ -101,6 +107,7 @@
     <script src="bower_components/angular-notify/angular-notify.js"></script>
     <script src="/bower_components/lodash/dist/lodash.min.js"></script>
     <script src="/bower_components/restangular/dist/restangular.js"></script>
+    <script src="/bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
     <script type="application/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
@@ -109,6 +116,7 @@
     <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+    <script src="/bower_components/checklist-model/checklist-model.js"></script>
 
     <script src="/app.js"></script>
     <script src="app/controllers/daCtrl.js"></script>
@@ -117,9 +125,14 @@
     <script src="app/controllers/ageCtrl.js"></script>
     <script src="app/controllers/dtCtrl.js"></script>
     <script src="app/controllers/traitCtrl.js"></script>
+    <script src="app/controllers/countryCtrl.js"></script>
+    <script src="app/controllers/tierCtrl.js"></script>
+    <script src="app/controllers/genderCtrl.js"></script>
+    <script src="app/controllers/sesCtrl.js"></script>
     <script src="app/controllers/dpCtrl.js"></script>
     <script src="app/controllers/dtCtrl.js"></script>
     <script src="app/controllers/indicatorCtrl.js"></script>
+    <script src="app/controllers/subItemCtrl.js"></script>
 
     <!-- jQuery UI -->
 
