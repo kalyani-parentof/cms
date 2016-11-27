@@ -123,8 +123,8 @@
 
 <div>
     <div class="form-group">
-        <label for="genders">Gender</label>
-        <input type="text" ng-model="obj.name" >
+        <label for="genders">Objective name</label>
+        <input type="text" class="form-control" ng-model="obj.name" >
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
@@ -244,14 +244,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="si1s">Sub item 1</label>
-                            <select class="form-control" ng-model="obj.subItem1" ng-options="f._id as f.name for f in si1s"  id="si1s">
+                            <select class="form-control" ng-model="obj.subItem1" ng-change="findItem()" ng-options="f._id as f.name for f in si1s"  id="si1s">
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="si2s">Sub item 2</label>
-                            <select class="form-control" ng-model="obj.subItem2" ng-options="f._id as f.name for f in si2s"  id="si2s">
+                            <select class="form-control" ng-model="obj.subItem2" ng-change="findItem()" ng-options="f._id as f.name for f in si2s"  id="si2s">
                             </select>
                         </div>
                     </div>

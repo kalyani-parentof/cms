@@ -11,8 +11,9 @@ var objective = new Schema({
         ref: 'subItem'
     },
     name: String,
-    items:[{type: String,
-    ref: 'item'}],
+    itemName: String,
+    questions:[{type: String,
+    ref: 'question'}],
     createdDate: {
         type: Date,
         default: Date.now

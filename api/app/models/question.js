@@ -1,7 +1,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-var item = new Schema({
+var question = new Schema({
 
     question: String,
     trait:{type: String,
@@ -12,4 +12,4 @@ var item = new Schema({
     }
 });
 
-mongoose.model('item', item);
+mongoose.model('question', question);
