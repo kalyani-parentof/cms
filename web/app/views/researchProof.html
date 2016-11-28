@@ -18,7 +18,7 @@
                     <select ng-model="rp.type" class="form-control" id="type">
                         <option>Select type</option>
                         <option>Developmental task</option>
-                        <option>Mile stone</option>
+                        <option>Milestone</option>
                         <option>Trait</option>
                     </select>
                 </div>
@@ -77,8 +77,33 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
+                    <label class="control-label" for="ages">Age group </label>
+                    <select ng-options="a._id as a.name for a in ages" ng-model="rer.age" class="form-control" id="age">
+                        <option>Select Age</option>
+                    </select>
+                </div>
+                <div class="checkbox">
+                    <div ng-repeat="option in options" class="checkbox">
+                        <label >
+                            <input type="checkbox" checklist-model="rer.type" checklist-value="option"> {{option}}<br>
+                        </label>
+                    </div>
+                </div>
+                <button class="btn btn-primary" ng-click="search(rer)">Search</button>
+                <div>
+                    <div ng-repeat="proof in proofs" class="panel panel-default">
+                        <div class="panel-heading itsRequired">proof.name</div>
+                        <div class="panel-body">
 
+                            <div class="row">
+                                Author: {{proof.author}}
 
+                            </div>
+                            <div>
+                                {{proof.description}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

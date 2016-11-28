@@ -3,7 +3,7 @@ parentOf.controller('researchProofCtrl', function ($scope, pofRestangular, Notif
         pofRestangular.one('age').customGET().then(function(data){
             $scope.ages = data.data;
         })
-
+        $scope.rer = {}
         $scope.rp = {name: '',
             description: '',
             type: '',
@@ -49,6 +49,13 @@ parentOf.controller('researchProofCtrl', function ($scope, pofRestangular, Notif
         pofRestangular.one('research').customPOST($scope.rp).then(function(){
             Notification.primary("Proof inserted")
             init()
+        })
+    }
+
+    $scope.options = ["Developmental task", "Milestone","Trait"]
+    $scope.search = function(){
+        pofRestangular.one('research').one('search').customPOST($scope.rer).then(function(data){
+            $scope.proofs = data.data;
         })
     }
 })
