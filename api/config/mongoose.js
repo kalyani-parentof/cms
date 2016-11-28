@@ -18,6 +18,8 @@ module.exports = function () {
     require('../app/models/ses')
     require('../app/models/gender')
     require('../app/models/subItem')
+    require('../app/models/question')
+    require('../app/models/researchProof')
 
     return db;
 };

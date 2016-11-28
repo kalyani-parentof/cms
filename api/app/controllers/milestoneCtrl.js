@@ -4,6 +4,7 @@
 
 var MS = require('mongoose').model('mileStone');
 var OBJECTIVE = require('mongoose').model('objective');
+var Question = require('mongoose').model('question');
 
 
 exports.addIndicator = function(req, res){
@@ -26,10 +27,24 @@ exports.getIndicator = function(req, res){
     }).populate({
         path: 'indicators.trait',
         populate: {
-            path: 'trait.',
+            path: 'trait',
             model: 'trait'
         }
-    }).populate(['objectives']).exec(function (err, data) {
+    }).populate({
+        path: 'objectives',
+        populate: {
+            path: 'subItem1',
+            select: 'name _id'
+
+        }
+    }).populate({
+        path: 'objectives',
+        populate: {
+            path: 'subItem2',
+            select: 'name _id'
+
+        }
+    }).exec(function (err, data) {
         if(err){
             res.error(err)
         }
@@ -54,14 +69,30 @@ exports.deleteIndicator = function(req, res){
 
 exports.addObjective = function (req, res) {
     var msId = req.params.ms;
+    var body = req.body;
+    var questions = []
+
+    for(var i=0; i< body.questions.length; i++){
+        questions.push(new Question(body.questions[i]));
+    }
+    req.body.questions = []
     var obj = new OBJECTIVE(req.body);
-    obj.save(function(err){
-        if(err){
-            res.error(err)
-        }else{
-            MS.update({_id: msId},{$push:{objectives: obj._id}}, function(errr){
-                res.success("saved successfully")
-            })
+    console.log(questions)
+    Question.insertMany(questions,function(err,data){
+
+        for(var i=0; i< data.length; i++) {
+            obj.questions.push(data[i]._id)
         }
+        obj.save(function(err){
+            if(err){
+                res.error(err)
+            }else{
+                MS.update({_id: msId},{$push:{objectives: obj._id}}, function(errr){
+                    res.success("saved successfully")
+                })
+            }
+        })
     })
+
+
 }

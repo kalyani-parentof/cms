@@ -28,7 +28,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         $scope.selectedMS = ''
         pofRestangular.one('trait').customGET().then(function (data) {
             $scope.traits = data.data;
-            for(var i=0; i< traits.length; i++){
+            for(var i=0; i< $scope.traits.length; i++){
                 $scope.traits.indicator = ""
             }
         })
@@ -56,7 +56,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
        }
         if(!$scope.indicators){
 
-            pofRestangular.one('indic   ator').customGET().then(function (data) {
+            pofRestangular.one('indicator').customGET().then(function (data) {
                 $scope.indicators = data.data;
             })
         }
@@ -144,9 +144,10 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
                        $scope.existedItem = data.data[0].itemName;
                     }
                     else{
-                        $scope.newItem = {itemName: '', questions: []}
+                        $scope.obj.itemName = ''
+                        $scope.obj.questions= []
                         for(var i = 0; i< $scope.msIndicators.length; i++){
-                            $scope.newItem.questions.push({trait : $scope.msIndicators[i].trait._id, question: '', traitName: $scope.msIndicators[i].trait.name})
+                            $scope.obj.questions.push({trait : $scope.msIndicators[i].trait._id, question: '', traitName: $scope.msIndicators[i].trait.name})
                         }
                     }
                 }
@@ -175,13 +176,6 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     }
 
     $scope.addObjective = function(){
-        $scope.obj.func1 = $scope.selectedFunctionality1
-        $scope.obj.func2 = $scope.selectedFunctionality2
-        $scope.obj.char1 = $scope.selectedChar1
-        $scope.obj.char2 = $scope.selectedChar2
-        $scope.obj.code = $scope.code
-        $scope.obj.trait = $scope.objTrait
-        $scope.obj.indicator = getIndicatorFromTrait()
         pofRestangular.one('objective').one($scope.selectedMS).customPOST($scope.obj).then(function(data){
             initObj()
         })

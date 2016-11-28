@@ -48,10 +48,10 @@ exports.addMS = function (req, res) {
     for(var i=0; i< body.indicators.length; i++){
         indicators.push(new Indicator({name: body.indicators[i].indicator}))
     }
-    Indicator.insertMany(indicators).then(function(data){
+    Indicator.insertMany(indicators,function(err, data){
         console.log(data)
         for(var i=0; i< body.indicators.length; i++){
-            arr.push({trait: body.indicators[i]._id, indicator: findByName(data,body.indicators[i].indicator)._id})
+            arr.push({trait: body.indicators[i]._id, indicator: findByName(data,body.indicators.indicator)._id})
         }
         console.log(arr)
         var ms = new MS({name: body.name, description: body.description, indicators: arr});

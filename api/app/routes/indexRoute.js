@@ -15,6 +15,8 @@ module.exports = function (app) {
     var dp = require('../controllers/dpCtrl');
     var dt = require('../controllers/developmentalTaskCtrl');
     var ms = require('../controllers/milestoneCtrl');
+    var fileCtrl = require('../controllers/fileCtrl');
+    var rp = require('../controllers/researchProofCtrl');
 
     app.get('/*', function (req, res, next) {
         res.header('X-XSS-Protection', 0);
@@ -98,5 +100,9 @@ module.exports = function (app) {
     app.get('/ms/:ms', ms.getIndicator)
     app.delete('/ms/:ms/:trait/:indicator', ms.deleteIndicator)
 
+    app.post('/fileUpload/research', fileCtrl.create)
+
+
+    app.post('/research', rp.post)
 
 };

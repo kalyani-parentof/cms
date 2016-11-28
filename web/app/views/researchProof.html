@@ -1,0 +1,89 @@
+<div class="row">
+    <div>
+        <h2>Research Proof</h2>
+        <form class="form">
+            <div class="col-lg-6">
+                <div class="form-group required">
+                    <label class="control-label" for="ages">Age group </label>
+                    <select ng-options="a._id as a.name for a in ages" ng-model="rp.age" class="form-control" id="ages">
+                        <option>Select Age</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tname">Name of DT / MS / Trait</label>
+                    <input type="text" ng-model="rp.name" class="form-control" id="tname" placeholder=" name">
+                </div>
+                <div class="form-group required">
+                    <label class="control-label" for="ages">Typep </label>
+                    <select ng-model="rp.type" class="form-control" id="type">
+                        <option>Select type</option>
+                        <option>Developmental task</option>
+                        <option>Mile stone</option>
+                        <option>Trait</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" ng-model="rp.description" class="form-control" id="description" placeholder="description">
+                </div>
+                <div class="form-group">
+                    <label for="link">Link</label>
+                    <input type="text" ng-model="rp.link" class="form-control" id="link" placeholder="Link">
+                </div>
+                <div class="form-group">
+                    <label for="nameOfDocument">Name of document</label>
+                    <input type="text" ng-model="rp.nameOfDocument" class="form-control" id="nameOfDocument" placeholder="Name of document">
+                </div>
+                <div class="form-group">
+                    <label for="pageNo">Page No.</label>
+                    <input type="text" ng-model="rp.pageNo" class="form-control" id="pageNo" placeholder="page number">
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" ng-model="rp.author" class="form-control" id="author" placeholder="author">
+                </div>
+                <div class="form-group">
+                    <label for="isbn">ISBN</label>
+                    <input type="text" ng-model="rp.isbn" class="form-control" id="isbn" placeholder="ISBN">
+                </div>
+                <div class="form-group">
+                    <label for="excerpt">Excerpt</label>
+                    <textarea ng-model="rp.excerpt" class="form-control" id="excerpt" ></textarea>
+                </div>
+                <div class="form-group">
+
+                    <button ng-hide="f.progress >= 0" type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+                            accept="image/*" ngf-max-height="1000" ngf-max-size="10MB" class="btn btn-primary">
+                        Select File</button>
+                    <div class="progress" ng-show="f.progress >= 0">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{f.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{f.progress}}%;">
+                            <span class="sr-only">{{f.progress}}%</span>
+                        </div>
+                    </div>
+                    <div><div ng-show="f.progress >= 0" class="alert alert-info" role="alert">
+                        <a href="#" class="alert-link">{{rp.fileLink}}</a>
+                    </div></div>
+                </div>
+                <div class="form-group">
+                    <label for="interpretation">Your Interpretation</label>
+                    <textarea ng-model="rp.interpretation" class="form-control" id="interpretation" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="conclusion">Potential Application / Conclusion</label>
+                    <textarea ng-model="rp.conclusion" class="form-control" id="conclusion" ></textarea>
+                </div>
+                <button type="button" ng-if="!editMode" ng-click="add()" class="btn btn-default">Add</button>
+                <button type="button" ng-if="editMode" ng-click="update()" class="btn btn-default">Update</button>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+</div>

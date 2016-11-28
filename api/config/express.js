@@ -10,6 +10,8 @@ logger = require('./logger');
 var multer = require('multer');
 var path = require('path');
 var cors = require('cors');
+var multipart = require('connect-multiparty');
+
 
 module.exports = function () {
     express.response.success = function (obj) {
@@ -25,7 +27,9 @@ module.exports = function () {
         });
     };
     var app = express();
-
+    app.use(multipart({
+        uploadDir: 'uploads'
+    }));
     if (process.env.NODE_ENV === 'development') {
         app.use(morgan('dev'));
     } else if (process.env.NODE_ENV === 'production') {
