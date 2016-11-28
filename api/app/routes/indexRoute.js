@@ -6,6 +6,7 @@ module.exports = function (app) {
     var tier = require('../controllers/tierCtrl');
     var gender = require('../controllers/genderCtrl');
     var subItem = require('../controllers/subItemCtrl');
+    var objective = require('../controllers/objectiveCtrl');
     var ses = require('../controllers/sesCtrl');
     var indicator = require('../controllers/indicatorCtrl');
     var da = require('../controllers/developmentalAreaCtrl');
@@ -91,8 +92,11 @@ module.exports = function (app) {
     app.get('/indicator', indicator.get)
 
     // Milestones
+    app.post('/objective/searchItem', objective.searchItem)
     app.post('/ms/:ms', ms.addIndicator)
     app.post('/objective/:ms', ms.addObjective)
     app.get('/ms/:ms', ms.getIndicator)
     app.delete('/ms/:ms/:trait/:indicator', ms.deleteIndicator)
+
+
 };

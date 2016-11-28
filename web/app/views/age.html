@@ -261,30 +261,33 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
 
-                <div class="row">
-                    <div class="col-md-1">
-                        <h4 class="itsRequired">ITEM</h4>
-                    </div>
+<div ng-if="existedItem">
+    {{existedItem}}
+</div>
+<div ng-if="newItem" class="row">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
 
-                    <div class="col-md-11">
-                        <div class="dropdown">
-                            <input type="text" class="form-control input-lg" placeholder="Name of Item" ng-model="obj.item" />
+                    <div class="row">
+                        <div class="col-md-1">
+                            <h4 class="itsRequired">ITEM</h4>
                         </div>
-                    </div>
 
+                        <div class="col-md-11">
+                            <div ng-if class="dropdown">
+                                <input type="text" class="form-control input-lg" placeholder="Name of Item" ng-model="obj.itemName" />
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
+    <div ng-if="newItem" class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
 
@@ -293,37 +296,13 @@
 
                     </div>
                     <div class="col-md-11">
-                        <select class="form-control" ng-options="a.trait._id as a.trait.name for a in msIndicators" ng-model="objTrait"></select>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="input-group">
-                                    <span class="input-group-addon itsRequired" >Question</span>
-                                    <input type="text" class="form-control"  ng-model="obj.question" aria-describedby="basic-addon3">
+                                <div ng-repeat="question in newItem.questions" class="input-group">
+                                    <span class="input-group-addon" >{{question.traitName}}</span>
+                                    <input type="text" class="form-control"  ng-model="question.question" aria-describedby="basic-addon3">
                                 </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon itsRequired" >Intervention</span>
-                                    <input type="text" class="form-control" ng-model="obj.intervention" aria-describedby="basic-addon3">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon itsRequired" >No of days</span>
-                                    <input type="text" class="form-control"  ng-model="obj.noOfDay" aria-describedby="basic-addon3">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon itsRequired" >No of times every day</span>
-                                    <input type="text" class="form-control"  ng-model="obj.noOfTime" aria-describedby="basic-addon3">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon" >Intervention 2</span>
-                                    <input type="text" class="form-control" ng-model="obj.intervention2" aria-describedby="basic-addon3">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon" >No of days (2)</span>
-                                    <input type="text" class="form-control"  ng-model="obj.noOfDay2" aria-describedby="basic-addon3">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon" >No of times every day (2)</span>
-                                    <input type="text" class="form-control"  ng-model="obj.noOfTime2" aria-describedby="basic-addon3">
-                                </div>
+
                             </div>
                         </div>
                     </div>

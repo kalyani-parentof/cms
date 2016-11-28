@@ -136,6 +136,27 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
             })
 
     }
+    $scope.findItem = function(){
+        if($scope.obj.subItem1 && $scope.obj.subItem2){
+            pofRestangular.one("objective").one('searchItem').customPOST($scope.obj).then(function(data){
+                if(Array.isArray( data.data)){
+                    if(data.data.length > 0){
+                       $scope.existedItem = data.data[0].itemName;
+                    }
+                    else{
+                        $scope.newItem = {itemName: '', questions: []}
+                        for(var i = 0; i< $scope.msIndicators.length; i++){
+                            $scope.newItem.questions.push({trait : $scope.msIndicators[i].trait._id, question: '', traitName: $scope.msIndicators[i].trait.name})
+                        }
+                    }
+                }
+                else{
+
+                }
+            })
+        }
+    }
+
     $scope.renderCode = function(){
         $scope.code = ""
         if($scope.selectedFunctionality1 ){
