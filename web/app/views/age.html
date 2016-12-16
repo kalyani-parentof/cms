@@ -37,8 +37,10 @@
                     <option>Select DT</option>
                 </select>
             </div>
+
             <div ng-if="selectedDt">
                 {{findById(dts, selectedDt).description}}
+                <button class="btn btn-primary" ng-click="edit()">Edit</button>
             </div>
         </div>
         <div class="col-lg-6">
@@ -51,13 +53,14 @@
                 <label for="dtDesc"  class="control-label">Description</label>
                 <input type="text" class="form-control" id="dtDesc" ng-model="dt.description" placeholder="Description">
             </div>
-            <button type="button" ng-disabled="!dt.description || !dt.name" class="btn btn-default" ng-click="addDt()">Add</button>
+            <button type="button" ng-disabled="!dt.description || !dt.name" ng-if="!editMode" class="btn btn-default" ng-click="addDt()">Add</button>
+            <button type="button" ng-disabled="!dt.description || !dt.name" ng-if="editMode" class="btn btn-default" ng-click="uodateDt()">Update</button>
                 </div>
         </div>
 
     </form>
 </div>
-
+<div class="clearfix"></div>
 <div ng-show="selectedDt && selectedAge">
     <h2>Milestone</h2>
     <form class="form">

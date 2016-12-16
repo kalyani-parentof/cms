@@ -84,6 +84,7 @@ module.exports = function (app) {
 
     //dt
     app.post('/dt', dt.post);
+    app.put('/dt', dt.update);
     app.post('/dt/:dt/milestone/', dt.addMS);
     app.get('/dt/:dt/milestone/', dt.getMS);
     app.get('/dt', dt.get);
@@ -94,11 +95,13 @@ module.exports = function (app) {
     app.get('/indicator', indicator.get)
 
     // Milestones
+    app.put('/ms', ms.update)
     app.post('/objective/searchItem', objective.searchItem)
     app.post('/ms/:ms', ms.addIndicator)
     app.post('/objective/:ms', ms.addObjective)
     app.get('/ms/:ms', ms.getIndicator)
     app.delete('/ms/:ms/:trait/:indicator', ms.deleteIndicator)
+    app.get('/ms/:ms/:trait/', ms.listIndicators)
 
     app.post('/fileUpload/research', fileCtrl.create)
 

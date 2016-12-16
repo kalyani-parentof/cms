@@ -15,6 +15,47 @@ exports.addIndicator = function(req, res){
             })
 }
 
+exports.listIndicators = function(req, res){
+    var msId = req.params.ms;
+    var trait = req.params.trait;
+
+    MS.findOne({_id: msId}).populate({
+        path: 'indicators.indicator',
+        populate: {
+            path: 'indicator',
+            model: 'indicator'
+        }
+    }).exec(function (err, data) {
+        MS.find({
+            "indicators": {
+            $elemMatch: {
+                "trait": trait
+            }
+        }
+        },{"indicators.$": 1}, function(err, indicators){
+            if(err){
+                res.error(err)
+            }
+            else{
+                res.success({data: data, indicator:indicators})
+            }
+        })
+    })
+}
+
+exports.update = function(req, res){
+    MS.findOne({_id: req.body._id}, function(err, ms){
+        ms.name = req.body.name
+        ms.save(function(err){
+            if(err){
+                res.error(err)
+            }
+            else{
+                res.success(ms)
+            }
+        })
+    })
+}
 
 exports.getIndicator = function(req, res){
     var msId = req.params.ms;

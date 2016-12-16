@@ -19,6 +19,19 @@ exports.post = function (req, res) {
     })
 }
 
+exports.update = function(req, res){
+DT.findOne({_id: req.body._id}, function(err, dt){
+    dt.name = req.body.name
+    dt.save(function(err){
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(dt)
+        }
+    })
+})
+}
 
 exports.get = function(req, res){
     DT.find({}, function(err, data){

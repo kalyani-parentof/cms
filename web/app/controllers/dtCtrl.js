@@ -12,13 +12,24 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     }
     init()
     $scope.addDt = function(){
-        console.log($scope.dt)
         pofRestangular.one('dt').customPOST($scope.dt).then(function(data){
             $scope.dts.push($scope.dt)
-            init()
+            $scope.dt = {name: '', description: ''}
+            $scope.selectedDt = data.data._id
+
         })
     }
-
+    $scope.edit = function () {
+        $scope.dt = $scope.findById($scope.dts, $scope.selectedDt);
+        $scope.newDt = true;
+        $scope.editMode = true;
+    }
+    $scope.uodateDt = function(){
+        pofRestangular.one('dt').customPUT($scope.dt).then(function(data){
+            $scope.editMode = false;
+            $scope.dt = {name: '', description: ''}
+        })
+    }
     $scope.selectedDtChange = function(){
         initMS()
     }
@@ -38,6 +49,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
             $scope.milestones = data.data.mileStones;
         })
     }
+
 
     $scope.addMS = function(){
         pofRestangular.one('dt').one($scope.selectedDt).one("milestone").customPOST($scope.ms).then(function(data){

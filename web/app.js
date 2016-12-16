@@ -108,7 +108,7 @@ parentOf.run(function ($rootScope, $state, $location, localStorageService) {
 
 parentOf.factory('pofRestangular', ['Restangular', function (Restangular) {
     return Restangular.withConfig(function (RestangularConfigurer) {
-        RestangularConfigurer.setBaseUrl("http://localhost:3111");
+        RestangularConfigurer.setBaseUrl("http://192.168.1.28:3111");
         RestangularConfigurer.setDefaultHttpFields({
             timeout: 15000
         });
@@ -123,4 +123,6 @@ $scope.findById = function(arr, id){
         }
     }
 }
+
+    $scope.coreAreas = ["skill", "Behaviour", "emotion", "relationship"]
 })
