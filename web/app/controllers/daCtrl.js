@@ -20,6 +20,10 @@ parentOf.controller('daCtrl', function ($scope, pofRestangular) {
     init()
     $scope.addDa = function(){
         pofRestangular.one('da').customPOST($scope.da).then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.das.push($scope.da)
             init()
         })
@@ -38,6 +42,10 @@ parentOf.controller('daCtrl', function ($scope, pofRestangular) {
 
     $scope.update = function(){
         pofRestangular.one('da').customPUT($scope.da).then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             init()
         })
     }

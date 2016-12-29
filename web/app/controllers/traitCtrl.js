@@ -15,6 +15,10 @@ parentOf.controller('traitCtrl', function ($scope, pofRestangular, Notification)
     init()
     $scope.addTrait = function () {
         pofRestangular.one('trait').customPOST($scope.trait).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.traits.push($scope.trait.name)
             Notification.primary("Trait added successfully")
             init()
@@ -28,6 +32,10 @@ parentOf.controller('traitCtrl', function ($scope, pofRestangular, Notification)
 
     $scope.update = function(){
         pofRestangular.one('trait').customPUT($scope.trait).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             Notification.primary("Trait updated successfully")
             init()
         })

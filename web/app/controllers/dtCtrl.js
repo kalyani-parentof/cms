@@ -13,6 +13,10 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     init()
     $scope.addDt = function(){
         pofRestangular.one('dt').customPOST($scope.dt).then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.dts.push($scope.dt)
             $scope.dt = {name: '', description: ''}
             $scope.selectedDt = data.data._id
@@ -26,6 +30,10 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     }
     $scope.uodateDt = function(){
         pofRestangular.one('dt').customPUT($scope.dt).then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.editMode = false;
             $scope.dt = {name: '', description: ''}
         })
@@ -53,6 +61,10 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
 
     $scope.addMS = function(){
         pofRestangular.one('dt').one($scope.selectedDt).one("milestone").customPOST($scope.ms).then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             initMS()
             alert(data.data)
         })

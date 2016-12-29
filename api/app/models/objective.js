@@ -1,4 +1,4 @@
-
+var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var objective = new Schema({
@@ -10,7 +10,7 @@ var objective = new Schema({
         type: String,
         ref: 'subItem'
     },
-    name: String,
+    name: {type: String,unique : true,required: true},
     itemName: String,
     questions:[{type: String,
     ref: 'question'}],
@@ -19,5 +19,5 @@ var objective = new Schema({
         default: Date.now
     }
 });
-
+objective.plugin(uniqueValidator);
 mongoose.model('objective', objective);

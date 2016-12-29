@@ -2,11 +2,11 @@
 /**
  * Created by rajanchaudhary on 10/11/16.
  */
-
+var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var subItem = new Schema({
-    name: String,
+    name: {type: String,unique : true,required: true},
     characteristic: {
         type: String,
         ref: 'characteristic'
@@ -43,5 +43,5 @@ var subItem = new Schema({
         default: Date.now
     }
 });
-
+subItem.plugin(uniqueValidator);
 mongoose.model('subItem', subItem);

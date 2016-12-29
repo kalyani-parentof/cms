@@ -16,6 +16,10 @@ parentOf.controller('sesCtrl', function ($scope, pofRestangular, Notification) {
     init()
     $scope.add = function () {
         pofRestangular.one('ses').customPOST($scope.ses).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.sess.push($scope.ses.name)
             Notification.primary("SES added successfully")
             init()
@@ -29,6 +33,10 @@ parentOf.controller('sesCtrl', function ($scope, pofRestangular, Notification) {
 
     $scope.update = function(){
         pofRestangular.one('ses').customPUT($scope.ses).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             Notification.primary("SES updated successfully")
             init()
         })

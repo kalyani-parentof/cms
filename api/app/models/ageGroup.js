@@ -1,8 +1,8 @@
-
+var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var ageGroup = new Schema({
-    name: String,
+    name: {type: String,unique : true,required: true},
     createdBy: String,
     isDeleted: Boolean,
     isApproved: Boolean,
@@ -11,5 +11,5 @@ var ageGroup = new Schema({
         default: Date.now
     }
 });
-
+ageGroup.plugin(uniqueValidator);
 mongoose.model('ageGroup', ageGroup);

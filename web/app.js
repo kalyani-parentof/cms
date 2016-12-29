@@ -108,14 +108,14 @@ parentOf.run(function ($rootScope, $state, $location, localStorageService) {
 
 parentOf.factory('pofRestangular', ['Restangular', function (Restangular) {
     return Restangular.withConfig(function (RestangularConfigurer) {
-        RestangularConfigurer.setBaseUrl("http://192.168.1.28:3111");
+        RestangularConfigurer.setBaseUrl("http://localhost:3111");
         RestangularConfigurer.setDefaultHttpFields({
             timeout: 15000
         });
     });
 }]);
 
-parentOf.controller('mainCtrl', function ($scope) {
+parentOf.controller('mainCtrl', function ($scope, Notification) {
 $scope.findById = function(arr, id){
     for(var i=0; i< arr.length; i++){
         if(arr[i]._id == id){
@@ -123,6 +123,11 @@ $scope.findById = function(arr, id){
         }
     }
 }
+    $scope.errorHandler = function(data){
+        if(data.message.errors) {
+            Notification.error(data.message.errors.name.message)
+        }
 
+    }
     $scope.coreAreas = ["skill", "Behaviour", "emotion", "relationship"]
 })

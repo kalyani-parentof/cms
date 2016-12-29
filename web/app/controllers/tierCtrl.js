@@ -16,6 +16,10 @@ parentOf.controller('tierCtrl', function ($scope, pofRestangular, Notification) 
     init()
     $scope.add = function () {
         pofRestangular.one('tier').customPOST($scope.tier).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.tiers.push($scope.tier.name)
             Notification.primary("tier added successfully")
             init()
@@ -29,6 +33,10 @@ parentOf.controller('tierCtrl', function ($scope, pofRestangular, Notification) 
 
     $scope.update = function(){
         pofRestangular.one('tier').customPUT($scope.tier).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             Notification.primary("tier updated successfully")
             init()
         })

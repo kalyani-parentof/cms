@@ -17,6 +17,10 @@ parentOf.controller('countryCtrl', function ($scope, pofRestangular, Notificatio
     init()
     $scope.add = function () {
         pofRestangular.one('country').customPOST($scope.country).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.countries.push($scope.country.name)
             Notification.primary("Country added successfully")
             init()
@@ -30,6 +34,10 @@ parentOf.controller('countryCtrl', function ($scope, pofRestangular, Notificatio
 
     $scope.update = function(){
         pofRestangular.one('country').customPUT($scope.country).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             Notification.primary("country updated successfully")
             init()
         })

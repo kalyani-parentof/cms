@@ -37,6 +37,10 @@ parentOf.controller('subItemCtrl', function ($scope, pofRestangular, Notificatio
 
     $scope.add = function(){
         pofRestangular.one("subItem").customPOST($scope.si).then(function(data){
+                if(data.status == "error"){
+                    $scope.errorHandler(data)
+                    return;
+                }
             Notification.primary("sub item created successfully")
                 init()
         },
@@ -64,6 +68,10 @@ parentOf.controller('subItemCtrl', function ($scope, pofRestangular, Notificatio
 
     $scope.update = function(){
         pofRestangular.one("subItem").customPUT($scope.si).then(function(data){
+                if(data.status == "error"){
+                    $scope.errorHandler(data)
+                    return;
+                }
                 Notification.primary("sub item updated successfully")
                 init()
             },

@@ -4,11 +4,11 @@
 /**
  * Created by rajanchaudhary on 10/11/16.
  */
-
+var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var functionality = new Schema({
-    name: String,
+    name: {type: String,unique : true,required: true},
     code: String,
     characteristic: [{
         type: String,
@@ -22,5 +22,5 @@ var functionality = new Schema({
         default: Date.now
     }
 });
-
+functionality.plugin(uniqueValidator);
 mongoose.model('functionality', functionality);

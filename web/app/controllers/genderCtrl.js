@@ -16,6 +16,10 @@ parentOf.controller('genderCtrl', function ($scope, pofRestangular, Notification
     init()
     $scope.add = function () {
         pofRestangular.one('gender').customPOST($scope.gender).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.genders.push($scope.gender.name)
             Notification.primary("gender added successfully")
             init()
@@ -29,6 +33,10 @@ parentOf.controller('genderCtrl', function ($scope, pofRestangular, Notification
 
     $scope.update = function(){
         pofRestangular.one('gender').customPUT($scope.gender).then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             Notification.primary("gender updated successfully")
             init()
         })

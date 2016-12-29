@@ -1,8 +1,8 @@
-
+var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var researchProof = new Schema({
-    name: String,
+    name: {type: String,unique : true,required: true},
     description: String,
     type: String,
     age: {type:String,ref: 'ageGroup'},
@@ -21,5 +21,5 @@ var researchProof = new Schema({
         default: Date.now
     }
 });
-
+researchProof.plugin(uniqueValidator);
 mongoose.model('researchProof', researchProof);

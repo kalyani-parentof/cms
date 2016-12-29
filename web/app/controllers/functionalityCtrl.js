@@ -19,6 +19,10 @@ parentOf.controller('functionalityCtrl', function ($scope, pofRestangular) {
     init()
     $scope.addFunctionality = function(){
         pofRestangular.one('functionality').customPOST($scope.functionality).then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             $scope.functionalities.push($scope.functionality.name)
             init()
         })

@@ -47,6 +47,10 @@ parentOf.controller('researchProofCtrl', function ($scope, pofRestangular, Notif
 
     $scope.add = function(){
         pofRestangular.one('research').customPOST($scope.rp).then(function(){
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
             Notification.primary("Proof inserted")
             init()
         })

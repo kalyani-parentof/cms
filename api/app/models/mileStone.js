@@ -1,8 +1,8 @@
-
+var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var mileStone = new Schema({
-    name: String,
+    name: {type: String,unique : true,required: true},
     description: String,
     indicators: [{
         indicator:{type: String, ref: 'indicator'},
@@ -18,5 +18,5 @@ var mileStone = new Schema({
         default: Date.now
     }
 });
-
+mileStone.plugin(uniqueValidator);
 mongoose.model('mileStone', mileStone);
