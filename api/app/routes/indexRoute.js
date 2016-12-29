@@ -102,7 +102,7 @@ module.exports = function (app) {
     app.post('/ms/:ms', ms.addIndicator)
     app.post('/objective/:ms', ms.addObjective)
     app.get('/ms/:ms', ms.getIndicator)
-    app.delete('/ms/:ms/:trait/:indicator', ms.deleteIndicator)
+    app.delete('/ms/:ms/:trait/:indicator/:da/:dp', ms.deleteIndicator)
     app.get('/ms/:ms/:trait/', ms.listIndicators)
 
     app.post('/fileUpload/research', fileCtrl.create)

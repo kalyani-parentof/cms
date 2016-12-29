@@ -127,13 +127,15 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         })
     }
     $scope.deleteIndicator = function(ind){
-        pofRestangular.one('ms').one($scope.selectedMS).one(ind.trait._id).one(ind.indicator._id).customDELETE().then(function(data){
+        pofRestangular.one('ms').one($scope.selectedMS).one(ind.trait._id).one(ind.indicator._id).one(ind.da._id).one(ind.dp._id).customDELETE().then(function(data){
             $scope.selectedMSChange()
 
         })
     }
 
-
+    $scope.editIndicator = function(){
+        alert('edit functionality is not live today')
+    }
     //Objective
     function initObj(){
         $scope.code = ""

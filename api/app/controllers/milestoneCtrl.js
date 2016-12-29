@@ -166,9 +166,11 @@ exports.deleteIndicator = function(req, res){
     var msId = req.params.ms;
     var trait = req.params.trait;
     var indicator = req.params.indicator;
+    var da = req.params.da;
+    var dp = req.params.dp;
     var msId = req.params.ms;
     var indicator = req.body;
-    MS.update({_id: msId},{$pull:{indicators:{trait: trait,indicator: indicator }}}, function(errr){
+    MS.update({_id: msId},{$pull:{indicators:{trait: trait,indicator: indicator, da: da, dp: dp }}}, function(errr){
         res.success("deleted successfully")
     })
 }

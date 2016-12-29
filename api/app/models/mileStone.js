@@ -8,7 +8,8 @@ var mileStone = new Schema({
         indicator:{type: String, ref: 'indicator'},
         trait: {type:String, ref: 'trait'},
         da: {type: String, ref: 'developmentalArea'},
-        dp: {type: String, ref: 'dp'}
+        dp: {type: String, ref: 'dp'},
+        age: String
     }],
     objectives: [{
         type: String,
