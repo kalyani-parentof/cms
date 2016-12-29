@@ -29,7 +29,6 @@ module.exports = function (app) {
     //da
     app.post('/da', da.post);
     app.put('/da', da.update);
-    app.get('/da/:age', da.get);
     app.get('/da/', da.getAll);
 
     //characteristic

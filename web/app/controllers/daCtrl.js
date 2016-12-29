@@ -6,12 +6,9 @@ parentOf.controller('daCtrl', function ($scope, pofRestangular) {
     function init() {
         $scope.selectedDa = ''
         $scope.editMode = false;
-        $scope.selectedAge = ''
-        pofRestangular.one('age').customGET().then(function(data){
-            $scope.ages = data.data;
-        })
+
         if(!$scope.da) {
-            $scope.da = {name: '', age: ''}
+            $scope.da = {name: ''}
         }
         else{
             $scope.da = {name: ''}
@@ -30,10 +27,11 @@ parentOf.controller('daCtrl', function ($scope, pofRestangular) {
     }
 
     $scope.list = function(){
-        pofRestangular.one('da').one($scope.da.age).customGET().then(function(data){
+        pofRestangular.one('da').customGET().then(function(data){
             $scope.das = data.data;
         })
     }
+    $scope.list()
 
     $scope.edit = function(da){
         $scope.da = da;
