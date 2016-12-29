@@ -33,6 +33,7 @@ exports.update = function(req, res){
     var traitReq = new Trait(req.body);
     Trait.findOne({_id: traitReq._id}, function(err, trait){
         trait.name = traitReq.name
+        trait.description = traitReq.description
         trait.save(function(err){
             if(err){
                 res.error(err)

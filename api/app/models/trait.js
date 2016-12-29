@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var trait = new Schema({
     name: {type: String,unique : true, required: true},
+    description: String,
     createdBy: String,
     createdDate: {
         type: Date,

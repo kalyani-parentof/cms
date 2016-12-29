@@ -9,7 +9,7 @@ parentOf.controller('traitCtrl', function ($scope, pofRestangular, Notification)
         })
         $scope.editMode = false;
 
-        $scope.trait = {name: ''}
+        $scope.trait = {name: '', description: ''}
     }
 
     init()
@@ -19,7 +19,7 @@ parentOf.controller('traitCtrl', function ($scope, pofRestangular, Notification)
                 $scope.errorHandler(data)
                 return;
             }
-            $scope.traits.push($scope.trait.name)
+            $scope.traits.push({name: $scope.trait.name, description: $scope.trait.description})
             Notification.primary("Trait added successfully")
             init()
         })

@@ -20,8 +20,12 @@
                     <label for="tname">Name</label>
                     <input type="text" ng-model="trait.name" class="form-control" id="tname" placeholder="Trait name">
                 </div>
-                <button type="button" ng-if="!editMode" ng-click="addTrait()" class="btn btn-default">Add</button>
-                <button type="button" ng-if="editMode" ng-click="update()" class="btn btn-default">Update</button>
+                <div class="form-group">
+                    <label for="tname">Description</label>
+                    <input type="text" ng-model="trait.description" class="form-control" id="tdescription" placeholder="Trait description">
+                </div>
+                <button type="button" ng-if="!editMode" ng-disabled="!trait.name || !trait.description" ng-click="addTrait()" class="btn btn-default">Add</button>
+                <button type="button" ng-if="editMode"ng-disabled="!trait.name || !trait.description"  ng-click="update()" class="btn btn-default">Update</button>
             </div>
 
         </form>
