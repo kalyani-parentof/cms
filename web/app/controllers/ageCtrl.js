@@ -19,5 +19,8 @@ parentOf.controller('ageCtrl', function ($scope, pofRestangular,Notification) {
         })
     }
 
+    $scope.selectedAgeChange = function(){
+        $scope.$broadcast('selectedAgeChange', $scope.selectedAge)
+    }
 
 })

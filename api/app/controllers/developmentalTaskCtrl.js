@@ -44,6 +44,16 @@ exports.get = function(req, res){
     })
 }
 
+exports.getByAge = function(req, res){
+    DT.find({age: req.params.age}, function(err, data){
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(data)
+        }
+    })
+}
 //Milestone
 function findByName(arr, name){
     for(var i=0; i< arr.length; i++){

@@ -4,13 +4,23 @@
 parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     function init() {
         $scope.selectedDt = ''
-        pofRestangular.one('dt').customGET().then(function(data){
-            $scope.dts = data.data;
-        })
-
-        $scope.dt = {name: '', description: ''}
+        $scope.dts = []
+        //pofRestangular.one('dt').customGET().then(function(data){
+        //    $scope.dts = data.data;
+        //})
+        $scope.selectedAge = ""
+        $scope.dt = {name: '', description: '', age: $scope.selectedAge}
     }
     init()
+    $scope.$on('selectedAgeChange', function(e, age){
+        console.log(e, age)
+        $scope.dt.age = age;
+        if(age){
+            pofRestangular.one('dt').one('age').one(age).customGET().then(function(data){
+                $scope.dts = data.data ? data.data : [];
+            })
+        }
+    })
     $scope.addDt = function(){
         pofRestangular.one('dt').customPOST($scope.dt).then(function(data){
             if(data.status == "error"){

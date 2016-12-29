@@ -85,6 +85,7 @@ module.exports = function (app) {
     //dt
     app.post('/dt', dt.post);
     app.put('/dt', dt.update);
+    app.get('/dt/age/:age/', dt.getByAge);
     app.post('/dt/:dt/milestone/', dt.addMS);
     app.get('/dt/:dt/milestone/', dt.getMS);
     app.get('/dt', dt.get);

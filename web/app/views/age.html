@@ -5,7 +5,7 @@
        <div class="col-lg-6">
            <div class="form-group required">
                <label class="control-label" for="ages">Age group </label>
-               <select ng-options="a._id as a.name for a in ages" ng-model="selectedAge" class="form-control" id="ages">
+               <select ng-options="a._id as a.name for a in ages" ng-change="selectedAgeChange()" ng-model="selectedAge" class="form-control" id="ages">
                    <option>Select Age</option>
                </select>
            </div>
