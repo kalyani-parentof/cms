@@ -59,3 +59,16 @@ exports.getById = function(req, res){
         }
     })
 }
+
+exports.getByDA = function(req, res){
+    var da = req.params.da;
+    var age = req.params.age;
+    DP.find({da: da, age: age}, {_id:1, name: 1}).exec(function (err, data) {
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(data)
+        }
+    })
+}

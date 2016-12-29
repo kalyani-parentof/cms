@@ -61,40 +61,10 @@
     </form>
 </div>
 <div class="clearfix"></div>
-<div ng-show="selectedDt && selectedAge">
-    <h2>Milestone</h2>
+<div ng-show="selectedDt">
+    <h2>Milestone<span class="glyphicon right small glyphicon-plus" ng-click="newMS = !newMS" aria-hidden="true"></span></h2>
     <form class="form">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label for="dt" > Select milestone</label>
-                <select class="form-control" ng-model="selectedMS"  ng-change="selectedMSChange()" ng-options="a._id as a.name for a in milestones"  id="ms">
-
-                </select>
-
-            </div>
-            <div ng-if="selectedMS">
-                {{findById(milestones, selectedMS).description}}
-            </div>
-            <div ng-show="selectedMS" class="form-group">
-            <table class="table">
-                <thead>
-                <tr> <th>Trait</th>
-                    <th>Indicator</th></tr>
-<th></th>
-                </thead>
-<tbody>
-<tr ng-repeat="indicator in msIndicators"> <td>{{indicator.trait.name}}</td>
-    <td>{{indicator.indicator.name}}</td>
-    <td>
-         <button type="button"  ng-click="deleteIndicator(indicator)" class="btn btn-danger">Delete</button>
-    </td>
-</tr>
-</tbody>
-
-            </table>
-            </div>
-        </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12" ng-show="newMS">
             <div class="form-group required">
                 <label for="msName" class="control-label">Name</label>
                 <input type="text" class="form-control" id="msName" ng-model="ms.name" placeholder="please enter name">
@@ -103,17 +73,66 @@
                 <label for="msDesc" class="control-label">Description</label>
                 <input type="text" class="form-control" id="msDesc" ng-model="ms.description" placeholder="Description">
             </div>
-            <table>
-                <thead class="table table-bordered"><tr><th>Trait</th><th>Indicator</th></tr></thead>
-                <tbody>
-                <tr ng-repeat="trait in traits">
-                    <td>  <input type="checkbox" checklist-model="ms.indicators" checklist-value="trait"> {{trait.name}}</td>
-                    <td><input type="text" ng-model="trait.indicator"></td>
-                </tr>
-                </tbody>
-            </table>
-
             <button type="button" ng-click="addMS()" ng-disabled = "!ms.description || !ms.name" class="btn btn-default">Add</button>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="dt" > Select milestone</label>
+                <select class="form-control" ng-model="selectedMS"  ng-change="selectedMSChange()" ng-options="a._id as a.name for a in milestones"  id="ms">
+
+                </select>
+            </div>
+
+            <div ng-show="selectedMS" class="form-group">
+                <table class="table">
+                    <thead>
+                    <tr> <th>Trait</th>
+                        <th>Indicator</th>
+                        <th>DA</th>
+                        <th>DP</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="indicator in msIndicators">
+                        <td>{{indicator.trait.name}}</td>
+                        <td>{{indicator.indicator.name}}</td>
+                        <td>{{indicator.da.name}}</td>
+                        <td>{{indicator.dp.name}}</td>
+                        <td>
+                            <button type="button"  ng-click="deleteIndicator(indicator)" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td><select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait" class="form-control" id="traits">
+                            <option>Select Trait</option>
+                        </select></td>
+                        <td>
+                            <input type="text" ng-model="indicator" class="form-control" />
+                             </td>
+                        <td>
+                            <select ng-options="d._id as d.name for d in das" ng-change="selectedDAChange()" ng-model="selectedDA" class="form-control" id="das">
+                                <option>Select DA</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select ng-options="d._id as d.name for d in dps" ng-hide="newDp" ng-model="selectedDP" class="form-control" id="dps">
+                                <option>Select DP</option>
+                            </select>
+
+                            <input type="text" ng-model="DP" ng-hide="!newDp" class="form-control" /><span class="glyphicon right small glyphicon-plus" ng-click="newDp = !newDp" aria-hidden="true"></span>
+                        </td>
+
+                        <td><button type="button" ng-disabled="!selectedTrait || !indicator || !selectedDA " ng-click="addIndicator()" class="btn btn-default">Add</button></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
 
     </form>

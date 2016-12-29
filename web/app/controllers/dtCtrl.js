@@ -8,7 +8,6 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         //pofRestangular.one('dt').customGET().then(function(data){
         //    $scope.dts = data.data;
         //})
-        $scope.selectedAge = ""
         $scope.dt = {name: '', description: '', age: $scope.selectedAge}
     }
     init()
@@ -67,7 +66,15 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
             $scope.milestones = data.data.mileStones;
         })
     }
-
+    $scope.selectedDAChange = function(){
+        pofRestangular.one('dp').one("da").one($scope.selectedDA).one('age').one($scope.selectedAge).customGET().then(function(data){
+            $scope.dps = data.data;
+            console.log($scope.dps)
+        })
+    }
+    pofRestangular.one('da').customGET().then(function(data){
+        $scope.das = data.data;
+    })
 
     $scope.addMS = function(){
         pofRestangular.one('dt').one($scope.selectedDt).one("milestone").customPOST($scope.ms).then(function(data){
@@ -94,16 +101,27 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
                 $scope.indicators = data.data;
             })
         }
-        pofRestangular.one('ms').one($scope.selectedMS).customGET().then(function(data){
-            $scope.msIndicators = data.data.indicators
-            $scope.objectives = data.data.objectives;
+        pofRestangular.one('ms').one('indicator').one($scope.selectedMS).customGET().then(function(data){
+            $scope.msIndicators = data.data[0].indicators
+
+            //$scope.objectives = data.data.objectives;
 
         })
         initObj()
     }
 
     $scope.addIndicator = function(){
-        pofRestangular.one('ms').one($scope.selectedMS).customPOST({trait:$scope.selectedTrait , indicator: $scope.selectedIndicator }).then(function(data){
+        pofRestangular.one('ms').one($scope.selectedMS).customPOST({trait:$scope.selectedTrait , indicator: $scope.indicator, da: $scope.selectedDA, dp: $scope.selectedDP, DP: $scope.DP, age: $scope.selectedAge }).then(function(data){
+            pofRestangular.one('ms').one('indicator').one($scope.selectedMS).customGET().then(function(data){
+                $scope.msIndicators = data.data[0].indicators
+
+                $scope.selectedTrait = ''
+                $scope.indicator = ''
+                $scope.selectedDA = ''
+                $scope.selectedDP = ''
+                $scope.DP = ''
+                $scope.newDp = false;
+            })
 
 
         })

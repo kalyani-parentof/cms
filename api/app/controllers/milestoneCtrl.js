@@ -5,14 +5,44 @@
 var MS = require('mongoose').model('mileStone');
 var OBJECTIVE = require('mongoose').model('objective');
 var Question = require('mongoose').model('question');
-
+var Indicator = require('mongoose').model('indicator');
+var DP = require('mongoose').model('dp');
 
 exports.addIndicator = function(req, res){
     var msId = req.params.ms;
     var indicator = req.body;
-            MS.update({_id: msId},{$push:{indicators:indicator}}, function(errr){
+    if(indicator.DP){
+        var dp = new DP({name: indicator.DP, da: indicator.da, age: indicator.age});
+        dp.save(function(err){
+            if(err){
+                res.error(err)
+            }
+            else{
+
+                indicator.dp = dp._id
+                insertIndicator(msId, indicator, res)
+            }
+        })
+    }
+    else{
+        insertIndicator(msId, indicator, res)
+    }
+
+}
+function insertIndicator(msId, indi, res){
+    var indicator = new Indicator({name: indi.indicator});
+    indicator.save(function(err){
+        if(err){
+            res.error(err)
+        }
+        else{
+            indi.indicator = indicator._id
+            MS.update({_id: msId},{$push:{indicators:indi}}, function(errr){
                 res.success("saved successfully")
             })
+        }
+    })
+
 }
 
 exports.listIndicators = function(req, res){
@@ -57,6 +87,43 @@ exports.update = function(req, res){
     })
 }
 
+exports.findIndicators = function(req, res){
+    var msId = req.params.ms;
+    console.log(msId)
+    MS.find({_id: msId}).populate({
+        path: 'indicators.indicator',
+        populate: {
+            path: 'indicator',
+            model: 'indicator'
+        }
+    }).populate({
+        path: 'indicators.trait',
+        populate: {
+            path: 'trait',
+            model: 'trait'
+        }
+    }).populate({
+        path: 'indicators.da',
+        populate: {
+            path: 'developmentalArea',
+            model: 'developmentalArea'
+        }
+    }).populate({
+        path: 'indicators.dp',
+        populate: {
+            path: 'dp',
+            model: 'dp'
+        }
+    }).exec(function (err, data) {
+        console.log(err, data)
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(data)
+        }
+    })
+}
 exports.getIndicator = function(req, res){
     var msId = req.params.ms;
     MS.findOne({_id: msId}).populate({

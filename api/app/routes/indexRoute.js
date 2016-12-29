@@ -76,6 +76,7 @@ module.exports = function (app) {
     //DP
     app.post('/dp', dp.post);
     app.get('/dp', dp.get);
+    app.get('/dp/da/:da/age/:age', dp.getByDA);
     app.post('/dp/indicator/:id', dp.addIndicator);
     app.delete('/dp/indicator/:id/:indicator', dp.removeIndicator);
     app.get('/dp/:id', dp.getById);
@@ -96,6 +97,7 @@ module.exports = function (app) {
 
     // Milestones
     app.put('/ms', ms.update)
+    app.get('/ms/indicator/:ms', ms.findIndicators)
     app.post('/objective/searchItem', objective.searchItem)
     app.post('/ms/:ms', ms.addIndicator)
     app.post('/objective/:ms', ms.addObjective)

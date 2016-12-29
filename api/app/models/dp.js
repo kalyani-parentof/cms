@@ -11,10 +11,7 @@ var dp = new Schema({
     name: {type: String,unique : true,required: true},
     age: {type: String,
     ref: 'ageGroup'},
-    indicators: [{
-        type: String,
-        ref: 'indicator'
-    }],
+    da: {type: String, ref: 'developmentalArea'},
     createdBy: String,
     isDeleted: Boolean,
     isApproved: Boolean,
