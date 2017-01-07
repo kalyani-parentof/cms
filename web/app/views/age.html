@@ -1,147 +1,254 @@
 <div>
-<div>
-    <h2>Age <span class="glyphicon right small glyphicon-plus" ng-click="newAge = true" aria-hidden="true"></span></h2>
-   <form class="form">
-       <div class="col-lg-6">
-           <div class="form-group required">
-               <label class="control-label" for="ages">Age group </label>
-               <select ng-options="a._id as a.name for a in ages" ng-change="selectedAgeChange()" ng-model="selectedAge" class="form-control" id="ages">
-                   <option>Select Age</option>
-               </select>
-           </div>
-       </div>
-       <div class="col-lg-6">
-           <div ng-show="newAge" >
-               <div  class="form-group">
-                   <label for="name">Name</label>
-                   <input ng-model="age.name" type="text" class="form-control" id="name" placeholder="Age group name">
-               </div>
-               <button type="button" ng-disabled="!age.name" ng-click="addAge()" class="btn btn-default">Add</button>
-           </div>
+    <div>
+        <h2>Age <span class="glyphicon right small glyphicon-plus" ng-click="newAge = true" aria-hidden="true"></span>
+        </h2>
 
-       </div>
-
-
-   </form>
-</div>
-    <div class="clearfix"></div>
-<hr>
-    <div ng-controller="dtCtrl">
-<div >
-    <h2>Developmental task <span class="glyphicon right small glyphicon-plus" ng-click="newDt = true" aria-hidden="true"></span></h2>
-    <form class="form">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label for="dt" > Select developmental task</label>
-                <select class="form-control" ng-options="a._id as a.name for a in dts" ng-model="selectedDt" ng-change="selectedDtChange()" id="dt">
-                    <option>Select DT</option>
-                </select>
-            </div>
-
-            <div ng-if="selectedDt">
-                {{findById(dts, selectedDt).description}}
-                <button class="btn btn-primary" ng-click="edit()">Edit</button>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div  ng-show="newDt">
-            <div class="form-group required">
-                <label for="dtName"  class="control-label">Name</label>
-                <input type="text" class="form-control" ng-model="dt.name" id="dtName" placeholder="please enter name">
-            </div>
-            <div class="form-group  required">
-                <label for="dtDesc"  class="control-label">Description</label>
-                <input type="text" class="form-control" id="dtDesc" ng-model="dt.description" placeholder="Description">
-            </div>
-            <button type="button" ng-disabled="!dt.description || !dt.name" ng-if="!editMode" class="btn btn-default" ng-click="addDt()">Add</button>
-            <button type="button" ng-disabled="!dt.description || !dt.name" ng-if="editMode" class="btn btn-default" ng-click="uodateDt()">Update</button>
+        <form class="form">
+            <div class="col-lg-6">
+                <div class="form-group required">
+                    <label class="control-label" for="ages">Age group </label>
+                    <select ng-options="a._id as a.name for a in ages" ng-change="selectedAgeChange()"
+                            ng-model="selectedAge" class="form-control" id="ages">
+                        <option>Select Age</option>
+                    </select>
                 </div>
+            </div>
+            <div class="col-lg-6">
+                <div ng-show="newAge">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input ng-model="age.name" type="text" class="form-control" id="name"
+                               placeholder="Age group name">
+                    </div>
+                    <button type="button" ng-disabled="!age.name" ng-click="addAge()" class="btn btn-default">Add
+                    </button>
+                </div>
+
+            </div>
+
+
+        </form>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div ng-controller="dtCtrl">
+        <div>
+            <h2>Developmental task <span class="glyphicon right small glyphicon-plus" ng-click="newDt = true"
+                                         aria-hidden="true"></span></h2>
+
+            <form class="form">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="dt"> Select developmental task</label>
+                        <select class="form-control" ng-options="a._id as a.name for a in dts" ng-model="selectedDt"
+                                ng-change="selectedDtChange()" id="dt">
+                            <option>Select DT</option>
+                        </select>
+                    </div>
+
+                    <div ng-if="selectedDt">
+                        {{findById(dts, selectedDt).description}}
+                        <button class="btn btn-primary" ng-click="edit()">Edit</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div ng-show="newDt">
+                        <div class="form-group required">
+                            <label for="dtName" class="control-label">Name</label>
+                            <input type="text" class="form-control" ng-model="dt.name" id="dtName"
+                                   placeholder="please enter name">
+                        </div>
+                        <div class="form-group  required">
+                            <label for="dtDesc" class="control-label">Description</label>
+                            <input type="text" class="form-control" id="dtDesc" ng-model="dt.description"
+                                   placeholder="Description">
+                        </div>
+                        <button type="button" ng-disabled="!dt.description || !dt.name" ng-if="!editMode"
+                                class="btn btn-default" ng-click="addDt()">Add
+                        </button>
+                        <button type="button" ng-disabled="!dt.description || !dt.name" ng-if="editMode"
+                                class="btn btn-default" ng-click="uodateDt()">Update
+                        </button>
+                    </div>
+                </div>
+
+            </form>
         </div>
+        <div class="clearfix"></div>
+        <div ng-show="selectedDt">
+            <h2>Milestone<span class="glyphicon right small glyphicon-plus" ng-click="newMS = !newMS"
+                               aria-hidden="true"></span></h2>
 
-    </form>
-</div>
-<div class="clearfix"></div>
-<div ng-show="selectedDt">
-    <h2>Milestone<span class="glyphicon right small glyphicon-plus" ng-click="newMS = !newMS" aria-hidden="true"></span></h2>
-    <form class="form">
-        <div class="col-lg-12" ng-show="newMS">
-            <div class="form-group required">
-                <label for="msName" class="control-label">Name</label>
-                <input type="text" class="form-control" id="msName" ng-model="ms.name" placeholder="please enter name">
-            </div>
-            <div class="form-group required">
-                <label for="msDesc" class="control-label">Description</label>
-                <input type="text" class="form-control" id="msDesc" ng-model="ms.description" placeholder="Description">
-            </div>
-            <button type="button" ng-click="addMS()" ng-disabled = "!ms.description || !ms.name" class="btn btn-default">Add</button>
+            <form class="form">
+                <div class="col-lg-12" ng-show="newMS">
+                    <div class="form-group required">
+                        <label for="msName" class="control-label">Name</label>
+                        <input type="text" class="form-control" id="msName" ng-model="ms.name"
+                               placeholder="please enter name">
+                    </div>
+                    <div class="form-group required">
+                        <label for="msDesc" class="control-label">Description</label>
+                        <input type="text" class="form-control" id="msDesc" ng-model="ms.description"
+                               placeholder="Description">
+                    </div>
+                    <button type="button" ng-click="addMS()" ng-disabled="!ms.description || !ms.name"
+                            class="btn btn-default">Add
+                    </button>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="dt"> Select milestone</label>
+                        <select class="form-control" ng-model="selectedMS" ng-change="selectedMSChange()"
+                                ng-options="a._id as a.name for a in milestones" id="ms">
+
+                        </select>
+                    </div>
+
+                    <div ng-show="selectedMS" class="form-group">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Trait</th>
+                                <th>Indicator</th>
+                                <th>IsPermanent</th>
+                                <th>DPs</th>
+                                <!--<th>DA</th>-->
+                                <!--<th>DP</th>-->
+                                <th>Action</th>
+
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="indicator in msIndicators">
+                                <td>{{indicator.trait.name}}</td>
+                                <td>{{indicator.indicator.name}}</td>
+                                <td>{{indicator.indicator.isPermanent}}</td>
+                                <td>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>DA</th>
+                                            <th>DP</th>
+                                            <th>Action</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in indicator.indicator.dps">
+                                            <td>{{obj.da.name}}</td>
+                                            <td>{{obj.dp.name}}</td>
+                                            <td>
+                                                <button type="button" ng-click="editIndicator(indicator)"
+                                                        class="btn btn-danger">Edit
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><button class="btn btn-info" ng-click="activateDP(indicator.indicator._id)">Add</button> </td>
+                                        </tr>
+
+                                        </tbody>
+
+                                    </table>
+                                </td>
+
+                                <!--<td>{{indicator.da.name}}</td>-->
+                                <!--<td>{{indicator.dp.name}}</td>-->
+                                <td>
+                                    <button type="button" ng-click="editIndicator(indicator)" class="btn btn-danger">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td>
+                                    <select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait"
+                                            class="form-control" id="traits">
+                                        <option>Select Trait</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="indicator" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="isPermanent" class="form-control"/>
+                                </td>
+                                <td>
+
+                                </td>
+                                <!--<td>-->
+                                <!--<select ng-options="d._id as d.name for d in das" ng-change="selectedDAChange()" ng-model="selectedDA" class="form-control" id="das">-->
+                                <!--<option>Select DA</option>-->
+                                <!--</select>-->
+                                <!--</td>-->
+                                <!--<td>-->
+                                <!--<select ng-options="d._id as d.name for d in dps" ng-hide="newDp" ng-model="selectedDP" class="form-control" id="dps">-->
+                                <!--<option>Select DP</option>-->
+                                <!--</select>-->
+
+                                <!--<input type="text" ng-model="DP" ng-hide="!newDp" class="form-control" /><span class="glyphicon right small glyphicon-plus" ng-click="newDp = !newDp" aria-hidden="true"></span>-->
+                                <!--</td>-->
+
+                                <td>
+                                    <button type="button" ng-disabled="!selectedTrait || !indicator "
+                                            ng-click="addIndicator()" class="btn btn-default">Add
+                                    </button>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-dialog "ng-show="addDp" style="position:fixed; top: 28%; ">
+                    <div class="modal-content" >
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-title">Assign DP</h3>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <table class="table">
+                            <tr>
+
+                                <td>
+                                    <select ng-options="d._id as d.name for d in das" ng-change="selectedDAChange()"
+                                            ng-model="selectedDA" class="form-control" id="das">
+                                        <option>Select DA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select ng-options="d._id as d.name for d in dps" ng-hide="newDp" ng-model="selectedDP"
+                                            class="form-control" id="dps">
+                                        <option>Select DP</option>
+                                    </select>
+
+                                    <input type="text" ng-model="DP" ng-hide="!newDp" class="form-control"/><span
+                                        class="glyphicon right small glyphicon-plus" ng-click="newDp = !newDp"
+                                        aria-hidden="true"></span>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-click="addDPs()" >Add</button>
+                        <button class="btn btn-warning" ng-click="addDp = false" type="button" >Cancel</button>
+                    </div>
+                    </div>
+
+                </div>
+
+
+            </form>
         </div>
+        <div class="row">
 
-        <div class="col-lg-12">
-            <div class="form-group">
-                <label for="dt" > Select milestone</label>
-                <select class="form-control" ng-model="selectedMS"  ng-change="selectedMSChange()" ng-options="a._id as a.name for a in milestones"  id="ms">
-
-                </select>
-            </div>
-
-            <div ng-show="selectedMS" class="form-group">
-                <table class="table">
-                    <thead>
-                    <tr> <th>Trait</th>
-                        <th>Indicator</th>
-                        <th>DA</th>
-                        <th>DP</th>
-                        <th>Action</th>
-
-                    </tr>
-
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="indicator in msIndicators">
-                        <td>{{indicator.trait.name}}</td>
-                        <td>{{indicator.indicator.name}}</td>
-                        <td>{{indicator.da.name}}</td>
-                        <td>{{indicator.dp.name}}</td>
-                        <td>
-                            <button type="button"  ng-click="editIndicator(indicator)" class="btn btn-danger">Edit</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td><select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait" class="form-control" id="traits">
-                            <option>Select Trait</option>
-                        </select></td>
-                        <td>
-                            <input type="text" ng-model="indicator" class="form-control" />
-                             </td>
-                        <td>
-                            <select ng-options="d._id as d.name for d in das" ng-change="selectedDAChange()" ng-model="selectedDA" class="form-control" id="das">
-                                <option>Select DA</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select ng-options="d._id as d.name for d in dps" ng-hide="newDp" ng-model="selectedDP" class="form-control" id="dps">
-                                <option>Select DP</option>
-                            </select>
-
-                            <input type="text" ng-model="DP" ng-hide="!newDp" class="form-control" /><span class="glyphicon right small glyphicon-plus" ng-click="newDp = !newDp" aria-hidden="true"></span>
-                        </td>
-
-                        <td><button type="button" ng-disabled="!selectedTrait || !indicator || !selectedDA " ng-click="addIndicator()" class="btn btn-default">Add</button></td>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
         </div>
-
-    </form>
-</div>
-<div class="row">
-
-</div>
         <div ng-show="selectedDt && selectedAge && selectedMS" class="panel panel-default">
-            <div class="panel-heading">Objectives <span class="glyphicon glyphicon-plus-sign" ng-click="newObjective = true" aria-hidden="true"></span></div>
+            <div class="panel-heading">Objectives <span class="glyphicon glyphicon-plus-sign"
+                                                        ng-click="newObjective = true" aria-hidden="true"></span></div>
             <div class="panel-body">
                 <div ng-repeat="objective in objectives" class="panel panel-default">
                     <div class="panel-heading">{{objective.name}}</div>
@@ -150,212 +257,237 @@
                         <div> Sub item2 : {{objective.subItem2.name}}</div>
                         <div> Item : {{objective.itemName}}</div>
                     </div>
-                    </div>
                 </div>
-
             </div>
+
+        </div>
 
         <div ng-if="newObjective" ng-show="selectedDt && selectedAge && selectedMS" class="panel panel-default">
             <div class="panel-heading">Add Objective</div>
             <div class="panel-body">
-<div>
+                <div>
 
-<div >
-    <div class="form-group">
-        <label for="genders">Objective name</label>
-        <input type="text" class="form-control" ng-model="obj.name" >
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading itsRequired">Functionality A x Characteristic</div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="dropdown">
-                            <select class="form-control itsRequired" ng-change="searchSi1()"
-                                    ng-options="a._id as a.name for a in functionalities"
-                                    ng-model="si1.functionality" >
-
-
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="dropdown">
-                            <select class="form-control itsRequired"  id="char1" ng-change="searchSi1()"
-                                    ng-options="a._id as a.name for a in chars"
-                                    ng-model="si1.characteristic">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="row"><h3>Parameter /Tag</h3></div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in countries" ng-change="searchSi1()" ng-model="si1.country" ng-change="searchSI()" id="countries">
-                            <option>Select Country</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in tiers" ng-change="searchSi1()" ng-model="si1.tier" ng-change="searchSI()" id="tiers">
-                            <option>Select City tier</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in genders" ng-change="searchSi1()" ng-model="si1.gender" ng-change="searchSI()" id="genders">
-                            <option>Select gender</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in sess" ng-change="searchSi1()" ng-model="si1.ses"  ng-change="searchSI()" id="sess">
-                            <option>Socio Economic Status</option>
-                        </select>
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading itsRequired">Functionality B x Characteristic</div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="dropdown">
-                            <select class="form-control itsRequired" ng-change="searchSi2()"
-                                    ng-options="a._id as a.name for a in functionalities"
-                                    ng-model="si2.functionality">
-
-
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="dropdown">
-                            <select class="form-control itsRequired"  id="char2" ng-change="searchSi2()"
-                                    ng-options="a._id as a.name for a in chars"
-                                    ng-model="si2.characteristic">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="row"><h3>Parameter /Tag</h3></div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in countries" ng-change="searchSi2()" ng-model="si2.country" ng-change="searchSI()" id="countries">
-                            <option>Select Country</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in tiers" ng-change="searchSi2()" ng-model="si2.tier" ng-change="searchSI()" id="tiers">
-                            <option>Select City tier</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in genders" ng-change="searchSi2()" ng-model="si2.gender" ng-change="searchSI()" id="genders">
-                            <option>Select gender</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" ng-options="c._id as c.name for c in sess" ng-change="searchSi2()" ng-model="si2.ses"  ng-change="searchSI()" id="sess">
-                            <option>Socio Economic Status</option>
-                        </select>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body text-center">
-                <div class="col-md-12">
-                    <div class="col-md-6">
+                    <div>
                         <div class="form-group">
-                            <label for="si1s">Sub item 1</label>
-                            <select class="form-control" ng-model="obj.subItem1" ng-change="findItem()" ng-options="f._id as f.name for f in si1s"  id="si1s">
-                            </select>
+                            <label for="genders">Objective name</label>
+                            <input type="text" class="form-control" ng-model="obj.name">
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="si2s">Sub item 2</label>
-                            <select class="form-control" ng-model="obj.subItem2" ng-change="findItem()" ng-options="f._id as f.name for f in si2s"  id="si2s">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading itsRequired">Functionality A x Characteristic</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <select class="form-control itsRequired" ng-change="searchSi1()"
+                                                        ng-options="a._id as a.name for a in functionalities"
+                                                        ng-model="si1.functionality">
 
 
-<div ng-if="existedItem">
-    <div>Item with combination of above sub items already exist</div>
-    <i>{{existedItem}}</i>
-</div>
-<div ng-if="!existedItem " class="row">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <select class="form-control itsRequired" id="char1"
+                                                        ng-change="searchSi1()"
+                                                        ng-options="a._id as a.name for a in chars"
+                                                        ng-model="si1.characteristic">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row"><h3>Parameter /Tag</h3></div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in countries"
+                                                    ng-change="searchSi1()" ng-model="si1.country"
+                                                    ng-change="searchSI()" id="countries">
+                                                <option>Select Country</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in tiers"
+                                                    ng-change="searchSi1()" ng-model="si1.tier" ng-change="searchSI()"
+                                                    id="tiers">
+                                                <option>Select City tier</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in genders"
+                                                    ng-change="searchSi1()" ng-model="si1.gender" ng-change="searchSI()"
+                                                    id="genders">
+                                                <option>Select gender</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in sess"
+                                                    ng-change="searchSi1()" ng-model="si1.ses" ng-change="searchSI()"
+                                                    id="sess">
+                                                <option>Socio Economic Status</option>
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading itsRequired">Functionality B x Characteristic</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <select class="form-control itsRequired" ng-change="searchSi2()"
+                                                        ng-options="a._id as a.name for a in functionalities"
+                                                        ng-model="si2.functionality">
+
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <select class="form-control itsRequired" id="char2"
+                                                        ng-change="searchSi2()"
+                                                        ng-options="a._id as a.name for a in chars"
+                                                        ng-model="si2.characteristic">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row"><h3>Parameter /Tag</h3></div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in countries"
+                                                    ng-change="searchSi2()" ng-model="si2.country"
+                                                    ng-change="searchSI()" id="countries">
+                                                <option>Select Country</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in tiers"
+                                                    ng-change="searchSi2()" ng-model="si2.tier" ng-change="searchSI()"
+                                                    id="tiers">
+                                                <option>Select City tier</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in genders"
+                                                    ng-change="searchSi2()" ng-model="si2.gender" ng-change="searchSI()"
+                                                    id="genders">
+                                                <option>Select gender</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" ng-options="c._id as c.name for c in sess"
+                                                    ng-change="searchSi2()" ng-model="si2.ses" ng-change="searchSI()"
+                                                    id="sess">
+                                                <option>Socio Economic Status</option>
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="row">
-                        <div class="col-md-1">
-                            <h4 class="itsRequired">ITEM</h4>
-                        </div>
-
-                        <div class="col-md-11">
-                            <div  class="dropdown">
-                                <input type="text" class="form-control input-lg" placeholder="Name of Item" ng-model="obj.itemName" />
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div  class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-
-                <div class="row">
-                    <div class="col-md-1">
-
-                    </div>
-                    <div class="col-md-11">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div ng-repeat="question in obj.questions" class="input-group">
-                                    <span class="input-group-addon" >{{question.traitName}}</span>
-                                    <input type="text" class="form-control"  ng-model="question.question" aria-describedby="basic-addon3">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body text-center">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="si1s">Sub item 1</label>
+                                                <select class="form-control" ng-model="obj.subItem1"
+                                                        ng-change="findItem()"
+                                                        ng-options="f._id as f.name for f in si1s" id="si1s">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="si2s">Sub item 2</label>
+                                                <select class="form-control" ng-model="obj.subItem2"
+                                                        ng-change="findItem()"
+                                                        ng-options="f._id as f.name for f in si2s" id="si2s">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
+
+                    <div ng-if="existedItem">
+                        <div>Item with combination of above sub items already exist</div>
+                        <i>{{existedItem}}</i>
+                    </div>
+                    <div ng-if="!existedItem " class="row">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <h4 class="itsRequired">ITEM</h4>
+                                            </div>
+
+                                            <div class="col-md-11">
+                                                <div class="dropdown">
+                                                    <input type="text" class="form-control input-lg"
+                                                           placeholder="Name of Item" ng-model="obj.itemName"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-11">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div ng-repeat="question in obj.questions" class="input-group">
+                                                        <span class="input-group-addon">{{question.traitName}}</span>
+                                                        <input type="text" class="form-control"
+                                                               ng-model="question.question"
+                                                               aria-describedby="basic-addon3">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button ng-click="addObjective()" ng-if="obj.itemName" class="btn btn-primary">Add</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-    <div>
-        <button ng-click="addObjective()"  ng-if="obj.itemName" class="btn btn-primary">Add</button>
-    </div>
-     </div>
             </div>
         </div>
 

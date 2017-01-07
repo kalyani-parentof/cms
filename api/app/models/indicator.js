@@ -13,6 +13,11 @@ var mongoose = require('mongoose'),
 var indicator = new Schema({
     name: {type: String,unique : true,required: true},
     createdBy: String,
+    isPermanent: Boolean,
+    dps: [{
+        da: {type: String, ref: 'developmentalArea'},
+        dp: {type: String, ref: 'dp'}
+    }],
     isDeleted: Boolean,
     isApproved: Boolean,
     createdDate: {

@@ -20,7 +20,7 @@ exports.update = function(req, res){
     var char = new Characteristic(req.body);
     Characteristic.findOne({_id: char._id}, function(err, characteristic){
         characteristic.name = char.name
-        characteristic.code = char.code
+        characteristic.category = char.category
         characteristic.save(function(err){
             if(err){
                 res.error(err)
@@ -36,6 +36,18 @@ exports.update = function(req, res){
 
 exports.get = function(req, res){
     Characteristic.find({}, function(err, data){
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(data)
+        }
+    })
+}
+
+
+exports.getByCategory = function(req, res){
+    Characteristic.find({category: req.params.category}, function(err, data){
         if(err){
             res.error(err)
         }

@@ -8,6 +8,41 @@ var Question = require('mongoose').model('question');
 var Indicator = require('mongoose').model('indicator');
 var DP = require('mongoose').model('dp');
 
+exports.addDp = function(req, res){
+    var msId = req.params.ms;
+    var dp = req.body;
+    if(dp.DP){
+        var dp = new DP({name: dp.DP, da: dp.da, age: dp.age});
+        dp.save(function(err){
+            if(err){
+                res.error(err)
+            }
+            else{
+                dp.dp = dp._id
+                Indicator.update({_id: dp.indicator},{$push:{dps: dp}}, function(err){
+                    if(err){
+                        res.error(err)
+                    }
+                    else {
+                        res.success("added dp to indicator")
+                    }
+
+                })
+            }
+        })
+    }
+    else {
+        Indicator.update({_id: dp.indicator}, {$push: {dps: dp}}, function (err) {
+            if (err) {
+                res.error(err)
+            }
+            else {
+                res.success("added dp to indicator")
+            }
+        })
+    }
+}
+
 exports.addIndicator = function(req, res){
     var msId = req.params.ms;
     var indicator = req.body;
@@ -18,7 +53,6 @@ exports.addIndicator = function(req, res){
                 res.error(err)
             }
             else{
-
                 indicator.dp = dp._id
                 insertIndicator(msId, indicator, res)
             }
@@ -27,10 +61,10 @@ exports.addIndicator = function(req, res){
     else{
         insertIndicator(msId, indicator, res)
     }
-
 }
+
 function insertIndicator(msId, indi, res){
-    var indicator = new Indicator({name: indi.indicator});
+    var indicator = new Indicator({name: indi.indicator, isPermanent: indi.isPermanent});
     indicator.save(function(err){
         if(err){
             res.error(err)
@@ -91,29 +125,31 @@ exports.findIndicators = function(req, res){
     var msId = req.params.ms;
     console.log(msId)
     MS.find({_id: msId}).populate({
-        path: 'indicators.indicator',
-        populate: {
-            path: 'indicator',
-            model: 'indicator'
-        }
-    }).populate({
         path: 'indicators.trait',
         populate: {
             path: 'trait',
             model: 'trait'
         }
     }).populate({
-        path: 'indicators.da',
+        path: 'indicators.indicator',
         populate: {
-            path: 'developmentalArea',
-            model: 'developmentalArea'
+            path: 'dps.da',
+            populate: {
+                path: 'da',
+                model: 'developmentalArea'
+            }
         }
+
     }).populate({
-        path: 'indicators.dp',
+        path: 'indicators.indicator',
         populate: {
-            path: 'dp',
-            model: 'dp'
+            path: 'dps.dp',
+            populate: {
+                path: 'dp',
+                model: 'dp'
+            }
         }
+
     }).exec(function (err, data) {
         console.log(err, data)
         if(err){

@@ -2,6 +2,7 @@ module.exports = function (app) {
     var health = require('../controllers/health');
     var age = require('../controllers/ageGroupCtrl');
     var trait = require('../controllers/traitCtrl');
+    var category = require('../controllers/categoryCtrl');
     var country = require('../controllers/countryCtrl');
     var tier = require('../controllers/tierCtrl');
     var gender = require('../controllers/genderCtrl');
@@ -35,6 +36,7 @@ module.exports = function (app) {
     app.post('/characteristic', characteristic.post);
     app.put('/characteristic', characteristic.update);
     app.get('/characteristic', characteristic.get);
+    app.get('/characteristic/:category', characteristic.getByCategory);
 
     //functionality
     app.post('/functionality', functionality.post);
@@ -57,6 +59,11 @@ module.exports = function (app) {
     app.post('/trait', trait.post)
     app.put('/trait', trait.update)
     app.get('/trait', trait.get)
+
+
+    app.post('/category', category.post)
+    app.put('/category', category.update)
+    app.get('/category', category.get)
 
     app.post('/country', country.post)
     app.put('/country', country.update)
@@ -96,6 +103,7 @@ module.exports = function (app) {
     app.get('/indicator', indicator.get)
 
     // Milestones
+    app.post('/indicator/dp', ms.addDp)
     app.put('/ms', ms.update)
     app.get('/ms/indicator/:ms', ms.findIndicators)
     app.post('/objective/searchItem', objective.searchItem)
@@ -104,6 +112,10 @@ module.exports = function (app) {
     app.get('/ms/:ms', ms.getIndicator)
     app.delete('/ms/:ms/:trait/:indicator/:da/:dp', ms.deleteIndicator)
     app.get('/ms/:ms/:trait/', ms.listIndicators)
+
+
+
+
 
     app.post('/fileUpload/research', fileCtrl.create)
 

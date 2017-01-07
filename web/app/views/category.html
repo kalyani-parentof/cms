@@ -1,0 +1,31 @@
+<div class="row">
+    <div>
+        <h2>Category</h2>
+        <form class="form">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <table class=" table table-bordered ">
+                        <thead><tr><th>Categories</th></tr></thead>
+                        <tbody>
+                        <tr ng-repeat="category in categories"><td>
+                            <div>{{category.name}} <span ng-click="edit(category)" class="glyphicon glyphicon-pencil"></span> </div>
+                        </td></tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="tname">Name</label>
+                    <input type="text" ng-model="category.name" class="form-control" id="tname" placeholder="Category name">
+                </div>
+
+                <button type="button" ng-if="!editMode" ng-disabled="!category.name" ng-click="addCategory()" class="btn btn-default">Add</button>
+                <button type="button" ng-if="editMode"ng-disabled="!category.name"  ng-click="update()" class="btn btn-default">Update</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>

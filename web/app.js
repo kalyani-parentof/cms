@@ -1,7 +1,7 @@
 /**
  * Created by rajanchaudhary on 3/9/16.
  */
-var parentOf = angular.module('parentOf', ['restangular', 'ui.router', 'LocalStorageModule', 'cgNotify','ui-notification','ngFileUpload', 'checklist-model']);
+var parentOf = angular.module('parentOf', ['restangular', 'ui.router', 'LocalStorageModule', 'cgNotify','ui-notification','ngFileUpload', 'checklist-model','ui.bootstrap']);
 parentOf.config(function ($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -36,6 +36,10 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
             url: '/trait',
             templateUrl: 'app/views/trait.html',
             controller: 'traitCtrl'
+        }).state('category', {
+            url: '/category',
+            templateUrl: 'app/views/category.html',
+            controller: 'categoryCtrl'
         }).state('country', {
             url: '/country',
             templateUrl: 'app/views/country.html',

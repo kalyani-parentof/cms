@@ -20,6 +20,7 @@ module.exports = function () {
     require('../app/models/subItem')
     require('../app/models/question')
     require('../app/models/researchProof')
+    require('../app/models/category')
 
     return db;
 };

@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var characteristic = new Schema({
     name: {type: String,unique : true,required: true},
-    code: {type: String,unique : true},
+    category: {type: String, ref: 'category'},
     createdBy: String,
     isDeleted: Boolean,
     isApproved: Boolean,
@@ -22,5 +22,5 @@ var characteristic = new Schema({
         default: Date.now
     }
 });
-characteristic.plugin(uniqueValidator);
+
 mongoose.model('characteristic', characteristic);
