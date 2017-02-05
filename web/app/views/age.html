@@ -4,7 +4,7 @@
         </h2>
 
         <form class="form">
-            <div class="col-lg-6">
+            <div class="col-lg-6 hide">
                 <div class="form-group required">
                     <label class="control-label" for="ages">Age group </label>
                     <select ng-options="a._id as a.name for a in ages" ng-change="selectedAgeChange()"
@@ -32,6 +32,13 @@
     <div class="clearfix"></div>
     <hr>
     <div ng-controller="dtCtrl">
+        <div class="form-group required">
+            <label class="control-label" for="ages">Age group </label>
+            <select ng-options="a._id as a.name for a in ages" ng-change="selectedAgeChange()"
+                    ng-model="selectedAge" class="form-control" id="ages">
+                <option>Select Age</option>
+            </select>
+        </div>
         <div>
             <h2>Developmental task <span class="glyphicon right small glyphicon-plus" ng-click="newDt = true"
                                          aria-hidden="true"></span></h2>
@@ -146,7 +153,11 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><button class="btn btn-info" ng-click="activateDP(indicator.indicator._id)">Add</button> </td>
+                                            <td>
+                                                <button class="btn btn-info"
+                                                        ng-click="activateDP(indicator.indicator._id)">Add
+                                                </button>
+                                            </td>
                                         </tr>
 
                                         </tbody>
@@ -203,39 +214,40 @@
                         </table>
                     </div>
                 </div>
-                <div class="modal-dialog "ng-show="addDp" style="position:fixed; top: 28%; ">
-                    <div class="modal-content" >
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="modal-title">Assign DP</h3>
-                    </div>
-                    <div class="modal-body" id="modal-body">
-                        <table class="table">
-                            <tr>
+                <div class="modal-dialog " ng-show="addDp" style="position:fixed; top: 28%; ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="modal-title">Assign DP</h3>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+                            <table class="table">
+                                <tr>
 
-                                <td>
-                                    <select ng-options="d._id as d.name for d in das" ng-change="selectedDAChange()"
-                                            ng-model="selectedDA" class="form-control" id="das">
-                                        <option>Select DA</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select ng-options="d._id as d.name for d in dps" ng-hide="newDp" ng-model="selectedDP"
-                                            class="form-control" id="dps">
-                                        <option>Select DP</option>
-                                    </select>
+                                    <td>
+                                        <select ng-options="d._id as d.name for d in das" ng-change="selectedDAChange()"
+                                                ng-model="selectedDA" class="form-control" id="das">
+                                            <option>Select DA</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select ng-options="d._id as d.name for d in dps" ng-hide="newDp"
+                                                ng-model="selectedDP"
+                                                class="form-control" id="dps">
+                                            <option>Select DP</option>
+                                        </select>
 
-                                    <input type="text" ng-model="DP" ng-hide="!newDp" class="form-control"/><span
-                                        class="glyphicon right small glyphicon-plus" ng-click="newDp = !newDp"
-                                        aria-hidden="true"></span>
-                                </td>
+                                        <input type="text" ng-model="DP" ng-hide="!newDp" class="form-control"/><span
+                                            class="glyphicon right small glyphicon-plus" ng-click="newDp = !newDp"
+                                            aria-hidden="true"></span>
+                                    </td>
 
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" ng-click="addDPs()" >Add</button>
-                        <button class="btn btn-warning" ng-click="addDp = false" type="button" >Cancel</button>
-                    </div>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" ng-click="addDPs()">Add</button>
+                            <button class="btn btn-warning" ng-click="addDp = false" type="button">Cancel</button>
+                        </div>
                     </div>
 
                 </div>
@@ -269,16 +281,21 @@
 
                     <div>
                         <div class="form-group">
+                            <label for="genders">Derivative</label>
+                            <input type="text" class="form-control" ng-model="obj.derivative">
+                        </div>
+                        <div class="form-group">
                             <label for="genders">Objective name</label>
                             <input type="text" class="form-control" ng-model="obj.name">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading itsRequired">Functionality A x Characteristic</div>
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="dropdown">
+                                                <label for="msDesc" class="control-label">Functionality</label>
                                                 <select class="form-control itsRequired" ng-change="searchSi1()"
                                                         ng-options="a._id as a.name for a in functionalities"
                                                         ng-model="si1.functionality">
@@ -289,18 +306,94 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <div class="col-md-6">
+                                                <div class="dropdown">
+                                                    <label>
+                                                        <input type="checkbox" name="searchSI" ng-model="searchObj.searchSi2"> Search Se2
+                                                    </label>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button class="btn btn-primary" ng-click="refreshSi()">Refresh</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <div class="dropdown">
+                                                <label for="msDesc" class="control-label">Category 1</label>
+                                                <select class="form-control itsRequired" ng-change="publishCategory1()"
+                                                        ng-options="a._id as a.name for a in categories"
+                                                        ng-model="si1.category1">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <label for="msDesc" class="control-label">Characterstic 1</label>
                                                 <select class="form-control itsRequired" id="char1"
                                                         ng-change="searchSi1()"
-                                                        ng-options="a._id as a.name for a in chars"
-                                                        ng-model="si1.characteristic">
+                                                        ng-options="a._id as a.name for a in characteristics1"
+                                                        ng-model="si1.characteristic1">
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="row"><h3>Parameter /Tag</h3></div>
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <label for="msDesc" class="control-label">Category 2</label>
+
+                                                <select class="form-control itsRequired" ng-change="publishCategory2()"
+                                                        ng-options="a._id as a.name for a in categories"
+                                                        ng-model="si1.category2">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <label for="msDesc" class="control-label">Characterstic 2</label>
+
+                                                <select class="form-control itsRequired" id="char22"
+                                                        ng-change="searchSi1()"
+                                                        ng-options="a._id as a.name for a in characteristics2"
+                                                        ng-model="si1.characteristic2">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <label for="msDesc" class="control-label">Category 3</label>
+
+                                                <select class="form-control itsRequired" ng-change="publishCategory3()"
+                                                        ng-options="a._id as a.name for a in categories"
+                                                        ng-model="si1.category3">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="dropdown">
+                                                <label for="msDesc" class="control-label">Characterstic 3</label>
+
+                                                <select class="form-control itsRequired" id="char1"
+                                                        ng-change="searchSi3()"
+                                                        ng-options="a._id as a.name for a in characteristics3"
+                                                        ng-model="si1.characteristic3">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row"><h3 style="margin-left: 30px;">Parameter /Tag</h3></div>
                                         <div class="col-md-3">
+                                            <label for="msDesc" class="control-label">Country </label>
+
                                             <select class="form-control" ng-options="c._id as c.name for c in countries"
                                                     ng-change="searchSi1()" ng-model="si1.country"
                                                     ng-change="searchSI()" id="countries">
@@ -308,6 +401,8 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
+                                            <label for="msDesc" class="control-label">City Tier </label>
+
                                             <select class="form-control" ng-options="c._id as c.name for c in tiers"
                                                     ng-change="searchSi1()" ng-model="si1.tier" ng-change="searchSI()"
                                                     id="tiers">
@@ -315,6 +410,8 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
+                                            <label for="msDesc" class="control-label">Gender </label>
+
                                             <select class="form-control" ng-options="c._id as c.name for c in genders"
                                                     ng-change="searchSi1()" ng-model="si1.gender" ng-change="searchSI()"
                                                     id="genders">
@@ -322,6 +419,8 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
+                                            <label for="msDesc" class="control-label">SES </label>
+
                                             <select class="form-control" ng-options="c._id as c.name for c in sess"
                                                     ng-change="searchSi1()" ng-model="si1.ses" ng-change="searchSI()"
                                                     id="sess">
@@ -335,68 +434,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading itsRequired">Functionality B x Characteristic</div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="dropdown">
-                                                <select class="form-control itsRequired" ng-change="searchSi2()"
-                                                        ng-options="a._id as a.name for a in functionalities"
-                                                        ng-model="si2.functionality">
 
-
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="dropdown">
-                                                <select class="form-control itsRequired" id="char2"
-                                                        ng-change="searchSi2()"
-                                                        ng-options="a._id as a.name for a in chars"
-                                                        ng-model="si2.characteristic">
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="row"><h3>Parameter /Tag</h3></div>
-                                        <div class="col-md-3">
-                                            <select class="form-control" ng-options="c._id as c.name for c in countries"
-                                                    ng-change="searchSi2()" ng-model="si2.country"
-                                                    ng-change="searchSI()" id="countries">
-                                                <option>Select Country</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <select class="form-control" ng-options="c._id as c.name for c in tiers"
-                                                    ng-change="searchSi2()" ng-model="si2.tier" ng-change="searchSI()"
-                                                    id="tiers">
-                                                <option>Select City tier</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <select class="form-control" ng-options="c._id as c.name for c in genders"
-                                                    ng-change="searchSi2()" ng-model="si2.gender" ng-change="searchSI()"
-                                                    id="genders">
-                                                <option>Select gender</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <select class="form-control" ng-options="c._id as c.name for c in sess"
-                                                    ng-change="searchSi2()" ng-model="si2.ses" ng-change="searchSI()"
-                                                    id="sess">
-                                                <option>Socio Economic Status</option>
-                                            </select>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
 

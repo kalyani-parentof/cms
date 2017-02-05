@@ -8,7 +8,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var dp = new Schema({
-    name: {type: String,unique : true,required: true},
+    name: {type: String ,required: true},
     age: {type: String,
     ref: 'ageGroup'},
     da: {type: String, ref: 'developmentalArea'},
@@ -20,5 +20,6 @@ var dp = new Schema({
         default: Date.now
     }
 });
+dp.index({age: 1, name: 1}, {unique: true})
 dp.plugin(uniqueValidator);
 mongoose.model('dp', dp);

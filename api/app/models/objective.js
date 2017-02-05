@@ -10,10 +10,14 @@ var objective = new Schema({
         type: String,
         ref: 'subItem'
     },
-    name: {type: String,unique : true,required: true},
+    name: {type: String, unique: true, required: true},
     itemName: String,
-    questions:[{type: String,
-    ref: 'question'}],
+    questions: [
+         {
+            type: String,
+            ref: 'question'
+        }
+    ],
     createdDate: {
         type: Date,
         default: Date.now

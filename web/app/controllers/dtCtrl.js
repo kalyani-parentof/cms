@@ -3,6 +3,10 @@
  */
 parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     function init() {
+        $scope.selectedAge = ''
+        pofRestangular.one('age').customGET().then(function (data) {
+            $scope.ages = data.data;
+        })
         $scope.selectedDt = ''
         $scope.dts = []
         //pofRestangular.one('dt').customGET().then(function(data){
@@ -12,15 +16,15 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     }
 
     init()
-    $scope.$on('selectedAgeChange', function (e, age) {
-        console.log(e, age)
+    $scope.selectedAgeChange = function () {
+        var age = $scope.selectedAge
         $scope.dt.age = age;
         if (age) {
             pofRestangular.one('dt').one('age').one(age).customGET().then(function (data) {
                 $scope.dts = data.data ? data.data : [];
             })
         }
-    })
+    }
     $scope.addDt = function () {
         pofRestangular.one('dt').customPOST($scope.dt).then(function (data) {
             if (data.status == "error") {
@@ -116,13 +120,14 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         $scope.indicatorForDP = indicator
         $scope.addDp = true
     }
-    $scope.addDPs = function(){
+    $scope.addDPs = function () {
         pofRestangular.one('indicator').one("dp").customPOST({
             da: $scope.selectedDA,
             indicator: $scope.indicatorForDP,
-            dp:  $scope.selectedDP,
-            DP: $scope.DP
-        }).then(function(){
+            dp: $scope.selectedDP,
+            DP: $scope.DP,
+            age: $scope.selectedAge
+        }).then(function () {
             $scope.indicatorForDP = '';
             $scope.addDp = false
         })
@@ -177,8 +182,8 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         pofRestangular.one('functionality').customGET().then(function (data) {
             $scope.functionalities = data.data;
         })
-        pofRestangular.one('characteristic').customGET().then(function (data) {
-            $scope.chars = data.data;
+        pofRestangular.one('category').customGET().then(function (data) {
+            $scope.categories = data.data;
         })
         pofRestangular.one('country').customGET().then(function (data) {
             $scope.countries = data.data;
@@ -208,26 +213,49 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         }
     }
 
-    $scope.searchSi2 = function () {
+    $scope.publishCategory1 = function () {
+        pofRestangular.one('characteristic').customGET($scope.si1.category1).then(function (data) {
+            $scope.characteristics1 = data.data;
+        })
+    }
+    $scope.publishCategory2 = function () {
+        pofRestangular.one('characteristic').customGET($scope.si1.category2).then(function (data) {
+            $scope.characteristics2 = data.data;
+        })
+    }
+    $scope.publishCategory3 = function () {
+        pofRestangular.one('characteristic').customGET($scope.si1.category3).then(function (data) {
+            $scope.characteristics3 = data.data;
+        })
+    }
 
-        pofRestangular.one("subItem").one("search").customPOST($scope.si2).then(function (data) {
-                $scope.si2s = data.data
-            },
-            function () {
-                Notification.error("some error occurred")
-            })
 
+    $scope.searchObj = {}
+    $scope.searchObj.searchSi2 = false
+    $scope.refreshSi = function(){
+
+        $scope.si1 = {ses: '', country: '', gender: '', tier: '',category1: '',category2: '',category3: '', characteristic1: '',characteristic2: '',characteristic3: '', functionality: ''}
     }
     $scope.searchSi1 = function () {
-
-        pofRestangular.one("subItem").one("search").customPOST($scope.si1).then(function (data) {
-                $scope.si1s = data.data
-            },
-            function () {
-                Notification.error("some error occurred")
-            })
+        if (!$scope.searchObj.searchSi2) {
+            pofRestangular.one("subItem").one("search").customPOST($scope.si1).then(function (data) {
+                    $scope.si1s = data.data
+                },
+                function () {
+                    Notification.error("some error occurred")
+                })
+        }
+        else{
+            pofRestangular.one("subItem").one("search").customPOST($scope.si2).then(function (data) {
+                    $scope.si2s = data.data
+                },
+                function () {
+                    Notification.error("some error occurred")
+                })
+        }
 
     }
+
     $scope.findItem = function () {
         if ($scope.obj.subItem1 && $scope.obj.subItem2) {
             pofRestangular.one("objective").one('searchItem').customPOST($scope.obj).then(function (data) {

@@ -28,8 +28,38 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="characteristic">Characteristic</label>
-                    <select class="form-control" ng-options="c._id as c.name for c in characteristics" ng-model="si.characteristic" ng-change="searchSI()" id="characteristic">
+                    <label for="characteristic">Category 1</label>
+                    <select class="form-control" ng-options="c._id as c.name for c in categories" ng-model="si.characteristics[0].category" ng-change="publishCategory1()" id="characteristic">
+                        <option>Select Characteristic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="characteristic">Characteristic 1</label>
+                    <select class="form-control" ng-options="c._id as c.name for c in characteristics1" ng-model="si.characteristics[0].characteristic" ng-change="searchSI()" id="characteristic">
+                        <option>Select Characteristic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="characteristic">Category 2</label>
+                    <select class="form-control" ng-options="c._id as c.name for c in categories" ng-model="si.characteristics[1].category" ng-change="publishCategory1()" id="characteristic">
+                        <option>Select Characteristic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="characteristic">Characteristic 2</label>
+                    <select class="form-control" ng-options="c._id as c.name for c in characteristics1" ng-model="si.characteristics[1].characteristic" ng-change="searchSI()" id="characteristic">
+                        <option>Select Characteristic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="characteristic">Category 3</label>
+                    <select class="form-control" ng-options="c._id as c.name for c in categories" ng-model="si.characteristics[2].category" ng-change="publishCategory1()" id="characteristic">
+                        <option>Select Characteristic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="characteristic">Characteristic 3</label>
+                    <select class="form-control" ng-options="c._id as c.name for c in characteristics1" ng-model="si.characteristics[2].characteristic" ng-change="searchSI()" id="characteristic">
                         <option>Select Characteristic</option>
                     </select>
                 </div>

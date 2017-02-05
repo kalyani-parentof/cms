@@ -10,16 +10,16 @@ var DP = require('mongoose').model('dp');
 
 exports.addDp = function(req, res){
     var msId = req.params.ms;
-    var dp = req.body;
-    if(dp.DP){
-        var dp = new DP({name: dp.DP, da: dp.da, age: dp.age});
+    var dpReq = req.body;
+    if(dpReq.DP){
+        var dp = new DP({name: dpReq.DP, da: dpReq.da, age: dpReq.age});
         dp.save(function(err){
             if(err){
                 res.error(err)
             }
             else{
-                dp.dp = dp._id
-                Indicator.update({_id: dp.indicator},{$push:{dps: dp}}, function(err){
+                dpReq.dp = dp._id
+                Indicator.update({_id: dpReq.indicator},{$push:{dps: {da: dpReq.da, dp: dpReq.dp}}}, function(err){
                     if(err){
                         res.error(err)
                     }
@@ -32,7 +32,7 @@ exports.addDp = function(req, res){
         })
     }
     else {
-        Indicator.update({_id: dp.indicator}, {$push: {dps: dp}}, function (err) {
+        Indicator.update({_id: dpReq.indicator}, {$push: {dps: dpReq}}, function (err) {
             if (err) {
                 res.error(err)
             }
@@ -217,17 +217,18 @@ exports.addObjective = function (req, res) {
     var msId = req.params.ms;
     var body = req.body;
     var questions = []
-
+    console.log(body.questions)
     for(var i=0; i< body.questions.length; i++){
         questions.push(new Question(body.questions[i]));
     }
+    console.log(questions)
     req.body.questions = []
     var obj = new OBJECTIVE(req.body);
     console.log(questions)
     Question.insertMany(questions,function(err,data){
 
         for(var i=0; i< data.length; i++) {
-            obj.questions.push(data[i]._id)
+            obj.questions.push({trait: body.questions[i].trait, question:  data[i]._id})
         }
         obj.save(function(err){
             if(err){

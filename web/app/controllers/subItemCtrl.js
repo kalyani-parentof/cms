@@ -7,17 +7,29 @@ parentOf.controller('subItemCtrl', function ($scope, pofRestangular, Notificatio
         $scope.editMode = false;
         $scope.isSearchable = false
 
-        $scope.si = {name: '', ses: '', country: '', das: [], gender: '', tier:'', characteristic: '', functionality: ''}
-        pofRestangular.one('characteristic').customGET().then(function(data){
-            $scope.characteristics = data.data;
-        })
+        $scope.si = {
+            name: '',
+            ses: '',
+            country: '',
+            das: [],
+            gender: '',
+            tier: '',
+            characteristics: [{category: '', characteristic: ''}, {category: '', characteristic: ''}, {
+                category: '',
+                characteristic: ''
+            }],
+            functionality: ''
+        }
         pofRestangular.one('country').customGET().then(function (data) {
             $scope.countries = data.data;
         })
-        pofRestangular.one('da').customGET().then(function(data){
+        pofRestangular.one('da').customGET().then(function (data) {
             $scope.das = data.data;
         })
-        pofRestangular.one('functionality').customGET().then(function(data){
+        pofRestangular.one('category').customGET().then(function (data) {
+            $scope.categories = data.data;
+        })
+        pofRestangular.one('functionality').customGET().then(function (data) {
             $scope.functionalities = data.data;
         })
         pofRestangular.one('gender').customGET().then(function (data) {
@@ -34,48 +46,62 @@ parentOf.controller('subItemCtrl', function ($scope, pofRestangular, Notificatio
 
     init()
 
-
-    $scope.add = function(){
-        pofRestangular.one("subItem").customPOST($scope.si).then(function(data){
-                if(data.status == "error"){
+    $scope.publishCategory1 = function () {
+        pofRestangular.one('characteristic').customGET($scope.si.characteristics[0].category).then(function(data){
+            $scope.characteristics1 = data.data;
+        })
+    }
+    $scope.publishCategory2 = function () {
+        pofRestangular.one('characteristic').customGET($scope.si.characteristics[1].category).then(function(data){
+            $scope.characteristics2 = data.data;
+        })
+    }
+    $scope.publishCategory3 = function () {
+        pofRestangular.one('characteristic').customGET($scope.si.characteristics[2].category).then(function(data){
+            $scope.characteristics3 = data.data;
+        })
+    }
+    $scope.add = function () {
+        pofRestangular.one("subItem").customPOST($scope.si).then(function (data) {
+                if (data.status == "error") {
                     $scope.errorHandler(data)
                     return;
                 }
-            Notification.primary("sub item created successfully")
+                Notification.primary("sub item created successfully")
                 init()
-        },
-        function(){
-            Notification.error("some error occurred")
-        })
+            },
+            function () {
+                Notification.error("some error occurred")
+            })
     }
 
-    $scope.searchSI = function(){
-        if($scope.isSearchable){
-            pofRestangular.one("subItem").one("search").customPOST($scope.si).then(function(data){
+    $scope.searchSI = function () {
+        if ($scope.isSearchable) {
+            pofRestangular.one("subItem").one("search").customPOST($scope.si).then(function (data) {
                     $scope.sis = data.data
                 },
-                function(){
+                function () {
                     Notification.error("some error occurred")
                 })
         }
     }
 
-    $scope.edit = function(si){
+    $scope.edit = function (si) {
         $scope.si = si;
         $scope.isSearchable = false;
         $scope.editMode = true;
     }
 
-    $scope.update = function(){
-        pofRestangular.one("subItem").customPUT($scope.si).then(function(data){
-                if(data.status == "error"){
+    $scope.update = function () {
+        pofRestangular.one("subItem").customPUT($scope.si).then(function (data) {
+                if (data.status == "error") {
                     $scope.errorHandler(data)
                     return;
                 }
                 Notification.primary("sub item updated successfully")
                 init()
             },
-            function(){
+            function () {
                 Notification.error("some error occurred")
             })
     }

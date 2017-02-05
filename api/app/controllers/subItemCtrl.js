@@ -37,8 +37,30 @@ exports.search = function(req, res){
         query.functionality = searchReq.functionality;
     }
 
-    if(searchReq.characteristic){
-        query.characteristic = searchReq.characteristic
+    var cats = []
+    var chars = []
+    if(searchReq.category2){
+        cats.push(searchReq.category2)
+        if(searchReq.characteristic2){
+            chars.push(searchReq.characteristic2)
+        }
+    }
+    if(searchReq.category1){
+        cats.push(searchReq.category1)
+        if(searchReq.characteristic1){
+            chars.push(searchReq.characteristic1)
+        }
+    }
+    if(searchReq.category3){
+        cats.push(searchReq.category3)
+        if(searchReq.characteristic3){
+            chars.push(searchReq.characteristic3)
+        }
+    }
+
+    if(cats.length > 0){
+        query.characteristics = {$elemMatch: {characteristic:{ $all: chars}, category: { $all: cats}}}
+
     }
 
     if(searchReq.country){
@@ -53,7 +75,7 @@ exports.search = function(req, res){
     if(searchReq.gender){
         query.gender = searchReq.gender
     }
-
+    console.log(query)
     SubItem.find(query, function(err, data){
         if(err){
             res.error(err)

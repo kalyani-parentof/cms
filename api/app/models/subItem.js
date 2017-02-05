@@ -7,10 +7,16 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var subItem = new Schema({
     name: {type: String,unique : true,required: true},
-    characteristic: {
-        type: String,
-        ref: 'characteristic'
-    },
+    characteristics: [{
+        characteristic: {
+            type: String,
+            ref: 'characteristic'
+        },
+        category: {
+            type: String,
+            ref: 'category'
+        }
+    }],
     functionality: {
         type: String,
         ref: 'functionality'
