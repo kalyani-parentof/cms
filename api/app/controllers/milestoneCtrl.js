@@ -8,19 +8,19 @@ var Question = require('mongoose').model('question');
 var Indicator = require('mongoose').model('indicator');
 var DP = require('mongoose').model('dp');
 
-exports.addDp = function(req, res){
+exports.addDp = function (req, res) {
     var msId = req.params.ms;
     var dpReq = req.body;
-    if(dpReq.DP){
+    if (dpReq.DP) {
         var dp = new DP({name: dpReq.DP, da: dpReq.da, age: dpReq.age});
-        dp.save(function(err){
-            if(err){
+        dp.save(function (err) {
+            if (err) {
                 res.error(err)
             }
-            else{
+            else {
                 dpReq.dp = dp._id
-                Indicator.update({_id: dpReq.indicator},{$push:{dps: {da: dpReq.da, dp: dpReq.dp}}}, function(err){
-                    if(err){
+                Indicator.update({_id: dpReq.indicator}, {$push: {dps: {da: dpReq.da, dp: dpReq.dp}}}, function (err) {
+                    if (err) {
                         res.error(err)
                     }
                     else {
@@ -43,35 +43,35 @@ exports.addDp = function(req, res){
     }
 }
 
-exports.addIndicator = function(req, res){
+exports.addIndicator = function (req, res) {
     var msId = req.params.ms;
     var indicator = req.body;
-    if(indicator.DP){
+    if (indicator.DP) {
         var dp = new DP({name: indicator.DP, da: indicator.da, age: indicator.age});
-        dp.save(function(err){
-            if(err){
+        dp.save(function (err) {
+            if (err) {
                 res.error(err)
             }
-            else{
+            else {
                 indicator.dp = dp._id
                 insertIndicator(msId, indicator, res)
             }
         })
     }
-    else{
+    else {
         insertIndicator(msId, indicator, res)
     }
 }
 
-function insertIndicator(msId, indi, res){
+function insertIndicator(msId, indi, res) {
     var indicator = new Indicator({name: indi.indicator, isPermanent: indi.isPermanent});
-    indicator.save(function(err){
-        if(err){
+    indicator.save(function (err) {
+        if (err) {
             res.error(err)
         }
-        else{
+        else {
             indi.indicator = indicator._id
-            MS.update({_id: msId},{$push:{indicators:indi}}, function(errr){
+            MS.update({_id: msId}, {$push: {indicators: indi}}, function (errr) {
                 res.success("saved successfully")
             })
         }
@@ -79,7 +79,7 @@ function insertIndicator(msId, indi, res){
 
 }
 
-exports.listIndicators = function(req, res){
+exports.listIndicators = function (req, res) {
     var msId = req.params.ms;
     var trait = req.params.trait;
 
@@ -92,36 +92,36 @@ exports.listIndicators = function(req, res){
     }).exec(function (err, data) {
         MS.find({
             "indicators": {
-            $elemMatch: {
-                "trait": trait
+                $elemMatch: {
+                    "trait": trait
+                }
             }
-        }
-        },{"indicators.$": 1}, function(err, indicators){
-            if(err){
+        }, {"indicators.$": 1}, function (err, indicators) {
+            if (err) {
                 res.error(err)
             }
-            else{
-                res.success({data: data, indicator:indicators})
+            else {
+                res.success({data: data, indicator: indicators})
             }
         })
     })
 }
 
-exports.update = function(req, res){
-    MS.findOne({_id: req.body._id}, function(err, ms){
+exports.update = function (req, res) {
+    MS.findOne({_id: req.body._id}, function (err, ms) {
         ms.name = req.body.name
-        ms.save(function(err){
-            if(err){
+        ms.save(function (err) {
+            if (err) {
                 res.error(err)
             }
-            else{
+            else {
                 res.success(ms)
             }
         })
     })
 }
 
-exports.findIndicators = function(req, res){
+exports.findIndicators = function (req, res) {
     var msId = req.params.ms;
     console.log(msId)
     MS.find({_id: msId}).populate({
@@ -150,17 +150,28 @@ exports.findIndicators = function(req, res){
             }
         }
 
-    }).exec(function (err, data) {
-        console.log(err, data)
-        if(err){
-            res.error(err)
+    }).populate(
+        {
+            "path": 'objectives', populate: {
+            path: 'objective',
+            populate: {
+                path: 'questions',
+                populate: {path: 'trait', model: 'trait'}
+
+            }
         }
-        else{
-            res.success(data)
         }
-    })
+    ).exec(function (err, data) {
+            console.log(err, data)
+            if (err) {
+                res.error(err)
+            }
+            else {
+                res.success(data)
+            }
+        })
 }
-exports.getIndicator = function(req, res){
+exports.getIndicator = function (req, res) {
     var msId = req.params.ms;
     MS.findOne({_id: msId}).populate({
         path: 'indicators.indicator',
@@ -189,16 +200,16 @@ exports.getIndicator = function(req, res){
 
         }
     }).exec(function (err, data) {
-        if(err){
+        if (err) {
             res.error(err)
         }
-        else{
+        else {
             res.success(data)
         }
     })
 }
 
-exports.deleteIndicator = function(req, res){
+exports.deleteIndicator = function (req, res) {
     var msId = req.params.ms;
     var trait = req.params.trait;
     var indicator = req.params.indicator;
@@ -206,7 +217,16 @@ exports.deleteIndicator = function(req, res){
     var dp = req.params.dp;
     var msId = req.params.ms;
     var indicator = req.body;
-    MS.update({_id: msId},{$pull:{indicators:{trait: trait,indicator: indicator, da: da, dp: dp }}}, function(errr){
+    MS.update({_id: msId}, {
+        $pull: {
+            indicators: {
+                trait: trait,
+                indicator: indicator,
+                da: da,
+                dp: dp
+            }
+        }
+    }, function (errr) {
         res.success("deleted successfully")
     })
 }
@@ -218,23 +238,23 @@ exports.addObjective = function (req, res) {
     var body = req.body;
     var questions = []
     console.log(body.questions)
-    for(var i=0; i< body.questions.length; i++){
+    for (var i = 0; i < body.questions.length; i++) {
         questions.push(new Question(body.questions[i]));
     }
     console.log(questions)
     req.body.questions = []
     var obj = new OBJECTIVE(req.body);
     console.log(questions)
-    Question.insertMany(questions,function(err,data){
+    Question.insertMany(questions, function (err, data) {
 
-        for(var i=0; i< data.length; i++) {
-            obj.questions.push({trait: body.questions[i].trait, question:  data[i]._id})
+        for (var i = 0; i < data.length; i++) {
+            obj.questions.push({trait: body.questions[i].trait, question: data[i]._id})
         }
-        obj.save(function(err){
-            if(err){
+        obj.save(function (err) {
+            if (err) {
                 res.error(err)
-            }else{
-                MS.update({_id: msId},{$push:{objectives: obj._id}}, function(errr){
+            } else {
+                MS.update({_id: msId}, {$push: {objectives: obj._id}}, function (errr) {
                     res.success("saved successfully")
                 })
             }

@@ -111,7 +111,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         pofRestangular.one('ms').one('indicator').one($scope.selectedMS).customGET().then(function (data) {
             $scope.msIndicators = data.data[0].indicators
 
-            //$scope.objectives = data.data.objectives;
+            $scope.objectives = data.data[0].objectives;
 
         })
         initObj()
