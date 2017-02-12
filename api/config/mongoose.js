@@ -21,6 +21,7 @@ module.exports = function () {
     require('../app/models/question')
     require('../app/models/researchProof')
     require('../app/models/category')
+    require('../app/models/skill')
 
     return db;
 };

@@ -83,10 +83,13 @@ module.exports = function (app) {
     //DP
     app.post('/dp', dp.post);
     app.get('/dp', dp.get);
+    app.get('/dp/age/:age', dp.getDpsByAge);
     app.get('/dp/da/:da/age/:age', dp.getByDA);
     app.post('/dp/indicator/:id', dp.addIndicator);
     app.delete('/dp/indicator/:id/:indicator', dp.removeIndicator);
     app.get('/dp/:id', dp.getById);
+
+
 
 
     //dt

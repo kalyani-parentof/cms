@@ -10,7 +10,8 @@ var objective = new Schema({
         type: String,
         ref: 'subItem'
     },
-    name: {type: String, unique: true, required: true},
+    name: {type: String, required: true},
+    derivative: String,
     itemName: String,
     questions: [
          {

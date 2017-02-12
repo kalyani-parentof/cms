@@ -130,6 +130,8 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         }).then(function () {
             $scope.indicatorForDP = '';
             $scope.addDp = false
+            $scope.selectedMSChange()
+
         })
     }
 
@@ -203,6 +205,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
 
         $scope.obj = {
             item: '',
+            derivative:'',
             question: '',
             intervention: '',
             noOfDay: '',
@@ -268,6 +271,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
                         $scope.obj.questions = []
                         for (var i = 0; i < $scope.msIndicators.length; i++) {
                             $scope.obj.questions.push({
+                                indicator: $scope.msIndicators[i].indicator._id,
                                 trait: $scope.msIndicators[i].trait._id,
                                 question: '',
                                 traitName: $scope.msIndicators[i].trait.name
@@ -302,6 +306,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     $scope.addObjective = function () {
         pofRestangular.one('objective').one($scope.selectedMS).customPOST($scope.obj).then(function (data) {
             initObj()
+            $scope.selectedMSChange()
         })
     }
 

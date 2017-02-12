@@ -152,16 +152,18 @@ exports.findIndicators = function (req, res) {
 
     }).populate(
         {
-            "path": 'objectives', populate: {
-            path: 'objective',
+            path: 'objectives',
             populate: {
-                path: 'questions',
-                populate: {path: 'trait', model: 'trait'}
+                path: 'objective',
+                populate: {
+                    path: 'questions',
+                    populate: {path: 'trait', model: 'trait'}
 
+                }
             }
         }
-        }
-    ).exec(function (err, data) {
+    )
+    .exec(function (err, data) {
             console.log(err, data)
             if (err) {
                 res.error(err)
@@ -171,6 +173,8 @@ exports.findIndicators = function (req, res) {
             }
         })
 }
+
+
 exports.getIndicator = function (req, res) {
     var msId = req.params.ms;
     MS.findOne({_id: msId}).populate({
@@ -241,14 +245,15 @@ exports.addObjective = function (req, res) {
     for (var i = 0; i < body.questions.length; i++) {
         questions.push(new Question(body.questions[i]));
     }
-    console.log(questions)
     req.body.questions = []
     var obj = new OBJECTIVE(req.body);
     console.log(questions)
     Question.insertMany(questions, function (err, data) {
-
+        if (err) {
+            console.log(err)
+        }
         for (var i = 0; i < data.length; i++) {
-            obj.questions.push({trait: body.questions[i].trait, question: data[i]._id})
+            obj.questions.push(questions[i]._id)
         }
         obj.save(function (err) {
             if (err) {

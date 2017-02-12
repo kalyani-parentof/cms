@@ -15,6 +15,7 @@ var dp = new Schema({
     createdBy: String,
     isDeleted: Boolean,
     isApproved: Boolean,
+    image: String,
     createdDate: {
         type: Date,
         default: Date.now
