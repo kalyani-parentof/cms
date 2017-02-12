@@ -32,7 +32,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
                 return;
             }
             $scope.dts.push($scope.dt)
-            $scope.dt = {name: '', description: ''}
+            $scope.dt = {name: '', description: '',age: $scope.selectedAge }
             $scope.selectedDt = data.data._id
 
         })
