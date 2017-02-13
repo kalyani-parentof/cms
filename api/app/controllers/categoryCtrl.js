@@ -30,15 +30,15 @@ exports.get = function(req, res){
 
 
 exports.update = function(req, res){
-    var categoryReq = new Category(req.body);
-    Category.findOne({_id: categoryReq._id}, function(err, trait){
+    var categoryReq = req.body;
+    Category.findOne({_id: categoryReq._id}, function(err, category){
         category.name = categoryReq.name
         category.save(function(err){
             if(err){
                 res.error(err)
             }
             else{
-                res.success(trait)
+                res.success(category)
             }
         })
     })

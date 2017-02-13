@@ -88,6 +88,8 @@ module.exports = function (app) {
     app.post('/dp/indicator/:id', dp.addIndicator);
     app.delete('/dp/indicator/:id/:indicator', dp.removeIndicator);
     app.get('/dp/:id', dp.getById);
+    app.get('/dp/skills/:dp', dp.getSkillsByDp);
+    app.get('/dp/skills/questions/:sa', dp.getQuestionFromSkills);
 
 
 
@@ -103,7 +105,9 @@ module.exports = function (app) {
 
     //Indicator
     app.post('/indicator', indicator.post)
+    app.put('/indicator', indicator.update)
     app.get('/indicator', indicator.get)
+    app.put('/indicator/delete', indicator.deleteDpDaMap)
 
     // Milestones
     app.post('/indicator/dp', ms.addDp)

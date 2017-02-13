@@ -17,7 +17,6 @@ var skill = new Schema({
         type: Date,
         default: Date.now
     }
-
 });
 skill.plugin(uniqueValidator);
 mongoose.model('skill', skill);

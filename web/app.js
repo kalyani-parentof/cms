@@ -112,7 +112,7 @@ parentOf.run(function ($rootScope, $state, $location, localStorageService) {
 
 parentOf.factory('pofRestangular', ['Restangular', function (Restangular) {
     return Restangular.withConfig(function (RestangularConfigurer) {
-        RestangularConfigurer.setBaseUrl("http://localhost:3111");
+        RestangularConfigurer.setBaseUrl("http://localhost:3301");
         RestangularConfigurer.setDefaultHttpFields({
             timeout: 15000
         });

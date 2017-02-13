@@ -158,7 +158,14 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     }
 
     $scope.updateIndicator = function () {
-
+        pofRestangular.one('indicator').customPUT({id: $scope.selectedIndicator.indicator._id, name:  $scope.indicator, isPermanent: $scope.isPermanent}).then(function(data){
+            $scope.editIndicatorMode = false;
+            $scope.selectedTrait = ""
+            $scope.isPermanent = ""
+            $scope.indicator = ""
+            $scope.selectedIndicator = {}
+            $scope.selectedMSChange()
+        })
     }
 
     $scope.deleteIndicator = function (ind) {
@@ -168,8 +175,20 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         })
     }
 
-    $scope.editIndicator = function () {
-        alert('edit functionality is not live today')
+    $scope.deleteDpMapping = function(id, da, dp){
+        pofRestangular.one('indicator').one('delete').customPUT({id: id, da: da, dp: dp}).then(function(data){
+            $scope.selectedMSChange()
+        })
+    }
+
+
+    $scope.editIndicator = function (indi) {
+        console.log(indi)
+        $scope.editIndicatorMode = true;
+        $scope.selectedTrait = indi.trait._id
+        $scope.isPermanent = indi.indicator.isPermanent
+        $scope.indicator = indi.indicator.name
+        $scope.selectedIndicator = indi;
     }
     //Objective
     function initObj() {

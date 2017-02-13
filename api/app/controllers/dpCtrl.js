@@ -5,6 +5,7 @@
 var DP = require('mongoose').model('dp');
 var Skill = require('mongoose').model('skill');
 var Age = require('mongoose').model('ageGroup');
+var Question = require('mongoose').model('question');
 
 
 exports.post = function (req, res) {
@@ -105,7 +106,16 @@ exports.getDpsByAge = function (req, res) {
 
 
 exports.getSkillsByDp = function(req, res){
-    Skill.find({decisionPoint: req.param.dp}, function(err, dps){
+    Skill.find({decisionPoint: req.param.dp},{rank: 1, name: 1,_id: 1}, function(err, dps){
+        res.success(dps)
+    })
+}
 
+exports.getQuestionFromSkills = function(req, res){
+    Skill.findOne({_id: req.param.sa}, function(err, dp ){
+        var indicators = dp.indicators
+        Question.find({indicator: {$in: indicators}}, {question: 1, _id: 1}, function(questions){
+            res.success({rank: dp.rank, questions: questions})
+        })
     })
 }

@@ -45,6 +45,10 @@ exports.search = function(req, res){
             chars.push(searchReq.characteristic2)
         }
     }
+    else{
+        cats.push("")
+        chars.push("")
+    }
     if(searchReq.category1){
         cats.push(searchReq.category1)
         if(searchReq.characteristic1){
@@ -57,9 +61,13 @@ exports.search = function(req, res){
             chars.push(searchReq.characteristic3)
         }
     }
-
+    else{
+        cats.push("")
+        chars.push("")
+    }
     if(cats.length > 0){
-        query.characteristics = {$elemMatch: {characteristic:{ $all: chars}, category: { $all: cats}}}
+        query['characteristics.characteristic'] =  { $all: chars}
+        query['characteristics.category']   = { $all: cats}
 
     }
 

@@ -147,8 +147,8 @@
                                             <td>{{obj.da.name}}</td>
                                             <td>{{obj.dp.name}}</td>
                                             <td>
-                                                <button type="button" ng-click="editIndicator(indicator)"
-                                                        class="btn btn-danger">Edit
+                                                <button type="button" ng-click="deleteDpMapping(indicator.indicator._id,obj.da._id,obj.dp._id )"
+                                                        class="btn btn-danger">Delete
                                                 </button>
                                             </td>
                                         </tr>
@@ -177,7 +177,7 @@
                             <tfoot>
                             <tr>
                                 <td>
-                                    <select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait"
+                                    <select ng-disabled="editIndicatorMode" ng-options="d._id as d.name for d in traits" ng-model="selectedTrait"
                                             class="form-control" id="traits">
                                         <option>Select Trait</option>
                                     </select>
@@ -191,22 +191,13 @@
                                 <td>
 
                                 </td>
-                                <!--<td>-->
-                                <!--<select ng-options="d._id as d.name for d in das" ng-change="selectedDAChange()" ng-model="selectedDA" class="form-control" id="das">-->
-                                <!--<option>Select DA</option>-->
-                                <!--</select>-->
-                                <!--</td>-->
-                                <!--<td>-->
-                                <!--<select ng-options="d._id as d.name for d in dps" ng-hide="newDp" ng-model="selectedDP" class="form-control" id="dps">-->
-                                <!--<option>Select DP</option>-->
-                                <!--</select>-->
-
-                                <!--<input type="text" ng-model="DP" ng-hide="!newDp" class="form-control" /><span class="glyphicon right small glyphicon-plus" ng-click="newDp = !newDp" aria-hidden="true"></span>-->
-                                <!--</td>-->
 
                                 <td>
-                                    <button type="button" ng-disabled="!selectedTrait || !indicator "
+                                    <button type="button" ng-hide="editIndicatorMode" ng-disabled="!selectedTrait || !indicator "
                                             ng-click="addIndicator()" class="btn btn-default">Add
+                                    </button>
+                                    <button type="button" ng-show="editIndicatorMode" ng-disabled="!selectedTrait || !indicator "
+                                            ng-click="updateIndicator()" class="btn btn-default">Update
                                     </button>
                                 </td>
                             </tr>

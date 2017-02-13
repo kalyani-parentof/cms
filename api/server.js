@@ -48,6 +48,6 @@ process.on('uncaughtException', function (err) {
     console.log('Caught exception: ' + err.stack);
 });
 
-app.listen(3111);
+app.listen(3301);
 module.exports = app;
-console.log('Server running at http://localhost:3111/');
+console.log('Server running at http://localhost:3301/');
