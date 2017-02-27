@@ -89,7 +89,9 @@ module.exports = function (app) {
     app.delete('/dp/indicator/:id/:indicator', dp.removeIndicator);
     app.get('/dp/:id', dp.getById);
     app.get('/dp/skills/:dp', dp.getSkillsByDp);
+    app.get('/dp/skills/:sa/interventions', dp.interventionBySkill);
     app.get('/dp/skills/questions/:sa', dp.getQuestionFromSkills);
+    app.get('/dp/skills/intervention/:id', dp.interventionById);
 
 
 

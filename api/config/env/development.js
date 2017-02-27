@@ -1,7 +1,7 @@
 module.exports = {
     // Development configuration options
     sessionSecret: 'inventory',
-    db: 'mongodb://localhost/parentof-dev',
+    db: 'mongodb://localhost/parentof-prod',
     username: "meetshanu1991@gmail.com",//Info@parentof.com",
     password: "losuman",//"pikto2p2attempt",
     postActivation: 'http://kyc.parentof.com/#login',

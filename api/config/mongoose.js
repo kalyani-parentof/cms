@@ -22,6 +22,8 @@ module.exports = function () {
     require('../app/models/researchProof')
     require('../app/models/category')
     require('../app/models/skill')
+    require('../app/models/contentTierCategory')
+    require('../app/models/intervention')
 
     return db;
 };
