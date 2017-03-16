@@ -12,6 +12,9 @@ var skill = new Schema({
     description: String,
     indicators: [],
     user: String,
+    isLocked: Boolean,
+    thumb: String,
+    cover:String,
     createdBy: String,
     createdDate: {
         type: Date,

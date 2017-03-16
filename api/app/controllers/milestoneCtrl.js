@@ -163,7 +163,7 @@ exports.findIndicators = function (req, res) {
             }
         }
     )
-    .exec(function (err, data) {
+        .exec(function (err, data) {
             console.log(err, data)
             if (err) {
                 res.error(err)
@@ -264,6 +264,58 @@ exports.addObjective = function (req, res) {
                 })
             }
         })
+    })
+
+
+}
+
+exports.updateObjective = function (req, res) {
+    var bulk = Question.collection.initializeOrderedBulkOp();
+    var body = req.body
+    OBJECTIVE.findOne({_id: body.id}, function (err, obj) {
+        if (err) {
+            console.log(err)
+        }
+        var questions = []
+        for (var i = 0; i < body.questions.length; i++) {
+            if (!body.questions[i].questionId) {
+                questions.push(new Question(body.questions[i]));
+            }
+            else {
+                bulk.find({_id: body.questions[i].questionId}).update({$set: {question: body.questions[i].question}})
+            }
+        }
+        if (questions.length > 0) {
+            Question.insertMany(questions, function (err, data) {
+                if (err) {
+                    console.log(err)
+                }
+
+                for (var i = 0; i < data.length; i++) {
+                    obj.questions.push(questions[i]._id)
+                }
+                bulk.execute(function () {
+                    obj.save(function (err) {
+                        if (err) {
+                            res.error(err)
+                        }
+                        res.success("questions updated")
+                    })
+                })
+
+            })
+
+        }
+        else {
+            bulk.execute(function () {
+
+                if (err) {
+                    res.error(err)
+                }
+                res.success("questions updated")
+
+            })
+        }
     })
 
 

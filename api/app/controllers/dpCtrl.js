@@ -142,8 +142,12 @@ exports.getSkillsByDp = function (req, res) {
     Skill.find({decisionPoint: req.params.dp}, {
         rank: 1,
         name: 1,
+        description: 1,
         _id: 1,
-        indicators: 1
+        indicators: 1,
+        isLocked: 1,
+        thumb: 1,
+        cover: 1
     }, {sort: 'rank'}, function (err, dps) {
         res.success(dps)
     })

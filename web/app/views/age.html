@@ -177,7 +177,7 @@
                             <tfoot>
                             <tr>
                                 <td>
-                                    <select ng-disabled="editIndicatorMode" ng-options="d._id as d.name for d in traits" ng-model="selectedTrait"
+                                    <select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait"
                                             class="form-control" id="traits">
                                         <option>Select Trait</option>
                                     </select>
@@ -258,13 +258,14 @@
                     <div class="panel-body">
                         <div> Item : {{objective.itemName}}</div>
                         <div> Derivative : {{objective.derivative}}</div>
+                        <button ng-click="editItem(objective._id)">Edit</button>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <div ng-if="newObjective" ng-show="selectedDt && selectedAge && selectedMS" class="panel panel-default">
+        <div ng-if="newObjective || editObjective" ng-show="selectedDt && selectedAge && selectedMS" class="panel panel-default">
             <div class="panel-heading">Add Objective</div>
             <div class="panel-body">
                 <div>
@@ -462,7 +463,7 @@
                         <div>Item with combination of above sub items already exist</div>
                         <i>{{existedItem}}</i>
                     </div>
-                    <div ng-if="!existedItem " class="row">
+                    <div  class="row">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel panel-default">
@@ -513,7 +514,8 @@
                         </div>
                     </div>
                     <div>
-                        <button ng-click="addObjective()" ng-if="obj.itemName" class="btn btn-primary">Add</button>
+                        <button ng-hide="editObjective" ng-click="addObjective()" ng-if="obj.itemName" class="btn btn-primary">Add</button>
+                        <button ng-show="editObjective" ng-click="updateObjective()" ng-if="obj.itemName" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </div>

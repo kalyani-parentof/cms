@@ -158,7 +158,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     }
 
     $scope.updateIndicator = function () {
-        pofRestangular.one('indicator').customPUT({id: $scope.selectedIndicator.indicator._id, name:  $scope.indicator, isPermanent: $scope.isPermanent}).then(function(data){
+        pofRestangular.one('indicator').customPUT({id: $scope.selectedIndicator.indicator._id, traitId: $scope.selectedTrait, name:  $scope.indicator, isPermanent: $scope.isPermanent, ms: $scope.selectedMS}).then(function(data){
             $scope.editIndicatorMode = false;
             $scope.selectedTrait = ""
             $scope.isPermanent = ""
@@ -277,13 +277,59 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         }
 
     }
+    $scope.editItem = function(id){
+        pofRestangular.one('objective').one(id).customGET().then(function(data){
+            $scope.obj.id = id
+            $scope.obj.name = data.data.name
+            $scope.obj.itemName = data.data.itemName
+            $scope.obj.questions = []
+            $scope.editObjective = true
+            for (var i = 0; i < $scope.msIndicators.length; i++) {
+                var questionObj = QuestionByIndicator(data.data.questions, $scope.msIndicators[i].indicator._id )
+                if(questionObj){
+                    $scope.obj.questions.push({
+                        indicator: $scope.msIndicators[i].indicator._id,
+                        trait: $scope.msIndicators[i].trait._id,
+                        question: questionObj.question,
+                        questionId: questionObj._id,
+                        traitName: $scope.msIndicators[i].trait.name
+                    })
+                }else{
+                    $scope.obj.questions.push({
+                        indicator: $scope.msIndicators[i].indicator._id,
+                        trait: $scope.msIndicators[i].trait._id,
+                        question: '',
+                        traitName: $scope.msIndicators[i].trait.name
+                    })
+                }
 
+            }
+        })
+    }
+    function QuestionByIndicator(questions, indicator){
+        for(var i=0; i< questions.length; i++){
+            if(questions[i].indicator == indicator){
+                return questions[i]
+            }
+        }
+        return false;
+    }
     $scope.findItem = function () {
         if ($scope.obj.subItem1 && $scope.obj.subItem2) {
             pofRestangular.one("objective").one('searchItem').customPOST($scope.obj).then(function (data) {
                 if (Array.isArray(data.data)) {
                     if (data.data.length > 0) {
                         $scope.existedItem = data.data[0].itemName;
+                        $scope.obj.itemName = ''
+                        $scope.obj.questions = []
+                        for (var i = 0; i < $scope.msIndicators.length; i++) {
+                            $scope.obj.questions.push({
+                                indicator: $scope.msIndicators[i].indicator._id,
+                                trait: $scope.msIndicators[i].trait._id,
+                                question: '',
+                                traitName: $scope.msIndicators[i].trait.name
+                            })
+                        }
                     }
                     else {
                         $scope.obj.itemName = ''
@@ -324,6 +370,13 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
 
     $scope.addObjective = function () {
         pofRestangular.one('objective').one($scope.selectedMS).customPOST($scope.obj).then(function (data) {
+            initObj()
+            $scope.selectedMSChange()
+        })
+    }
+
+    $scope.updateObjective = function(){
+        pofRestangular.one('objective').one($scope.selectedMS).customPUT($scope.obj).then(function (data) {
             initObj()
             $scope.selectedMSChange()
         })

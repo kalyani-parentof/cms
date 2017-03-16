@@ -2,6 +2,7 @@
  * Created by rajanchaudhary on 10/11/16.
  */
 var Indicator = require('mongoose').model('indicator');
+var Milestone = require('mongoose').model('mileStone');
 
 
 exports.post = function (req, res) {
@@ -30,8 +31,23 @@ exports.get = function (req, res) {
 
 exports.update = function (req, res) {
     Indicator.update({_id: req.body.id}, {name: req.body.name, isPermanent: req.body.isPermanent}, function (err) {
+        Milestone.update({
+            _id: req.body.ms,
+            "indicators.indicator": req.body.id
+        }, {
+            $set: {
+                "indicators.$.trait": req.body.traitId
+            }
+        }, function (err) {
+            if (err) {
+                res.error(err);
+                return;
+            } else
+                res.success(
+                    res.success("updated successfully")
+                );
+        })
 
-        res.success("updated successfully")
     })
 }
 
