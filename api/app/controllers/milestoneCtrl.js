@@ -7,10 +7,11 @@ var OBJECTIVE = require('mongoose').model('objective');
 var Question = require('mongoose').model('question');
 var Indicator = require('mongoose').model('indicator');
 var DP = require('mongoose').model('dp');
+var async = require('async')
 
 exports.addDp = function (req, res) {
     var msId = req.params.ms;
-    var dpReq = req.body;
+     var dpReq = req.body;
     if (dpReq.DP) {
         var dp = new DP({name: dpReq.DP, da: dpReq.da, age: dpReq.age});
         dp.save(function (err) {
@@ -19,6 +20,7 @@ exports.addDp = function (req, res) {
             }
             else {
                 dpReq.dp = dp._id
+
                 Indicator.update({_id: dpReq.indicator}, {$push: {dps: {da: dpReq.da, dp: dpReq.dp}}}, function (err) {
                     if (err) {
                         res.error(err)
@@ -272,6 +274,19 @@ exports.addObjective = function (req, res) {
 exports.updateObjective = function (req, res) {
     var bulk = Question.collection.initializeOrderedBulkOp();
     var body = req.body
+    var updateHash = {}
+    var counter = 0
+    function inc(){
+        counter++;
+    }
+
+    function dec (){
+        counter--;
+        if(counter == 0){
+            res.success("updated")
+        }
+    }
+    var questionsToUpdate = []
     OBJECTIVE.findOne({_id: body.id}, function (err, obj) {
         if (err) {
             console.log(err)
@@ -282,7 +297,8 @@ exports.updateObjective = function (req, res) {
                 questions.push(new Question(body.questions[i]));
             }
             else {
-                bulk.find({_id: body.questions[i].questionId}).update({$set: {question: body.questions[i].question}})
+                questionsToUpdate.push({_id: body.questions[i].questionId,question: body.questions[i].question })
+
             }
         }
         if (questions.length > 0) {
@@ -294,29 +310,24 @@ exports.updateObjective = function (req, res) {
                 for (var i = 0; i < data.length; i++) {
                     obj.questions.push(questions[i]._id)
                 }
-                bulk.execute(function () {
-                    obj.save(function (err) {
-                        if (err) {
-                            res.error(err)
-                        }
-                        res.success("questions updated")
-                    })
-                })
+                update()
 
             })
 
         }
         else {
-            bulk.execute(function () {
-
-                if (err) {
-                    res.error(err)
-                }
-                res.success("questions updated")
-
-            })
+            update()
+        }
+        function update(){
+            for(var i =0;i< questionsToUpdate.length; i++){
+                inc()
+                Question.update({_id: questionsToUpdate[i]._id}, {$set: {question: questionsToUpdate[i].question}}, function(){
+                    dec()
+                })
+            }
         }
     })
+
 
 
 }

@@ -12,5 +12,5 @@ module.exports = {
         options: {
             //stream: 'access.log'
         }
-    },
+    }
 };
