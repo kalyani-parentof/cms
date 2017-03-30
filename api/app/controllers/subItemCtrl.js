@@ -37,39 +37,6 @@ exports.search = function(req, res){
         query.functionality = searchReq.functionality;
     }
 
-    var cats = []
-    var chars = []
-    if(searchReq.category2){
-        cats.push(searchReq.category2)
-        if(searchReq.characteristic2){
-            chars.push(searchReq.characteristic2)
-        }
-    }
-    else{
-        cats.push("")
-        chars.push("")
-    }
-    if(searchReq.category1){
-        cats.push(searchReq.category1)
-        if(searchReq.characteristic1){
-            chars.push(searchReq.characteristic1)
-        }
-    }
-    if(searchReq.category3){
-        cats.push(searchReq.category3)
-        if(searchReq.characteristic3){
-            chars.push(searchReq.characteristic3)
-        }
-    }
-    else{
-        cats.push("")
-        chars.push("")
-    }
-    if(cats.length > 0){
-        query['characteristics.characteristic'] =  { $all: chars}
-        query['characteristics.category']   = { $all: cats}
-
-    }
 
     if(searchReq.country){
         query.country = searchReq.country
@@ -103,7 +70,7 @@ exports.update = function(req, res){
             query.functionality = searchReq.functionality;
         }
 
-        if(searchReq.characteristic){
+        if(searchReq.characteristics){
             query.characteristic = searchReq.characteristic
         }
 

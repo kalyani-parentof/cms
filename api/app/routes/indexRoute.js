@@ -83,6 +83,7 @@ module.exports = function (app) {
     //DP
     app.post('/dp', dp.post);
     app.get('/dp', dp.get);
+    app.get('/dp/skillsByIds', dp.getSkillsByIds);
     app.get('/dp/age/:age', dp.getDpsByAge);
     app.get('/dp/da/:da/age/:age', dp.getByDA);
     app.post('/dp/indicator/:id', dp.addIndicator);
@@ -92,6 +93,7 @@ module.exports = function (app) {
     app.get('/dp/skills/:sa/interventions', dp.interventionBySkill);
     app.get('/dp/skills/questions/:sa', dp.getQuestionFromSkills);
     app.get('/dp/skills/intervention/:id', dp.interventionById);
+
 
 
 
