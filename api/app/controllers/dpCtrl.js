@@ -188,7 +188,31 @@ exports.getQuestionFromSkills = function (req, res) {
         })
     })
 }
+exports.getInterventionsByDp = function(req, res){
+    var dp = req.params.dp
+    var plans = []
+    Intervention.find({decisionPoint: dp}, {_id: 1}, function(err, data){
+        for(var i=0; i< data.length; i++){
+            plans.push(data[i]._id)
+        }
+        res.success(plans)
+
+    })
+}
+
+exports.getQuestionsByDp = function(req, res){
+    var dp = req.params.dp
+    var plans = []
+    Intervention.find({decisionPoint: dp}, {_id: 1}, function(err, data){
+        for(var i=0; i< data.length; i++){
+            plans.push(data[i]._id)
+        }
+        Question.find({indicator: {$in: plans}}, function (err, questions) {
+
+            res.success(questions)
+        })
 
 
-
+    })
+}
 

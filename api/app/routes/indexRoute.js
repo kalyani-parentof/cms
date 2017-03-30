@@ -85,6 +85,8 @@ module.exports = function (app) {
     app.get('/dp', dp.get);
     app.get('/dp/skillsByIds', dp.getSkillsByIds);
     app.get('/dp/age/:age', dp.getDpsByAge);
+    app.get('/dp/intervention/:dp', dp.getInterventionsByDp);
+    app.get('/dp/questions/:dp', dp.getInterventionsByDp);
     app.get('/dp/da/:da/age/:age', dp.getByDA);
     app.post('/dp/indicator/:id', dp.addIndicator);
     app.delete('/dp/indicator/:id/:indicator', dp.removeIndicator);
