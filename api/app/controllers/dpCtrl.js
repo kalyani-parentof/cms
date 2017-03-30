@@ -156,7 +156,10 @@ exports.getSkillsByDp = function (req, res) {
 exports.getSkillsByIds = function(req, res){
     var ids = req.query.ids.split(',')
     console.log(ids)
-    Skill.find({_id : {$in : ids}}, {name: 1,cover:1}, function(err, data){
+    Skill.find({_id : {$in : ids}}, {name: 1,cover:1, decisionPoint: 1}).populate({
+        path: 'decisionPoint',
+        model: 'dp'
+    }).exec(function(err, data){
         res.success(data)
     })
 }
