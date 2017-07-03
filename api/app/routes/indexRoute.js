@@ -18,6 +18,7 @@ module.exports = function (app) {
     var ms = require('../controllers/milestoneCtrl');
     var fileCtrl = require('../controllers/fileCtrl');
     var rp = require('../controllers/researchProofCtrl');
+    var milestone = require('../controllers/milestoneNCtrl');
 
     app.get('/*', function (req, res, next) {
         res.header('X-XSS-Protection', 0);
@@ -129,7 +130,11 @@ module.exports = function (app) {
     app.get('/ms/:ms/:trait/', ms.listIndicators)
 
 
-
+//milestone
+     app.get('/milestone', milestone.get);
+    app.post('/milestone', milestone.post);
+    app.put('/milestone', milestone.update);
+    app.delete('/milestone/:id/', milestone.deleteMilestone);
 
 
     app.post('/fileUpload/research', fileCtrl.create)
