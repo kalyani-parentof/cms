@@ -68,7 +68,12 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
             url: '/research',
             templateUrl: 'app/views/researchProof.html',
             controller: 'researchProofCtrl'
-        })
+        }).state('milestone', {
+        url: '/milestone',
+        templateUrl: 'app/views/milestone.html',
+        controller: 'milestoneCtrl',            // return a Restangular promise, the route will
+
+    })
 
 
     // if none of the above states are matched, use this as the fallback
