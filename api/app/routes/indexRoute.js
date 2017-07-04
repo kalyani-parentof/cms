@@ -65,6 +65,7 @@ module.exports = function (app) {
     app.post('/taxonomyCategory', taxonomyCategory.post)
     app.put('/taxonomyCategory', taxonomyCategory.update)
     app.get('/taxonomyCategory', taxonomyCategory.get)
+    app.delete('/taxonomyCategory/:id',taxonomyCategory.delete)
 
 
     app.post('/category', category.post)
