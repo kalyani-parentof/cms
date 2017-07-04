@@ -37,4 +37,25 @@ parentOf.controller('taxonomyCategoryCtrl', function ($scope, pofRestangular, No
             init()
         })
     }
-})
+       $scope.delete = function(taxonomyCategory){
+        var id = taxonomyCategory._id;
+        pofRestangular.one('taxonomyCategory').one(id).customDELETE().then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data)
+                return;
+            }
+            Notification.primary("Taxonomy Category deleted successfully");
+            init();
+            refreshTaxonomyCategory();
+        });
+
+
+    };
+    function refreshTaxonomyCategory(){
+        pofRestangular.one('taxonomyCategory').customGET().then(function(data){
+
+            $scope.taxonomyCategories = data.data;
+        });
+    }
+
+});
