@@ -36,6 +36,10 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
             url: '/trait',
             templateUrl: 'app/views/trait.html',
             controller: 'traitCtrl'
+        }).state('taxonomyCategory', {
+        url: '/taxonomyCategory',
+        templateUrl: 'app/views/taxonomyCategory.html',
+        controller: 'taxonomyCategoryCtrl'
         }).state('category', {
             url: '/category',
             templateUrl: 'app/views/category.html',
