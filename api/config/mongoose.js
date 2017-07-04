@@ -6,6 +6,7 @@ module.exports = function () {
     require('../app/models/developmentalTask')
     require('../app/models/mileStone')
     require('../app/models/trait')
+    require('../app/models/taxonomyCategory')
     require('../app/models/characteristic')
     require('../app/models/developmentalArea')
     require('../app/models/dp')
@@ -24,6 +25,7 @@ module.exports = function () {
     require('../app/models/skill')
     require('../app/models/contentTierCategory')
     require('../app/models/intervention')
+    require('../app/models/milestoneN')
 
     return db;
 };
