@@ -8,7 +8,7 @@
                         <thead><tr><th>Traits</th></tr></thead>
                         <tbody>
                         <tr ng-repeat="taxonomyCategory in taxonomyCategories"><td>
-                            <div>{{taxonomyCategory.name}} <span ng-click="edit(taxonomyCategory)" class="glyphicon glyphicon-pencil"></span> </div>
+                            <div>{{taxonomyCategory.name}} <span ng-click="edit(taxonomyCategory)" class="glyphicon glyphicon-pencil"></span>&emsp;<span ng-click="delete(taxonomyCategory)" class="glyphicon glyphicon-remove"></span>  </div>
                         </td></tr>
                         </tbody>
                     </table>
