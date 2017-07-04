@@ -42,3 +42,17 @@ exports.update = function(req, res){
         })
     })
 }
+
+exports.delete = function(req,res){
+    var id = req.params.id;
+    console.log(id);
+    TaxonomyCategory.remove({_id: id},function (err,data) {
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(data)
+        }
+    });
+    res.success("deleted successfully")
+}
