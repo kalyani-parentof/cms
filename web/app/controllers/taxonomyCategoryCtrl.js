@@ -10,7 +10,7 @@ parentOf.controller('taxonomyCategoryCtrl', function ($scope, pofRestangular, No
     }
 
     init()
-    $scope.addtaxonomyCategory = function () {
+    $scope.addTaxonomyCategory = function () {
         pofRestangular.one('taxonomyCategory').customPOST($scope.taxonomyCategory).then(function (data) {
             if(data.status == "error"){
                 $scope.errorHandler(data)
