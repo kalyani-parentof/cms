@@ -5,6 +5,7 @@ module.exports = function (app) {
     var category = require('../controllers/categoryCtrl');
     var country = require('../controllers/countryCtrl');
     var tier = require('../controllers/tierCtrl');
+    var taxonomyCategory = require('../controllers/taxonomyCategoryCtrl');
     var gender = require('../controllers/genderCtrl');
     var subItem = require('../controllers/subItemCtrl');
     var objective = require('../controllers/objectiveCtrl');
@@ -60,6 +61,10 @@ module.exports = function (app) {
     app.post('/trait', trait.post)
     app.put('/trait', trait.update)
     app.get('/trait', trait.get)
+    
+    app.post('/taxonomyCategory', taxonomyCategory.post)
+    app.put('/taxonomyCategory', taxonomyCategory.update)
+    app.get('/taxonomyCategory', taxonomyCategory.get)
 
 
     app.post('/category', category.post)
