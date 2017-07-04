@@ -22,7 +22,7 @@ parentOf.controller('taxonomyCategoryCtrl', function ($scope, pofRestangular, No
         })
     }
 
-    $scope.edit = function(trait){
+    $scope.edit = function(taxonomyCategory){
         $scope.editMode= true;
         $scope.taxonomyCategory = taxonomyCategory;
     }
