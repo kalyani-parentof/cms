@@ -52,3 +52,23 @@ exports.getAll = function(req, res){
         }
     })
 }
+exports.delete= function(req, res){
+
+    var id = req.params.id;
+    console.log(id);
+
+    DA.remove({_id: id}, function(err){
+
+        if(err){
+            res.error(err)
+        }
+        else{
+            res.success(data)
+        }
+
+    })
+
+
+
+    res.success("deleted successfully")
+}

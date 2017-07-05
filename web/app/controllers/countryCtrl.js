@@ -42,4 +42,23 @@ parentOf.controller('countryCtrl', function ($scope, pofRestangular, Notificatio
             init()
         })
     }
+    $scope.delete = function(country){
+        var id = country._id;
+        pofRestangular.one('country').one(id).customDELETE().then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data);
+                return;
+            }
+            Notification.primary("country deleted successfully");
+            init();
+            return refreshCountry();
+
+        })
+    }
+    function refreshCountry() {
+        pofRestangular.one('country').customGET().then(function(data){
+            $scope.country = data.data;
+        })
+
+    }
 })

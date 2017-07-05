@@ -37,7 +37,7 @@ parentOf.controller('taxonomyCategoryCtrl', function ($scope, pofRestangular, No
             init()
         })
     }
-       $scope.delete = function(taxonomyCategory){
+    $scope.delete = function(taxonomyCategory){
         var id = taxonomyCategory._id;
         pofRestangular.one('taxonomyCategory').one(id).customDELETE().then(function (data) {
             if(data.status == "error"){
@@ -59,3 +59,4 @@ parentOf.controller('taxonomyCategoryCtrl', function ($scope, pofRestangular, No
     }
 
 });
+

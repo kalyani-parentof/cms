@@ -1,12 +1,3 @@
-/**
- * Created by rajanchaudhary on 10/14/16.
- */
-/**
- * Created by rajanchaudhary on 10/11/16.
- */
-/**
- * Created by rajanchaudhary on 10/11/16.
- */
 var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;

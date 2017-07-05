@@ -1,4 +1,6 @@
-
+/**
+ * Created by parentof 6 on 20-06-2017.
+ */
 var Milestone = require('mongoose').model('milestone');
 
 
@@ -72,4 +74,3 @@ exports.deleteMilestone= function(req, res){
 
     res.success("deleted successfully")
 }
-

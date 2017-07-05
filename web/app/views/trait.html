@@ -8,7 +8,7 @@
                         <thead><tr><th>Traits</th></tr></thead>
                         <tbody>
                         <tr ng-repeat="trait in traits"><td>
-                            <div>{{trait.name}} <span ng-click="edit(trait)" class="glyphicon glyphicon-pencil"></span> </div>
+                            <div>{{trait.name}} <span ng-click="edit(trait)" class="glyphicon glyphicon-pencil"></span> &emsp;<span ng-click="delete(trait)" class="glyphicon glyphicon-remove" style="color: red"></span> </div>
                         </td></tr>
                         </tbody>
                     </table>

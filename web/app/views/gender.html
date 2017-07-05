@@ -8,7 +8,7 @@
                         <thead><tr><th>Gender</th></tr></thead>
                         <tbody>
                         <tr ng-repeat="gender in genders"><td>
-                            <div>{{gender.name}} <span ng-click="edit(gender)" class="glyphicon glyphicon-pencil"></span> </div>
+                            <div>{{gender.name}}  <span style="color: blue" ng-click="edit(gender)" class="glyphicon glyphicon-pencil"></span>&emsp;<span style="color: red" ng-click="delete(gender)" class="glyphicon glyphicon-remove"></span></div>
                         </td></tr>
                         </tbody>
                     </table>

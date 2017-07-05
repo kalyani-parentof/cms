@@ -40,7 +40,7 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
         url: '/taxonomyCategory',
         templateUrl: 'app/views/taxonomyCategory.html',
         controller: 'taxonomyCategoryCtrl'
-        }).state('category', {
+    }).state('category', {
             url: '/category',
             templateUrl: 'app/views/category.html',
             controller: 'categoryCtrl'
@@ -72,14 +72,19 @@ parentOf.config(function ($stateProvider, $urlRouterProvider) {
             url: '/research',
             templateUrl: 'app/views/researchProof.html',
             controller: 'researchProofCtrl'
-        }).state('milestone', {
+        })
+        .state('milestone', {
         url: '/milestone',
         templateUrl: 'app/views/milestone.html',
         controller: 'milestoneCtrl',            // return a Restangular promise, the route will
 
     })
+        .state('devTask', {
+            url: '/devTask',
+            templateUrl: 'app/views/devTask.html',
+            controller: 'devTaskCtrl',            // return a Restangular promise, the route will
 
-
+        })
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/age');
 
@@ -126,6 +131,7 @@ parentOf.factory('pofRestangular', ['Restangular', function (Restangular) {
             timeout: 15000
         });
     });
+
 }]);
 
 parentOf.controller('mainCtrl', function ($scope, Notification) {

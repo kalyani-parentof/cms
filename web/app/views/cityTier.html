@@ -8,7 +8,7 @@
                         <thead><tr><th>City tier</th></tr></thead>
                         <tbody>
                         <tr ng-repeat="tier in tiers"><td>
-                            <div>{{tier.name}} <span ng-click="edit(tier)" class="glyphicon glyphicon-pencil"></span> </div>
+                            <div>{{tier.name}} <span style="color: blue" ng-click="edit(tier)" class="glyphicon glyphicon-pencil"></span>&emsp;<span style="color: red" ng-click="delete(tier)" class="glyphicon glyphicon-remove"></span> </div>
                         </td></tr>
                         </tbody>
                     </table>

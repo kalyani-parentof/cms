@@ -42,4 +42,16 @@ exports.update = function(req, res){
             }
         })
     })
+};
+exports.delete = function (req,res) {
+    var id = req.params.id;
+    SES.remove({_id:id},function (err,data) {
+        if(err){
+            res.error(err);
+        }else{
+            res.success(data);
+        }
+
+    })
+
 }

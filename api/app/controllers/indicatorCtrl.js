@@ -34,7 +34,12 @@ exports.update = function (req, res) {
         Milestone.update({
             _id: req.body.ms,
             "indicators.indicator": req.body.id
-        }, {
+        },
+            {
+                $set: {
+                    "indicators.$.taxonomyCategory": req.body.taxonomyCategoryId
+                }
+            },{
             $set: {
                 "indicators.$.trait": req.body.traitId
             }
@@ -63,4 +68,16 @@ exports.deleteDpDaMap = function (req, res) {
                 "Da Dp deleted"
             );
     })
+}
+exports.delete = function (req,res) {
+    var id = req.params.id;
+    Indicator.remove({_id:id},function (err,data) {
+        if(err){
+            res.error(err);
+        }else{
+            res.success(data);
+        }
+
+    })
+
 }
