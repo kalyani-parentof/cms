@@ -18,6 +18,10 @@ exports.getItem = function(req, res){
     var id = req.params.id;
     OBJECTIVE.findOne({"_id": id}).populate({
         path: 'questions',
+        populate: {
+            path: 'taxonomyCategory',
+            model: 'taxonomyCategory'
+        },
     populate: {
         path: 'trait',
             model: 'trait'
