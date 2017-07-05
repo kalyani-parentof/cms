@@ -55,4 +55,3 @@ parentOf.controller('indicatorCtrl', function ($scope, pofRestangular,Notificati
         })
 
     }
-});
