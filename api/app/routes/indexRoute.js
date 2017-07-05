@@ -4,8 +4,8 @@ module.exports = function (app) {
     var trait = require('../controllers/traitCtrl');
     var category = require('../controllers/categoryCtrl');
     var country = require('../controllers/countryCtrl');
-    var tier = require('../controllers/tierCtrl');
     var taxonomyCategory = require('../controllers/taxonomyCategoryCtrl');
+    var tier = require('../controllers/tierCtrl');
     var gender = require('../controllers/genderCtrl');
     var subItem = require('../controllers/subItemCtrl');
     var objective = require('../controllers/objectiveCtrl');
@@ -33,6 +33,7 @@ module.exports = function (app) {
     app.post('/da', da.post);
     app.put('/da', da.update);
     app.get('/da/', da.getAll);
+    app.delete('/da/:id', da.delete);
 
     //characteristic
     app.post('/characteristic', characteristic.post);
@@ -55,38 +56,45 @@ module.exports = function (app) {
     app.post('/subItem', subItem.post)
     app.put('/subItem', subItem.update)
     app.post('/subItem/search', subItem.search)
+    app.post('/si/:id', subItem.delete)
 
 
 
     app.post('/trait', trait.post)
     app.put('/trait', trait.update)
     app.get('/trait', trait.get)
-    
+    app.delete('/trait/:id', trait.delete)
+
     app.post('/taxonomyCategory', taxonomyCategory.post)
     app.put('/taxonomyCategory', taxonomyCategory.update)
     app.get('/taxonomyCategory', taxonomyCategory.get)
-    app.delete('/taxonomyCategory/:id',taxonomyCategory.delete)
+    app.delete('/taxonomyCategory/:id', taxonomyCategory.delete)
 
 
     app.post('/category', category.post)
     app.put('/category', category.update)
     app.get('/category', category.get)
+    app.delete('/category/:id', category.delete)
 
     app.post('/country', country.post)
     app.put('/country', country.update)
     app.get('/country', country.get)
+    app.delete('/country/:id', country.delete)
 
     app.post('/gender', gender.post)
     app.put('/gender', gender.update)
     app.get('/gender', gender.get)
+    app.delete('/gender/:id', gender.delete)
 
     app.post('/tier', tier.post)
     app.put('/tier', tier.update)
     app.get('/tier', tier.get)
+    app.delete('/tier/:id', tier.delete)
 
     app.post('/ses', ses.post)
     app.put('/ses', ses.update)
     app.get('/ses', ses.get)
+    app.delete('/ses/:id', ses.delete)
     //DP
     app.post('/dp', dp.post);
     app.get('/dp', dp.get);
@@ -121,6 +129,7 @@ module.exports = function (app) {
     app.put('/indicator', indicator.update)
     app.get('/indicator', indicator.get)
     app.put('/indicator/delete', indicator.deleteDpDaMap)
+    app.delete('/indicator/:id', indicator.delete)
 
     // Milestones
     app.post('/indicator/dp', ms.addDp)
@@ -132,18 +141,18 @@ module.exports = function (app) {
     app.post('/objective/:ms', ms.addObjective)
     app.put('/objective/:ms', ms.updateObjective)
     app.get('/ms/:ms', ms.getIndicator)
-    app.delete('/ms/:ms/:trait/:indicator/:da/:dp', ms.deleteIndicator)
-    app.get('/ms/:ms/:trait/', ms.listIndicators)
-
-
-//milestone
-     app.get('/milestone', milestone.get);
-    app.post('/milestone', milestone.post);
-    app.put('/milestone', milestone.update);
-    app.delete('/milestone/:id/', milestone.deleteMilestone);
-
+    app.delete('/ms/:ms/:taxonomyCategory/:trait/:indicator/:da/:dp', ms.deleteIndicator)
+    app.get('/ms/:ms/:taxonomyCategory/:trait/', ms.listIndicators)
 
     app.post('/fileUpload/research', fileCtrl.create)
+
+    app.get('/milestone', milestone.get);
+    app.post('/milestone', milestone.post);
+    app.put('/milestone', milestone.update);
+    //app.delete('/milestone/id',milestone.delete)
+    app.delete('/milestone/:id/', milestone.deleteMilestone);
+
+   // app.delete('/milestone/:id', milestone.delete);
 
 
     app.post('/research', rp.post)
