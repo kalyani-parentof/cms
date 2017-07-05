@@ -1,94 +1,368 @@
-/*Created by parentof 6 on 15-06-2017.*/
+/**
+ * Created by rajanchaudhary on 10/11/16.
+ */
 
-parentOf.controller('milestoneCtrl', function ($scope, pofRestangular,Notification) {
-    function init() {
-        $scope.selectedMilestone = "";
+var MS = require('mongoose').model('mileStone');
+var OBJECTIVE = require('mongoose').model('objective');
+var Question = require('mongoose').model('question');
+var Indicator = require('mongoose').model('indicator');
+var DP = require('mongoose').model('dp');
+var async = require('async')
 
-        $scope.editMode = false;
-
-        if(!$scope.da) {
-            $scope.milestone = {name: ''}
-        }
-        else{
-            $scope.milestone = {name: ''}
-        }
-        pofRestangular.one("milestone").customGET().then(function (data) {
-            $scope.milestones = data.data;
-        });
-        $scope.milestone = {name: ''};
-    }
-
-    init();
-    $scope.addMilestone = function () {
-        $scope.editMode = false;
-        pofRestangular.one('milestone').customPOST($scope.milestone).then(function (data) {
-            //console.log("hello2");
-            // console.log($scope.milestone.name);
-            if (data.status == "error") {
-                $scope.errorHandler(data);
-                console.log(data);
-                return;
+exports.addDp = function (req, res) {
+    var msId = req.params.ms;
+     var dpReq = req.body;
+    if (dpReq.DP) {
+        var dp = new DP({name: dpReq.DP, da: dpReq.da, age: dpReq.age});
+        dp.save(function (err) {
+            if (err) {
+                res.error(err)
             }
-            $scope.milestones.push({name: $scope.milestone.name});
+            else {
+                dpReq.dp = dp._id
 
+                Indicator.update({_id: dpReq.indicator}, {$push: {dps: {da: dpReq.da, dp: dpReq.dp}}}, function (err) {
+                    if (err) {
+                        res.error(err)
+                    }
+                    else {
+                        res.success("added dp to indicator")
+                    }
 
-            Notification.primary("milestone added successfully");
-            init();
-        });
-    };
-
-    $scope.list = function(){
-        pofRestangular.one('milestone').customGET().then(function(data){
-            $scope.milestones = data.data;
+                })
+            }
         })
     }
-    $scope.list()
-
-    $scope.edit = function(milestone){
-        $scope.milestone = milestone;
-        $scope.editMode = true;
-    };
-
-    $scope.update = function(){
-        pofRestangular.one('milestone').customPUT($scope.milestone).then(function(data){
-            if(data.status == "error"){
-                $scope.errorHandler(data)
-                return;
+    else {
+        Indicator.update({_id: dpReq.indicator}, {$push: {dps: dpReq}}, function (err) {
+            if (err) {
+                res.error(err)
             }
-            Notification.primary("milestone updated successfully");
-
-            init()
+            else {
+                res.success("added dp to indicator")
+            }
         })
-    };
-    init();
+    }
+}
 
+exports.addIndicator = function (req, res) {
+    var msId = req.params.ms;
+    var indicator = req.body;
+    if (indicator.DP) {
+        var dp = new DP({name: indicator.DP, da: indicator.da, age: indicator.age});
+        dp.save(function (err) {
+            if (err) {
+                res.error(err)
+            }
+            else {
+                indicator.dp = dp._id;
+                insertIndicator(msId, indicator, res)
+            }
+        })
+    }
+    else {
+        insertIndicator(msId, indicator, res)
+    }
+}
 
-    $scope.deleteMilestone= function(milestone) {
+function insertIndicator(msId, indi, res) {
+    var indicator = new Indicator({name: indi.indicator, isPermanent: indi.isPermanent});
+    indicator.save(function (err) {
+        if (err) {
+            res.error(err)
+        }
+        else {
+            indi.indicator = indicator._id
+            MS.update({_id: msId}, {$push: {indicators: indi}}, function (errr) {
+                res.success("saved successfully")
+            })
+        }
+    })
 
-        var id = milestone._id;
-        console.log(id);
-        pofRestangular.one('milestone').one(id).customDELETE().then(function (data) {
-            if (data.status == "error") {
-                $scope.errorHandler(data);
-                console.log(data);
-                return;
-            }  else  {
-                Notification.primary("milestone deleted successfully");
+}
+
+exports.listIndicators = function (req, res) {
+    var msId = req.params.ms;
+    var trait = req.params.trait;
+    var taxonomyCategory = req.params.taxonomyCategory;
+
+    MS.findOne({_id: msId}).populate({
+        path: 'indicators.indicator',
+        populate: {
+            path: 'indicator',
+            model: 'indicator'
+        }
+    }).exec(function (err, data) {
+        MS.find({
+            "indicators": {
+                $elemMatch: {
+                    "taxonomyCategory": taxonomyCategory
+                },
+                $elemMatch: {
+                    "trait": trait
+                }
 
             }
+        }, {"indicators.$": 1}, function (err, indicators) {
+            if (err) {
+                res.error(err)
+            }
+            else {
+                res.success({data: data, indicator: indicators})
+            }
+        })
+    })
+}
 
-           refreshMilestones();
+exports.update = function (req, res) {
+    MS.findOne({_id: req.body._id}, function (err, ms) {
+        ms.name = req.body.name;
+        ms.save(function (err) {
+            if (err) {
+                res.error(err)
+            }
+            else {
+                res.success(ms)
+            }
+        })
+    })
+}
+
+exports.findIndicators = function (req, res) {
+    var msId = req.params.ms;
+    console.log(msId)
+    MS.find({_id: msId}).populate({
+        path:'indicators.taxonomyCategory',
+        populate: {
+            path: 'taxonomyCategory',
+            model: 'taxonomyCategory'
+        }
+    }).populate({
+        path: 'indicators.trait',
+        populate: {
+            path: 'trait',
+            model: 'trait'
+        }
+    }).populate({
+        path: 'indicators.indicator',
+        populate: {
+            path: 'dps.da',
+            populate: {
+                path: 'da',
+                model: 'developmentalArea'
+            }
+        }
+
+    }).populate({
+        path: 'indicators.indicator',
+        populate: {
+            path: 'dps.dp',
+            populate: {
+                path: 'dp',
+                model: 'dp'
+            }
+        }
+
+    }).populate(
+        {
+            path: 'objectives',
+            populate: {
+                path: 'objective',
+                populate: {
+                    path: 'questions',
+                    populate: {path: 'taxonomyCategory', model: 'taxonomyCategory'},
+                    populate: {path: 'trait', model: 'trait'}
+
+                }
+            }
+        }
+    )
+        .exec(function (err, data) {
+            console.log(err, data)
+            if (err) {
+                res.error(err)
+            }
+            else {
+                res.success(data)
+            }
+        })
+}
+
+
+exports.getIndicator = function (req, res) {
+    var msId = req.params.ms;
+    MS.findOne({_id: msId}).populate({
+        path: 'indicators.indicator',
+        populate: {
+            path: 'indicator',
+            model: 'indicator'
+        }
+    }).populate({
+        path:'indicators.taxonomyCategory',
+        populate: {
+            path: 'taxonomyCategory',
+            model: 'taxonomyCategory'
+        }
+    }).populate({
+        path: 'indicators.trait',
+        populate: {
+            path: 'trait',
+            model: 'trait'
+        }
+    }).populate({
+        path: 'objectives',
+        populate: {
+            path: 'subItem1',
+            select: 'name _id'
+
+        }
+    }).populate({
+        path: 'objectives',
+        populate: {
+            path: 'subItem2',
+            select: 'name _id'
+
+        }
+    }).exec(function (err, data) {
+        if (err) {
+            res.error(err)
+        }
+        else {
+            res.success(data)
+        }
+    })
+}
+
+exports.deleteIndicator = function (req, res) {
+    var msId = req.params.ms;
+    var taxonomyCategory = req.params.taxonomyCategory;
+    var trait = req.params.trait;
+    var indicator = req.params.indicator;
+    var da = req.params.da;
+    var dp = req.params.dp;
+    var msId = req.params.ms;
+    var indicator = req.body;
+    MS.update({_id: msId}, {
+        $pull: {
+            indicators: {
+                taxonomyCategory: taxonomyCategory,
+                trait: trait,
+                indicator: indicator,
+                da: da,
+                dp: dp
+            }
+        }
+    }, function (errr) {
+        res.success("deleted successfully")
+    })
+}
+
+//Objective
+
+exports.addObjective = function (req, res) {
+    var msId = req.params.ms;
+    var body = req.body;
+    var questions = []
+    console.log(body.questions)
+    for (var i = 0; i < body.questions.length; i++) {
+        questions.push(new Question(body.questions[i]));
+    }
+    req.body.questions = []
+    var obj = new OBJECTIVE(req.body);
+    console.log(questions)
+    Question.insertMany(questions, function (err, data) {
+        if (err) {
+            console.log(err)
+        }
+        for (var i = 0; i < data.length; i++) {
+            obj.questions.push(questions[i]._id)
+        }
+        obj.save(function (err) {
+            if (err) {
+                res.error(err)
+            } else {
+                MS.update({_id: msId}, {$push: {objectives: obj._id}}, function (errr) {
+                    res.success("saved successfully")
+                })
+            }
+        })
+    })
+
+
+}
+
+exports.updateObjective = function (req, res) {
+    var bulk = Question.collection.initializeOrderedBulkOp();
+    var body = req.body
+    var updateHash = {}
+    var counter = 0
+    function inc(){
+        counter++;
+    }
+
+    function dec (){
+        counter--;
+        if(counter == 0){
+            res.success("updated")
+        }
+    }
+    var questionsToUpdate = []
+    OBJECTIVE.findOne({_id: body.id}, function (err, obj) {
+        if (err) {
+            console.log(err)
+        }
+        var questions = []
+        for (var i = 0; i < body.questions.length; i++) {
+            if (!body.questions[i].questionId) {
+                questions.push(new Question(body.questions[i]));
+            }
+            else {
+                questionsToUpdate.push({_id: body.questions[i].questionId,question: body.questions[i].question })
+
+            }
+        }
+        if (questions.length > 0) {
+            Question.insertMany(questions, function (err, data) {
+                if (err) {
+                    console.log(err)
+                }
+
+                for (var i = 0; i < data.length; i++) {
+                    obj.questions.push(questions[i]._id)
+                }
+                update()
+
+            })
+
+        }
+        else {
+            update()
+        }
+        function update(){
+            for(var i =0;i< questionsToUpdate.length; i++){
+                inc()
+                Question.update({_id: questionsToUpdate[i]._id}, {$set: {question: questionsToUpdate[i].question}}, function(){
+                    dec()
+                })
+            }
+        }
+    })
 
 
 
-        });
-    };
-
-    function refreshMilestones(){
-        pofRestangular.one('milestone').customGET().then(function(data){
-
-            $scope.milestones = data.data;
-        });
-    };
-
-});
+}
+exports.deleteMilestone = function (req, res) {
+    var id = req.body.milestone._id;
+    var msId = req.params.ms;
+    console.log(msId);
+    var milestone = req.body;
+    console.log(milestone);
+    Milestone.remove({_id:msId}, function(err){
+        console.log(err)
+        res.success("saved successfully")
+    })
+}
+//test
+/**
+ * Created by rajanchaudhary on 10/11/16.
+ */
