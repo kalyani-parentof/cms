@@ -7,7 +7,7 @@
             <div class="col-lg-6 hide">
                 <div class="form-group required">
                     <label class="control-label" for="ages">Age group </label>
-                    <select ng-options="a._id as a.name for a in ages" ng-change="selectedAgeChange()"
+                    <select ng-options="a._id as a.name for a in ages" ng-change="selectedDtChange()"
                             ng-model="selectedAge" class="form-control" id="ages">
                         <option>Select Age</option>
                     </select>
@@ -116,7 +116,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Taxonomy keyword</th>
+                                <th>Taxonomy Category</th>
+                                <th>Taxonomy Keyword</th>
                                 <th>Indicator</th>
                                 <th>IsPermanent</th>
                                 <th>DPs</th>
@@ -129,6 +130,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="indicator in msIndicators">
+                                <td>{{indicator.taxonomyCategory.name}}</td>
                                 <td>{{indicator.trait.name}}</td>
                                 <td>{{indicator.indicator.name}}</td>
                                 <td>{{indicator.indicator.isPermanent}}</td>
@@ -177,6 +179,12 @@
                             <tfoot>
                             <tr>
                                 <td>
+                                    <select ng-options="d._id as d.name for d in taxonomyCategories" ng-model="selectedTaxonomyCategory"
+                                            class="form-control" id="taxonomyCategories">
+                                        <option>Select Taxonomy Category</option>
+                                    </select>
+                                </td>
+                                <td>
                                     <select ng-options="d._id as d.name for d in traits" ng-model="selectedTrait"
                                             class="form-control" id="traits">
                                         <option>Select Trait</option>
@@ -193,10 +201,10 @@
                                 </td>
 
                                 <td>
-                                    <button type="button" ng-hide="editIndicatorMode" ng-disabled="!selectedTrait || !indicator "
+                                    <button type="button" ng-hide="editIndicatorMode" ng-disabled="!selectedTaxonomyCategory || !selectedTrait || !indicator "
                                             ng-click="addIndicator()" class="btn btn-default">Add
                                     </button>
-                                    <button type="button" ng-show="editIndicatorMode" ng-disabled="!selectedTrait || !indicator "
+                                    <button type="button" ng-show="editIndicatorMode" ng-disabled="!selectedTaxonomyCategory || !selectedTrait || !indicator "
                                             ng-click="updateIndicator()" class="btn btn-default">Update
                                     </button>
                                 </td>
@@ -273,7 +281,7 @@
                     <div>
                         <div class="form-group">
                             <label for="genders">Derivative</label>
-                            <input type="text" class="form-control" ng-model="obj.derivative">
+                            <input type="text" class="form-control" ng-model="obj.derivative" formnovalidate>
                         </div>
                         <div class="form-group">
                             <label for="genders">Objective name</label>
@@ -373,7 +381,7 @@
                                                 <label for="msDesc" class="control-label">Characterstic 3</label>
 
                                                 <select class="form-control itsRequired" id="char1"
-                                                        ng-change="searchSi3()"
+                                                        ng-change="searchSi1()"
                                                         ng-options="a._id as a.name for a in characteristics3"
                                                         ng-model="si1.characteristic3">
                                                 </select>
