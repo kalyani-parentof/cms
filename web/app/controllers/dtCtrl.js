@@ -1,7 +1,7 @@
 /**
  * Created by rajanchaudhary on 10/14/16.
  */
-parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
+parentOf.controller('dtCtrl', function ($scope, pofRestangular,Notification) {
     function init() {
         $scope.selectedAge = ''
         pofRestangular.one('age').customGET().then(function (data) {
@@ -33,9 +33,9 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
             }
             $scope.dts.push($scope.dt)
             $scope.dt = {name: '', description: '',age: $scope.selectedAge }
-            $scope.selectedDt = data.data._id
-
+            $scope.selectedDt = data.data._id;
         })
+        Notification.primary("Developmental task added successfully");
     }
     $scope.edit = function () {
         $scope.dt = $scope.findById($scope.dts, $scope.selectedDt);
@@ -51,6 +51,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
             $scope.editMode = false;
             $scope.dt = {name: '', description: ''}
         })
+        Notification.primary("Developmental task updated successfully");
     }
     $scope.selectedDtChange = function () {
         initMS()
@@ -64,6 +65,12 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
             $scope.traits = data.data;
             for (var i = 0; i < $scope.traits.length; i++) {
                 $scope.traits.indicator = ""
+            }
+        })
+        pofRestangular.one('taxonomyCategory').customGET().then(function (data) {
+            $scope.taxonomyCategories = data.data;
+            for (var i = 0; i < $scope.taxonomyCategories.length; i++) {
+                $scope.taxonomyCategories.indicator = ""
             }
         })
 
@@ -97,6 +104,12 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     $scope.selectedMSChange = function () {
         $scope.selectedIndicator = ''
         $scope.selectedTrait = ''
+        $scope.selectedTaxonomyCategory = ''
+        if (!$scope.taxonomyCategories) {
+            pofRestangular.one('taxonomyCategory').customGET().then(function (data) {
+                $scope.taxonomyCategories = data.data;
+            })
+        }
         if (!$scope.traits) {
             pofRestangular.one('trait').customGET().then(function (data) {
                 $scope.traits = data.data;
@@ -109,7 +122,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
             })
         }
         pofRestangular.one('ms').one('indicator').one($scope.selectedMS).customGET().then(function (data) {
-            $scope.msIndicators = data.data[0].indicators
+            $scope.msIndicators = data.data[0].indicators;
 
             $scope.objectives = data.data[0].objectives;
 
@@ -137,20 +150,22 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
 
     $scope.addIndicator = function () {
         pofRestangular.one('ms').one($scope.selectedMS).customPOST({
+            taxonomyCategory: $scope.selectedTaxonomyCategory,
             trait: $scope.selectedTrait,
             indicator: $scope.indicator,
             isPermanent: $scope.isPermanent,
             age: $scope.selectedAge
         }).then(function (data) {
             pofRestangular.one('ms').one('indicator').one($scope.selectedMS).customGET().then(function (data) {
-                $scope.msIndicators = data.data[0].indicators
+                $scope.msIndicators = data.data[0].indicators;
 
-                $scope.selectedTrait = ''
+                $scope.selectedTaxonomyCategory = '';
+                $scope.selectedTrait = '';
                 $scope.isPermanent = false;
-                $scope.indicator = ''
-                $scope.selectedDA = ''
-                $scope.selectedDP = ''
-                $scope.DP = ''
+                $scope.indicator = '';
+                $scope.selectedDA = '';
+                $scope.selectedDP = '';
+                $scope.DP = '';
                 $scope.newDp = false;
             })
 
@@ -158,18 +173,19 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
     }
 
     $scope.updateIndicator = function () {
-        pofRestangular.one('indicator').customPUT({id: $scope.selectedIndicator.indicator._id, traitId: $scope.selectedTrait, name:  $scope.indicator, isPermanent: $scope.isPermanent, ms: $scope.selectedMS}).then(function(data){
+        pofRestangular.one('indicator').customPUT({id: $scope.selectedIndicator.indicator._id, taxonomyCategoryId: $scope.selectedTaxonomyCategory, traitId: $scope.selectedTrait, name:  $scope.indicator, isPermanent: $scope.isPermanent, ms: $scope.selectedMS}).then(function(data){
             $scope.editIndicatorMode = false;
-            $scope.selectedTrait = ""
-            $scope.isPermanent = ""
-            $scope.indicator = ""
-            $scope.selectedIndicator = {}
+            $scope.selectedTaxonomyCategory = '';
+             $scope.selectedTrait = "";
+            $scope.isPermanent = "";
+            $scope.indicator = "";
+            $scope.selectedIndicator = {};
             $scope.selectedMSChange()
         })
     }
 
     $scope.deleteIndicator = function (ind) {
-        pofRestangular.one('ms').one($scope.selectedMS).one(ind.trait._id).one(ind.indicator._id).one(ind.da._id).one(ind.dp._id).customDELETE().then(function (data) {
+        pofRestangular.one('ms').one($scope.selectedMS).one(ind.taxonomyCategory._id).one(ind.trait._id).one(ind.indicator._id).one(ind.da._id).one(ind.dp._id).customDELETE().then(function (data) {
             $scope.selectedMSChange()
 
         })
@@ -179,16 +195,18 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
         pofRestangular.one('indicator').one('delete').customPUT({id: id, da: da, dp: dp}).then(function(data){
             $scope.selectedMSChange()
         })
-    }
+    };
 
 
     $scope.editIndicator = function (indi) {
-        console.log(indi)
+        console.log(indi);
         $scope.editIndicatorMode = true;
-        $scope.selectedTrait = indi.trait._id
-        $scope.isPermanent = indi.indicator.isPermanent
-        $scope.indicator = indi.indicator.name
+        $scope.selectedTaxonomyCategory = indi.taxonomyCategory._id;
+        $scope.selectedTrait = indi.trait._id;
+        $scope.isPermanent = indi.indicator.isPermanent;
+        $scope.indicator = indi.indicator.name;
         $scope.selectedIndicator = indi;
+
     }
     //Objective
     function initObj() {
@@ -253,10 +271,11 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
 
 
     $scope.searchObj = {}
-    $scope.searchObj.searchSi2 = false
+    $scope.searchObj.searchSi2 = false;
     $scope.refreshSi = function(){
 
         $scope.si1 = {ses: '', country: '', gender: '', tier: '',category1: '',category2: '',category3: '', characteristic1: '',characteristic2: '',characteristic3: '', functionality: ''}
+        $scope.searchObj.searchSi2 = true;
     }
     $scope.searchSi1 = function () {
         if (!$scope.searchObj.searchSi2) {
@@ -267,7 +286,7 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
                     Notification.error("some error occurred")
                 })
         }
-        else{
+        else if($scope.searchObj.searchSi2){
             pofRestangular.one("subItem").one("search").customPOST($scope.si2).then(function (data) {
                     $scope.si2s = data.data
                 },
@@ -325,8 +344,10 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
                         for (var i = 0; i < $scope.msIndicators.length; i++) {
                             $scope.obj.questions.push({
                                 indicator: $scope.msIndicators[i].indicator._id,
+                                taxonomyCategory: $scope.msIndicators[i].taxonomyCategory._id,
                                 trait: $scope.msIndicators[i].trait._id,
                                 question: '',
+                                taxonomyCategoryName: $scope.msIndicators[i].taxonomyCategory.name,
                                 traitName: $scope.msIndicators[i].trait.name
                             })
                         }
@@ -337,8 +358,10 @@ parentOf.controller('dtCtrl', function ($scope, pofRestangular) {
                         for (var i = 0; i < $scope.msIndicators.length; i++) {
                             $scope.obj.questions.push({
                                 indicator: $scope.msIndicators[i].indicator._id,
+                                taxonomyCategory: $scope.msIndicators[i].taxonomyCategory._id,
                                 trait: $scope.msIndicators[i].trait._id,
                                 question: '',
+                                taxonomyCategoryName: $scope.msIndicators[i].taxonomyCategory.name,
                                 traitName: $scope.msIndicators[i].trait.name
                             })
                         }

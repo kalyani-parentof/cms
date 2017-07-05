@@ -8,7 +8,7 @@
                         <thead><tr><th>Categories</th></tr></thead>
                         <tbody>
                         <tr ng-repeat="category in categories"><td>
-                            <div>{{category.name}} <span ng-click="edit(category)" class="glyphicon glyphicon-pencil"></span> </div>
+                            <div>{{category.name}} <span ng-click="edit(category)" class="glyphicon glyphicon-pencil" style="color: blue"></span>&emsp;<span ng-click="delete(category)" class="glyphicon glyphicon-remove" style="color: red"></span> </div>
                         </td></tr>
                         </tbody>
                     </table>

@@ -55,7 +55,7 @@ exports.addIndicator = function (req, res) {
                 res.error(err)
             }
             else {
-                indicator.dp = dp._id
+                indicator.dp = dp._id;
                 insertIndicator(msId, indicator, res)
             }
         })
@@ -84,6 +84,7 @@ function insertIndicator(msId, indi, res) {
 exports.listIndicators = function (req, res) {
     var msId = req.params.ms;
     var trait = req.params.trait;
+    var taxonomyCategory = req.params.taxonomyCategory;
 
     MS.findOne({_id: msId}).populate({
         path: 'indicators.indicator',
@@ -95,8 +96,12 @@ exports.listIndicators = function (req, res) {
         MS.find({
             "indicators": {
                 $elemMatch: {
+                    "taxonomyCategory": taxonomyCategory
+                },
+                $elemMatch: {
                     "trait": trait
                 }
+
             }
         }, {"indicators.$": 1}, function (err, indicators) {
             if (err) {
@@ -111,7 +116,7 @@ exports.listIndicators = function (req, res) {
 
 exports.update = function (req, res) {
     MS.findOne({_id: req.body._id}, function (err, ms) {
-        ms.name = req.body.name
+        ms.name = req.body.name;
         ms.save(function (err) {
             if (err) {
                 res.error(err)
@@ -127,6 +132,12 @@ exports.findIndicators = function (req, res) {
     var msId = req.params.ms;
     console.log(msId)
     MS.find({_id: msId}).populate({
+        path:'indicators.taxonomyCategory',
+        populate: {
+            path: 'taxonomyCategory',
+            model: 'taxonomyCategory'
+        }
+    }).populate({
         path: 'indicators.trait',
         populate: {
             path: 'trait',
@@ -159,6 +170,7 @@ exports.findIndicators = function (req, res) {
                 path: 'objective',
                 populate: {
                     path: 'questions',
+                    populate: {path: 'taxonomyCategory', model: 'taxonomyCategory'},
                     populate: {path: 'trait', model: 'trait'}
 
                 }
@@ -184,6 +196,12 @@ exports.getIndicator = function (req, res) {
         populate: {
             path: 'indicator',
             model: 'indicator'
+        }
+    }).populate({
+        path:'indicators.taxonomyCategory',
+        populate: {
+            path: 'taxonomyCategory',
+            model: 'taxonomyCategory'
         }
     }).populate({
         path: 'indicators.trait',
@@ -217,6 +235,7 @@ exports.getIndicator = function (req, res) {
 
 exports.deleteIndicator = function (req, res) {
     var msId = req.params.ms;
+    var taxonomyCategory = req.params.taxonomyCategory;
     var trait = req.params.trait;
     var indicator = req.params.indicator;
     var da = req.params.da;
@@ -226,6 +245,7 @@ exports.deleteIndicator = function (req, res) {
     MS.update({_id: msId}, {
         $pull: {
             indicators: {
+                taxonomyCategory: taxonomyCategory,
                 trait: trait,
                 indicator: indicator,
                 da: da,
@@ -331,3 +351,18 @@ exports.updateObjective = function (req, res) {
 
 
 }
+exports.deleteMilestone = function (req, res) {
+    var id = req.body.milestone._id;
+    var msId = req.params.ms;
+    console.log(msId);
+    var milestone = req.body;
+    console.log(milestone);
+    Milestone.remove({_id:msId}, function(err){
+        console.log(err)
+        res.success("saved successfully")
+    })
+}
+//test
+/**
+ * Created by rajanchaudhary on 10/11/16.
+ */

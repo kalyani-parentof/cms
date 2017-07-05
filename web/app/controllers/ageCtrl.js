@@ -17,6 +17,7 @@ parentOf.controller('ageCtrl', function ($scope, pofRestangular,Notification) {
             $scope.ages.push($scope.age.name)
             init()
         })
+        Notification.primary("age created successfully");
     }
 
     $scope.selectedAgeChange = function(){

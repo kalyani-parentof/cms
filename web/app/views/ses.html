@@ -8,7 +8,7 @@
                         <thead><tr><th>SES</th></tr></thead>
                         <tbody>
                         <tr ng-repeat="ses in sess"><td>
-                            <div>{{ses.name}} <span ng-click="edit(ses)" class="glyphicon glyphicon-pencil"></span> </div>
+                            <div>{{ses.name}} <span style="color: blue" ng-click="edit(ses)" class="glyphicon glyphicon-pencil"></span>&emsp;<span style="color: red" ng-click="delete(ses)" class="glyphicon glyphicon-remove"></span> </div>
                         </td></tr>
                         </tbody>
                     </table>

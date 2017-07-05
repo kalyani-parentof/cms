@@ -41,4 +41,24 @@ parentOf.controller('tierCtrl', function ($scope, pofRestangular, Notification) 
             init()
         })
     }
-})
+    $scope.delete = function (tier) {
+        var id = tier._id;
+        pofRestangular.one("tier").one(id).customDELETE().then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data);
+                return;
+            }
+            Notification.primary("tier deleted successfully");
+            init();
+            return refreshTier();
+        })
+
+    };
+    function refreshTier() {
+        pofRestangular.one("tier").customGET().then(function (data) {
+            $scope.tiers = data.data;
+
+        })
+
+    }
+});

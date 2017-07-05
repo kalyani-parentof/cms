@@ -40,4 +40,22 @@ parentOf.controller('categoryCtrl', function ($scope, pofRestangular, Notificati
             init()
         })
     }
+    $scope.delete = function(category){
+        var id = category._id;
+        pofRestangular.one('category').one(id).customDELETE().then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data);
+                return;
+            }
+            Notification.primary("category deleted successfully");
+            init();
+            return refreshCategory();
+        });
+
+    }
+    function refreshCategory() {
+        pofRestangular.one('category').customGET().then(function(data){
+            $scope.categories = data.data;
+        })
+    }
 })

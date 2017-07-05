@@ -41,4 +41,24 @@ parentOf.controller('genderCtrl', function ($scope, pofRestangular, Notification
             init()
         })
     }
-})
+    $scope.delete = function (gender) {
+        var id = gender._id;
+        pofRestangular.one("gender").one(id).customDELETE().then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data);
+                return;
+            }
+            Notification.primary("gender deleted successfully");
+            init();
+            return refreshGender();
+
+        })
+
+    };
+    function refreshGender() {
+        pofRestangular.one("gender").customGET().then(function(data){
+            $scope.genders = data.data;
+        })
+
+    }
+});

@@ -85,7 +85,21 @@ parentOf.controller('subItemCtrl', function ($scope, pofRestangular, Notificatio
                 })
         }
     }
-
+    $scope.delete = function(si) {
+        $scope.si = si;
+       pofRestangular.one("subItem", si._id).customDELETE().then(function() {
+            var index = $scope.subItems.indexOf(subItem);
+            if (index > -1) $scope.subItems.splice(index, 1);
+            /*   });
+      pofRestangular.one("subItem").one(si._id).customDELETE().then(function (data) {
+            if (data.status == "error") {
+                $scope.errorHandler(data)
+                return;
+            } */
+            Notification.primary("sub item deleted successfully")
+            init()
+        })
+    }
     $scope.edit = function (si) {
         $scope.si = si;
         $scope.isSearchable = false;

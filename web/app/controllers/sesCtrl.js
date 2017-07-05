@@ -4,32 +4,32 @@
 
 parentOf.controller('sesCtrl', function ($scope, pofRestangular, Notification) {
     function init() {
-        $scope.selectedCountry = ''
+        $scope.selectedCountry = '';
         pofRestangular.one('ses').customGET().then(function (data) {
             $scope.sess = data.data;
-        })
+        });
         $scope.editMode = false;
 
         $scope.ses = {name: ''}
     }
 
-    init()
+    init();
     $scope.add = function () {
         pofRestangular.one('ses').customPOST($scope.ses).then(function (data) {
             if(data.status == "error"){
-                $scope.errorHandler(data)
+                $scope.errorHandler(data);
                 return;
             }
-            $scope.sess.push($scope.ses.name)
-            Notification.primary("SES added successfully")
+            $scope.sess.push($scope.ses.name);
+            Notification.primary("SES added successfully");
             init()
         })
-    }
+    };
 
     $scope.edit = function(ses){
         $scope.editMode= true;
         $scope.ses = ses;
-    }
+    };
 
     $scope.update = function(){
         pofRestangular.one('ses').customPUT($scope.ses).then(function (data) {
@@ -40,5 +40,24 @@ parentOf.controller('sesCtrl', function ($scope, pofRestangular, Notification) {
             Notification.primary("SES updated successfully")
             init()
         })
+    };
+    $scope.delete = function (ses) {
+        var id = ses._id;
+        pofRestangular.one('ses').one(id).customDELETE().then(function (data) {
+            if(data.status == "error"){
+                $scope.errorHandler(data);
+                return;
+            }
+            Notification.primary("ses deleted successfully");
+            init();
+            return refreshSes();
+        })
+    };
+    function refreshSes() {
+        pofRestangular.one('ses').customGET().then(function (data) {
+            $scope.sess = data.data;
+
+        })
+
     }
-})
+});

@@ -2,6 +2,7 @@ module.exports = {
     // Development configuration options
     sessionSecret: 'intialQuoteProduction',
     db: 'mongodb://parentOfProd:parent0fPr0d@localhost/parentof-prod',
+
     getClientDetail: 'http://apps.homelane.com/webapi/customers/aG9tZWxhbmVvZmZsaW5lY2F0YWxvZw==/info?email=',
     getClientBucket: 'http://artifactservice.homelane.com/v1/customers/',
     log: {

@@ -6,6 +6,7 @@ var mileStone = new Schema({
     description: String,
     indicators: [{
         indicator:{type: String, ref: 'indicator'},
+        taxonomyCategory:{type:String, ref: 'taxonomyCategory'},
         trait: {type:String, ref: 'trait'},
         //da: {type: String, ref: 'developmentalArea'},
         //dp: {type: String, ref: 'dp'},

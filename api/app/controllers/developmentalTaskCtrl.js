@@ -17,11 +17,11 @@ exports.post = function (req, res) {
             res.success(dt)
         }
     })
-}
+};
 
 exports.update = function (req, res) {
     DT.findOne({_id: req.body._id}, function (err, dt) {
-        dt.name = req.body.name
+        dt.name = req.body.name;
         dt.save(function (err) {
             if (err) {
                 res.error(err)
@@ -31,7 +31,7 @@ exports.update = function (req, res) {
             }
         })
     })
-}
+};
 
 exports.get = function (req, res) {
     DT.find({}, function (err, data) {
@@ -100,8 +100,8 @@ exports.getMS = function (req, res) {
                 path: 'objective',
                 populate: {
                     path: 'questions',
+                    populate:{path: 'taxonomyCategory', model: 'taxonomyCategory'},
                     populate:{path: 'trait', model: 'trait'}
-
                 }
             }
         }

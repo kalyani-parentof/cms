@@ -40,4 +40,24 @@ parentOf.controller('traitCtrl', function ($scope, pofRestangular, Notification)
             init()
         })
     }
+    $scope.delete = function(trait){
+        var id = trait._id;
+        console.log(id);
+        pofRestangular.one('trait').one(id).customDELETE().then(function(data){
+            if(data.status == "error"){
+                $scope.errorHandler(data);
+                console.log(data);
+                return;
+            }
+            Notification.primary("Trait deleted successfully");
+            init();
+            return refreshTrait();
+
+        })
+    }
+    function refreshTrait(){
+        pofRestangular.one('trait').customGET().then(function(data){
+            $scope.traits = data.data;
+        })
+    }
 })

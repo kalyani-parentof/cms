@@ -101,4 +101,17 @@ exports.update = function(req, res){
 
 
 
-}
+};
+
+exports.delete = function (req,res) {
+    SubItem.remove({id:_id},function (err,data) {
+        if(err){
+            res.error(err);
+        }
+        else{
+            res.success(data);
+        }
+
+});
+
+};

@@ -8,7 +8,7 @@
                         <thead><tr><th>Countries</th></tr></thead>
                         <tbody>
                         <tr ng-repeat="country in countries"><td>
-                            <div>{{country.name}} <span ng-click="edit(country)" class="glyphicon glyphicon-pencil"></span> </div>
+                            <div>{{country.name}} <span ng-click="edit(country)" class="glyphicon glyphicon-pencil" style="color: blue"></span>&emsp;<span style="color: red" ng-click="delete(country)" class="glyphicon glyphicon-remove"></span> </div>
                         </td></tr>
                         </tbody>
                     </table>
